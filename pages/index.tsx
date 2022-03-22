@@ -1,9 +1,26 @@
-import type { NextPage } from "next";
+import type { InferGetServerSidePropsType, NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
+import { supabase } from "../utils/supabase";
 
-const Home: NextPage = () => {
+export const getServerSideProps = async () => {
+  const { data, error } = await supabase.from("varer").select("*");
+
+  console.log(data);
+
+  return {
+    props: {
+      data: {
+        varer: data ?? [],
+      },
+    },
+  };
+};
+
+function Home({
+  data,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <div className={styles.container}>
       <Head>
@@ -16,6 +33,10 @@ const Home: NextPage = () => {
         <h1 className={styles.title}>
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
+
+        {data.varer.map((vare) => (
+          <div key={vare.id}>{vare.navn}</div>
+        ))}
 
         <p className={styles.description}>
           Get started by editing{" "}
@@ -67,6 +88,6 @@ const Home: NextPage = () => {
       </footer>
     </div>
   );
-};
+}
 
 export default Home;
