@@ -16,6 +16,7 @@ function Om() {
         skulle det være. Ikke flere undskyldninger. Frem med dejskraberen og sæt
         igang!
       </Text>
+      <br />
       <Text>
         Min vision med Brødkompagniet er at tilbyde dig friskt og ærligt brød
         bagt på de bedste økologiske råvarer. Et godt brød bliver ikke lavet på
