@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "install-pnpm": "npm install -g pnpm",
     "update-pnpm": "pnpm add -g pnpm"
   },
   "dependencies": {
@@ -15,7 +16,7 @@
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
     "@fontsource/inter": "^4.5.5",
-    "@supabase/supabase-js": "^1.31.1",
+    "@supabase/supabase-js": "^1.31.2",
     "framer-motion": "^6",
     "next": "12.1.0",
     "react": "17.0.2",
@@ -23,7 +24,7 @@
   },
   "devDependencies": {
     "@types/node": "17.0.22",
-    "@types/react": "17.0.41",
+    "@types/react": "17.0.42",
     "eslint": "8.11.0",
     "eslint-config-next": "12.1.0",
     "prettier": "^2.6.0",
