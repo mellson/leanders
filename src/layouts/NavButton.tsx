@@ -12,12 +12,7 @@ export const NavButton = (props: NavButtonProps) => {
   const { icon, label, ...buttonProps } = props;
   return (
     <Link href={props.href} passHref>
-      <Button
-        variant="ghost"
-        justifyContent="start"
-        {...buttonProps}
-        onClick={(event) => event.stopPropagation()}
-      >
+      <Button variant="ghost" justifyContent="start" {...buttonProps}>
         <HStack spacing="3">
           <Icon as={icon} boxSize="6" color="subtle" />
           <Text>{label}</Text>

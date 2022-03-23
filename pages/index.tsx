@@ -21,8 +21,6 @@ function Home({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <>
-      <h1>Velkommen til Leanders 🥐</h1>
-
       {data.varer.map((vare) => (
         <div key={vare.id}>{vare.navn}</div>
       ))}

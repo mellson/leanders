@@ -1,5 +1,4 @@
 import {
-  Avatar,
   Box,
   Button,
   ButtonGroup,
@@ -9,7 +8,6 @@ import {
   DrawerOverlay,
   Flex,
   HStack,
-  Link,
   useBreakpointValue,
   useColorModeValue,
   useDisclosure,
@@ -18,9 +16,11 @@ import NextLink from "next/link";
 import { useRouter } from "next/router";
 import * as React from "react";
 import { routes } from "../utils/routes";
+import { ColorModeButton } from "./ColorModeButton";
 import { Logo } from "./Logo";
 import { Sidebar } from "./Sidebar";
 import { ToggleButton } from "./ToggleButton";
+import { UserLink } from "./UserLink";
 
 export const Navbar = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
@@ -34,37 +34,30 @@ export const Navbar = () => {
       boxShadow={useColorModeValue("sm", "sm-dark")}
     >
       <Container py={{ base: "3", lg: "4" }}>
-        <Flex justify="space-between">
-          <HStack spacing="4">
-            <Logo />
-            {isDesktop && (
-              <ButtonGroup variant="ghost" spacing="1">
-                {routes.map((route) => (
-                  <NextLink href={route.href} key={route.href} passHref>
-                    <Button
-                      aria-current={
-                        router.asPath === route.href ? "page" : undefined
-                      }
-                    >
-                      {route.label}
-                    </Button>
-                  </NextLink>
-                ))}
-              </ButtonGroup>
-            )}
-          </HStack>
+        <Flex justify="space-between" alignItems="center">
           {isDesktop ? (
-            <HStack spacing="4">
-              <NextLink href="/profil" passHref>
-                <Link>
-                  <Avatar
-                    boxSize="10"
-                    name="Christoph Winston"
-                    src="https://tinyurl.com/yhkm2ek8"
-                  />
-                </Link>
-              </NextLink>
-            </HStack>
+            <>
+              <HStack spacing="4">
+                <Logo />
+                <ButtonGroup variant="ghost" spacing="1">
+                  {routes.map((route) => (
+                    <NextLink href={route.href} key={route.href} passHref>
+                      <Button
+                        aria-current={
+                          router.asPath === route.href ? "page" : undefined
+                        }
+                      >
+                        {route.label}
+                      </Button>
+                    </NextLink>
+                  ))}
+                </ButtonGroup>
+              </HStack>
+              <HStack spacing="4">
+                <ColorModeButton />
+                <UserLink />
+              </HStack>
+            </>
           ) : (
             <>
               <ToggleButton
@@ -72,6 +65,7 @@ export const Navbar = () => {
                 aria-label="Open Menu"
                 onClick={onToggle}
               />
+              <Logo />
               <Drawer
                 isOpen={isOpen}
                 placement="left"
@@ -81,7 +75,7 @@ export const Navbar = () => {
               >
                 <DrawerOverlay />
                 <DrawerContent>
-                  <Sidebar />
+                  <Sidebar onClose={onClose} />
                 </DrawerContent>
               </Drawer>
             </>
