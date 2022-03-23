@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "update-pnpm": "pnpm add -g pnpm"
   },
   "dependencies": {
     "@chakra-ui/pro-theme": "^0.0.41",
