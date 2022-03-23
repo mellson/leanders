@@ -7,6 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "install-vercel-cli": "npm i -g vercel",
+    "pull-env-variables": "vercel pull",
     "install-pnpm": "npm install -g pnpm",
     "update-pnpm": "pnpm add -g pnpm"
   },
