@@ -2,11 +2,10 @@ import type { InferGetServerSidePropsType } from "next";
 import * as React from "react";
 import { supabase } from "../src/utils/supabase";
 
-export const getServerSideProps = async () => {
+export const getStaticProps = async () => {
   const { data, error } = await supabase.from("varer").select("*");
 
-  console.log(data);
-
+  // Overvej at bruge ISR i stedet for SSG - https://nextjs.org/docs/basic-features/data-fetching/incremental-static-regeneration
   return {
     props: {
       data: {
@@ -16,9 +15,7 @@ export const getServerSideProps = async () => {
   };
 };
 
-function Home({
-  data,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+function Home({ data }: InferGetServerSidePropsType<typeof getStaticProps>) {
   return (
     <>
       {data.varer.map((vare) => (
