@@ -1,7 +1,7 @@
 import { Heading, SimpleGrid, Text, VStack } from "@chakra-ui/layout";
 import type { InferGetServerSidePropsType } from "next";
-import Image from "next/image";
 import * as React from "react";
+import { Billede } from "../src/components/Billede";
 import { supabase } from "../src/utils/supabase";
 
 export const getStaticProps = async () => {
@@ -25,7 +25,7 @@ function Home({ data }: InferGetServerSidePropsType<typeof getStaticProps>) {
         {data.varer.map((vare) => {
           return (
             <VStack key={vare.id} spacing={2}>
-              <Image
+              <Billede
                 alt={vare.navn}
                 src={`/billeder/${vare.billede}.jpeg`}
                 height={100}
