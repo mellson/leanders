@@ -1,9 +1,11 @@
+import { Heading, SimpleGrid, Text, VStack } from "@chakra-ui/layout";
 import type { InferGetServerSidePropsType } from "next";
+import Image from "next/image";
 import * as React from "react";
 import { supabase } from "../src/utils/supabase";
 
 export const getStaticProps = async () => {
-  const { data, error } = await supabase.from("varer").select("*");
+  const { data, error } = await supabase.from("varer").select("*").order("id");
 
   // Overvej at bruge ISR i stedet for SSG - https://nextjs.org/docs/basic-features/data-fetching/incremental-static-regeneration
   return {
@@ -18,9 +20,22 @@ export const getStaticProps = async () => {
 function Home({ data }: InferGetServerSidePropsType<typeof getStaticProps>) {
   return (
     <>
-      {data.varer.map((vare) => (
-        <div key={vare.id}>{vare.navn}</div>
-      ))}
+      <Heading>Brød</Heading>
+      <SimpleGrid columns={{ sm: 1, md: 3, lg: 5 }} spacing={10}>
+        {data.varer.map((vare) => {
+          return (
+            <VStack key={vare.id} spacing={2}>
+              <Image
+                alt={vare.navn}
+                src={`/billeder/${vare.billede}.jpeg`}
+                height={100}
+                width={100}
+              />
+              <Text>{vare.navn}</Text>
+            </VStack>
+          );
+        })}
+      </SimpleGrid>
     </>
   );
 }
