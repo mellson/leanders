@@ -1,4 +1,5 @@
 import { Box, chakra } from "@chakra-ui/react";
+import { ImageLoaderProps } from "next/dist/client/image";
 import NextImage from "next/image";
 
 const CoverImg = chakra(NextImage, {
@@ -8,12 +9,18 @@ const CoverImg = chakra(NextImage, {
     ),
 });
 
-const myLoader = ({ src, width, quality }) => {
-  console.log(width);
+const myLoader = ({ src, width, quality }: ImageLoaderProps) => {
   return `${src}?w=${width}&q=${quality || 75}`;
 };
 
-export const VareBillede = (props) => {
+interface VareBilledeProps {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+}
+
+export const VareBillede = (props: VareBilledeProps) => {
   const { src, alt, ...rest } = props;
   return (
     <Box
