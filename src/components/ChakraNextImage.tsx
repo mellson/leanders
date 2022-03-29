@@ -1,9 +1,12 @@
-import { Box, chakra } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/layout";
+import { chakra } from "@chakra-ui/react";
 import NextImage from "next/image";
 
 const ChakraWrappedNextImage = chakra(NextImage, {
   shouldForwardProp: (prop) =>
-    ["width", "height", "src", "alt", "layout", "objectFit"].includes(prop),
+    ["width", "height", "src", "alt", "layout", "loader", "quality"].includes(
+      prop
+    ),
 });
 
 interface VareBilledeProps {
@@ -14,10 +17,10 @@ interface VareBilledeProps {
 }
 
 export const ChakraNextImage = (props: VareBilledeProps) => {
-  const { src, alt, ...rest } = props;
   return (
     <Box
-      {...rest}
+      width={props.width}
+      height={props.height}
       pos="relative"
       cursor="pointer"
       transition="all 0.2s"
@@ -28,10 +31,13 @@ export const ChakraNextImage = (props: VareBilledeProps) => {
     >
       <ChakraWrappedNextImage
         rounded="md"
-        layout="fill"
         objectFit="cover"
-        src={src}
-        alt={alt}
+        layout="raw"
+        quality={50}
+        src={props.src}
+        alt={props.alt}
+        width={props.width}
+        height={props.height}
       />
     </Box>
   );
