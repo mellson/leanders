@@ -16,7 +16,6 @@ import NextLink from "next/link";
 import { useRouter } from "next/router";
 import * as React from "react";
 import { routes } from "../utils/routes";
-import { ColorModeButton } from "./ColorModeButton";
 import { Logo } from "./Logo";
 import { Sidebar } from "./Sidebar";
 import { ToggleButton } from "./ToggleButton";
@@ -54,7 +53,6 @@ export const Navbar = () => {
                 </ButtonGroup>
               </HStack>
               <HStack spacing="4">
-                <ColorModeButton />
                 <UserLink />
               </HStack>
             </>

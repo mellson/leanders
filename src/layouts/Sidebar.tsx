@@ -3,7 +3,6 @@ import NextLink from "next/link";
 import { useRouter } from "next/router";
 import * as React from "react";
 import { routes } from "../utils/routes";
-import { ColorModeButton } from "./ColorModeButton";
 import { Logo } from "./Logo";
 import { NavButton } from "./NavButton";
 import { UserProfile } from "./UserProfile";
@@ -45,7 +44,6 @@ export const Sidebar = (props: SidebarProps) => {
             </Stack>
           </Stack>
           <Stack spacing={{ base: "5", sm: "6" }}>
-            <ColorModeButton />
             <NextLink href="/profil" passHref>
               <Link>
                 <UserProfile

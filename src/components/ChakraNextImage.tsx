@@ -1,44 +1,76 @@
-import { Box } from "@chakra-ui/layout";
-import { chakra } from "@chakra-ui/react";
+import type { FlexProps } from "@chakra-ui/react";
+import { chakra, Flex } from "@chakra-ui/react";
+import type { ImageLoaderProps, ImageProps } from "next/image";
 import NextImage from "next/image";
+import theme from "../theme";
 
-const ChakraWrappedNextImage = chakra(NextImage, {
+const ChakraNextUnwrappedImage = chakra(NextImage, {
   shouldForwardProp: (prop) =>
-    ["width", "height", "src", "alt", "layout", "loader", "quality"].includes(
-      prop
-    ),
+    [
+      "width",
+      "height",
+      "src",
+      "alt",
+      "quality",
+      "placeholder",
+      "blurDataURL",
+      "loader ",
+    ].includes(prop),
 });
+const toBase64 = (str: string) =>
+  typeof window === "undefined"
+    ? Buffer.from(str).toString("base64")
+    : window.btoa(str);
 
-interface VareBilledeProps {
-  src: string;
-  alt: string;
-  width: number;
-  height: number;
-}
+const shimmer = (w: number, h: number) => {
+  const shimmerColor = theme.colors.gray[300];
+  return `
+    <svg width="${w}" height="${h}" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <rect width="${w}" height="${h}" fill={shimmerColor}  />
+      <rect id="r" width="${w}" height="${h}" fill={shimmerColor}  />
+      <animate xlink:href="#r" attributeName="x" from="-${w}" to="${w}" dur="1s" repeatCount="indefinite"  />
+    </svg>`;
+};
 
-export const ChakraNextImage = (props: VareBilledeProps) => {
+const myLoader = (resolverProps: ImageLoaderProps): string => {
+  return `${resolverProps.src}?w=${resolverProps.width}&q=${resolverProps.quality}`;
+};
+
+const ChakraNextImage = (props: ImageProps & FlexProps) => {
+  const { src, width, height, alt, quality, ...rest } = props;
+
   return (
-    <Box
-      width={props.width}
-      height={props.height}
+    <Flex
       pos="relative"
       cursor="pointer"
+      className="group"
+      overflow="hidden"
+      rounded="md"
       transition="all 0.2s"
       _hover={{
         transform: "scale(1.05)",
         shadow: "md",
       }}
+      {...rest}
     >
-      <ChakraWrappedNextImage
-        rounded="md"
+      <ChakraNextUnwrappedImage
+        w="auto"
+        h="auto"
+        loader={myLoader}
+        width={width}
+        quality={quality}
+        height={height}
+        placeholder="blur"
         objectFit="cover"
-        layout="raw"
-        quality={50}
-        src={props.src}
-        alt={props.alt}
-        width={props.width}
-        height={props.height}
+        blurDataURL={`data:image/svg+xml;base64,${toBase64(
+          shimmer(+width!, +height!)
+        )}`}
+        src={src}
+        alt={alt}
+        transition="all 0.2s"
       />
-    </Box>
+    </Flex>
   );
 };
+
+export default ChakraNextImage;

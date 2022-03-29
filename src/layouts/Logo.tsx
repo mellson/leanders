@@ -1,5 +1,4 @@
-import { Link } from "@chakra-ui/layout";
-import { Heading, useBreakpointValue } from "@chakra-ui/react";
+import { Heading, Link, useBreakpointValue } from "@chakra-ui/react";
 import NextLink from "next/link";
 import * as React from "react";
 

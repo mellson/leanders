@@ -1,18 +1,17 @@
+import { ChakraProvider } from "@chakra-ui/react";
 import "@fontsource/inter/variable.css";
 import type { AppProps } from "next/app";
-import { ChakraColorWrapper } from "../src/components/ChakraColorWrapper";
 import { AppLayout } from "../src/layouts/AppLayout";
+import theme from "../src/theme";
 
-function MyApp({ Component, pageProps }: AppProps) {
+function App({ Component, pageProps }: AppProps) {
   return (
-    <ChakraColorWrapper cookies={pageProps.cookies}>
+    <ChakraProvider theme={theme}>
       <AppLayout>
         <Component {...pageProps} />
       </AppLayout>
-    </ChakraColorWrapper>
+    </ChakraProvider>
   );
 }
 
-export { getServerSideProps } from "../src/components/ChakraColorWrapper";
-
-export default MyApp;
+export default App;
