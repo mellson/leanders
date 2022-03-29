@@ -1,12 +1,11 @@
-import { theme } from "@chakra-ui/pro-theme";
 import {
   ChakraProvider,
   cookieStorageManager,
-  extendTheme,
   localStorageManager,
 } from "@chakra-ui/react";
 import { GetServerSideProps } from "next";
 import { ReactElement } from "react";
+import theme from "../theme";
 
 interface ChakraProps {
   cookies?: string;
@@ -17,20 +16,13 @@ export function ChakraColorWrapper({
   cookies,
   children,
 }: ChakraProps): JSX.Element {
-  const myTheme = extendTheme(
-    {
-      colors: { ...theme.colors, brand: theme.colors.purple },
-    },
-    theme
-  );
-
   const colorModeManager =
     typeof cookies === "string"
       ? cookieStorageManager(cookies)
       : localStorageManager;
 
   return (
-    <ChakraProvider colorModeManager={colorModeManager} theme={myTheme}>
+    <ChakraProvider colorModeManager={colorModeManager} theme={theme}>
       {children}
     </ChakraProvider>
   );
