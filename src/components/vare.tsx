@@ -24,7 +24,6 @@ export const Vare: FC<VareProps> = ({ vare }) => {
           src={`/billeder/${vare.billede}.jpeg`}
           width={200}
           height={200}
-          quality={50}
           onClick={onOpen}
         />
 
@@ -37,7 +36,7 @@ export const Vare: FC<VareProps> = ({ vare }) => {
             src={`/billeder/${vare.billede}.jpeg`}
             width={600}
             height={400}
-            quality={50}
+            hoverEffect={false}
           />
           <Text>{vare.beskrivelse}</Text>
         </VStack>

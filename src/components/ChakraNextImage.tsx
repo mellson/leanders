@@ -17,6 +17,7 @@ const ChakraNextUnwrappedImage = chakra(NextImage, {
       "loader ",
     ].includes(prop),
 });
+
 const toBase64 = (str: string) =>
   typeof window === "undefined"
     ? Buffer.from(str).toString("base64")
@@ -28,7 +29,7 @@ const shimmer = (w: number, h: number) => {
     <svg width="${w}" height="${h}" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
       <rect width="${w}" height="${h}" fill={shimmerColor}  />
       <rect id="r" width="${w}" height="${h}" fill={shimmerColor}  />
-      <animate xlink:href="#r" attributeName="x" from="-${w}" to="${w}" dur="1s" repeatCount="indefinite"  />
+      <animate xlinkHref="#r" attributeName="x" from="-${w}" to="${w}" dur="1s" repeatCount="indefinite"  />
     </svg>`;
 };
 
@@ -36,21 +37,39 @@ const myLoader = (resolverProps: ImageLoaderProps): string => {
   return `${resolverProps.src}?w=${resolverProps.width}&q=${resolverProps.quality}`;
 };
 
-const ChakraNextImage = (props: ImageProps & FlexProps) => {
-  const { src, width, height, alt, quality, ...rest } = props;
+interface ChakraNextImageProps {
+  hoverEffect?: boolean;
+}
+
+const ChakraNextImage = (
+  props: ImageProps & FlexProps & ChakraNextImageProps
+) => {
+  const {
+    src,
+    width,
+    height,
+    alt,
+    quality = 50,
+    hoverEffect = true,
+    ...rest
+  } = props;
 
   return (
     <Flex
       pos="relative"
-      cursor="pointer"
+      cursor={props.onClick ? "pointer" : "unset"}
       className="group"
       overflow="hidden"
       rounded="md"
       transition="all 0.2s"
-      _hover={{
-        transform: "scale(1.05)",
-        shadow: "md",
-      }}
+      _hover={
+        hoverEffect
+          ? {
+              transform: "scale(1.05)",
+              shadow: "md",
+            }
+          : {}
+      }
       {...rest}
     >
       <ChakraNextUnwrappedImage
