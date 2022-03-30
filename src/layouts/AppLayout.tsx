@@ -24,8 +24,8 @@ export const AppLayout: React.FC = ({ children }) => {
           >
             {children}
           </Container>
+          <Footer />
         </Flex>
-        <Footer />
       </Flex>
     </>
   );
