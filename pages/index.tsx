@@ -21,15 +21,15 @@ function Home({ data }: InferGetServerSidePropsType<typeof getStaticProps>) {
   return (
     <>
       <Heading>Brød</Heading>
-      <SimpleGrid columns={{ sm: 1, md: 3, lg: 5 }} spacing={10}>
+      <SimpleGrid columns={{ base: 2, md: 3, lg: 5 }} spacing={10}>
         {data.varer.map((vare) => {
           return (
             <VStack key={vare.id} spacing={2}>
               <ChakraNextImage
                 alt={vare.navn}
                 src={`/billeder/${vare.billede}.jpeg`}
-                width={100}
-                height={100}
+                width={200}
+                height={200}
                 quality={50}
               />
               <Text>{vare.navn}</Text>
