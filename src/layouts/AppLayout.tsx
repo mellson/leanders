@@ -1,17 +1,17 @@
-import { Flex } from "@chakra-ui/layout";
-import { Container } from "@chakra-ui/react";
+import { Container, Flex } from "@chakra-ui/react";
 import Head from "next/head";
 import * as React from "react";
 import Favicon from "../components/Favicon";
 import { Footer } from "./footer/Footer";
+import { navn } from "./Logo";
 import { Navbar } from "./navbar/Navbar";
 
 export const AppLayout: React.FC = ({ children }) => {
   return (
     <>
       <Head>
-        <title>Leanders</title>
-        <meta name="description" content="Leanders" />
+        <title>{navn}</title>
+        <meta name="description" content={navn} />
         <Favicon />
       </Head>
       <Flex height="100vh" direction="column">

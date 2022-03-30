@@ -2,9 +2,11 @@ import {
   Drawer,
   DrawerContent,
   DrawerOverlay,
+  HStack,
   useDisclosure,
 } from "@chakra-ui/react";
 import * as React from "react";
+import { SoMeLinks } from "../footer/SoMeLinks";
 import { Logo } from "../Logo";
 import { Sidebar } from "../Sidebar";
 import { ToggleButton } from "../ToggleButton";
@@ -15,7 +17,12 @@ export function MobileNavBar() {
   return (
     <>
       <ToggleButton isOpen={isOpen} aria-label="Open Menu" onClick={onToggle} />
-      <Logo />
+      <HStack spacing={8}>
+        <HStack spacing={0}>
+          <SoMeLinks />
+        </HStack>
+        <Logo />
+      </HStack>
       <Drawer
         isOpen={isOpen}
         placement="left"

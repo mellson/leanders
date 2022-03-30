@@ -4,6 +4,11 @@ import { extendTheme } from "@chakra-ui/react";
 const theme = extendTheme(
   {
     colors: { ...proTheme.colors, brand: proTheme.colors.orange },
+    // fonts: {
+    //   body: "Roboto, sans-serif",
+    //   heading: "Roboto, sans-serif",
+    //   mono: "Menlo, monospace",
+    // },
   },
   {
     config: {

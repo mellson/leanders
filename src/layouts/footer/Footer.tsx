@@ -8,6 +8,7 @@ import {
 } from "@chakra-ui/react";
 
 import * as React from "react";
+import { navn } from "../Logo";
 import { OekoLogo } from "./OekoLogo";
 import { SoMeLinks } from "./SoMeLinks";
 
@@ -22,16 +23,22 @@ export const Footer = () => (
           <Text>
             Se fødevarestyrelsens{" "}
             <Link href="https://www.findsmiley.dk/719019">kontrolrapport</Link>{" "}
-            for Leanders
+            for {navn}
           </Text>
           <br />
           <OekoLogo />
+          <br />
+          <br />
+          <Heading as="h6" size="xs">
+            Følg os
+          </Heading>
+          <SoMeLinks />
         </Box>
         <Box>
           <Heading as="h6" size="xs">
             Kontaktoplysninger
           </Heading>
-          <Text>Leanders IVS CVR: 38996371</Text>
+          <Text>{navn} IVS CVR: 38996371</Text>
           <br />
           <Text fontWeight="bold">Adresse</Text>
           <Link href="https://www.google.com/maps?ll=55.058195,10.611426&z=17&t=m&hl=da&gl=DK&mapclient=embed&cid=11340513616249243461">
@@ -49,8 +56,8 @@ export const Footer = () => (
           <Link href="tel:+4525330045">
             <Text>+45 25 33 00 45</Text>
           </Link>
+          <br />
         </Box>
-        <SoMeLinks />
       </SimpleGrid>
     </Container>
   </Box>

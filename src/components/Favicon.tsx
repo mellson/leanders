@@ -1,3 +1,5 @@
+import { navn } from "../layouts/Logo";
+
 const Favicon = (): JSX.Element => {
   return (
     <>
@@ -20,7 +22,7 @@ const Favicon = (): JSX.Element => {
       />
       <link rel="manifest" href="/favicon/site.webmanifest" />
       <meta name="apple-mobile-web-app-title" content="Snippit" />
-      <meta name="application-name" content="Leanders" />
+      <meta name="application-name" content={navn} />
       <meta name="msapplication-TileColor" content="#ffc40d" />
       <meta name="theme-color" content="#ffffff" />
     </>

@@ -49,10 +49,11 @@ export const ToggleButton = (props: ToggleButtonProps) => {
   const { isOpen, ...iconButtonProps } = props;
   return (
     <IconButton
-      color={isOpen ? "white" : "muted"}
+      color="muted"
       transform="auto"
       translateX={isOpen ? 300 : 0}
       {...iconButtonProps}
+      variant={isOpen ? "solid" : "ghost"}
       zIndex={isOpen ? "skipLink" : "base"}
       icon={<ToggleIcon active={isOpen} />}
       {...iconButtonProps}
