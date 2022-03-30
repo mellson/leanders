@@ -6,6 +6,7 @@ export function NumberInput() {
       step: 1,
       defaultValue: 0,
       min: 0,
+      inputMode: "numeric",
     });
 
   const inc = getIncrementButtonProps();

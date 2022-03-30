@@ -15,7 +15,7 @@ export const Vare: FC<VareProps> = ({ vare }) => {
   return (
     <>
       <VStack spacing={2} maxWidth={200}>
-        <Heading as="h6" size="xs">
+        <Heading as="h6" size="xs" noOfLines={1}>
           {vare.navn}
         </Heading>
 
@@ -31,7 +31,16 @@ export const Vare: FC<VareProps> = ({ vare }) => {
         <NumberInput />
       </VStack>
       <CenterModal titel={vare.navn} isOpen={isOpen} onClose={onClose}>
-        <Text>{vare.beskrivelse}</Text>
+        <VStack spacing={2}>
+          <ChakraNextImage
+            alt={vare.navn}
+            src={`/billeder/${vare.billede}.jpeg`}
+            width={600}
+            height={400}
+            quality={50}
+          />
+          <Text>{vare.beskrivelse}</Text>
+        </VStack>
       </CenterModal>
     </>
   );
