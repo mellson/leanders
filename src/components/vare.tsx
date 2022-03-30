@@ -1,9 +1,9 @@
 import { Heading, Text, useDisclosure, VStack } from "@chakra-ui/react";
 import * as React from "react";
 import { FC } from "react";
-import { CenterModal } from "../src/components/CenterModal";
-import ChakraNextImage from "../src/components/ChakraNextImage";
-import { NumberInput } from "../src/components/NumberInput";
+import { CenterModal } from "./CenterModal";
+import ChakraNextImage from "./ChakraNextImage";
+import { NumberInput } from "./NumberInput";
 
 interface VareProps {
   vare: any;
