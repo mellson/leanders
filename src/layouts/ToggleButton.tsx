@@ -53,7 +53,7 @@ export const ToggleButton = (props: ToggleButtonProps) => {
       transform="auto"
       translateX={isOpen ? 300 : 0}
       {...iconButtonProps}
-      zIndex="skipLink"
+      zIndex={isOpen ? "skipLink" : "base"}
       icon={<ToggleIcon active={isOpen} />}
       {...iconButtonProps}
     />

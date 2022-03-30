@@ -1,8 +1,8 @@
-import { Heading, SimpleGrid, Text, VStack } from "@chakra-ui/react";
+import { SimpleGrid } from "@chakra-ui/react";
 import type { InferGetServerSidePropsType } from "next";
 import * as React from "react";
-import ChakraNextImage from "../src/components/ChakraNextImage";
 import { supabase } from "../src/utils/supabase";
+import { Vare } from "./vare";
 
 export const getStaticProps = async () => {
   const { data, error } = await supabase.from("varer").select("*").order("id");
@@ -20,22 +20,10 @@ export const getStaticProps = async () => {
 function Home({ data }: InferGetServerSidePropsType<typeof getStaticProps>) {
   return (
     <>
-      <Heading>Brød</Heading>
       <SimpleGrid columns={{ base: 2, md: 3, lg: 5 }} spacing={10}>
-        {data.varer.map((vare) => {
-          return (
-            <VStack key={vare.id} spacing={2}>
-              <ChakraNextImage
-                alt={vare.navn}
-                src={`/billeder/${vare.billede}.jpeg`}
-                width={200}
-                height={200}
-                quality={50}
-              />
-              <Text>{vare.navn}</Text>
-            </VStack>
-          );
-        })}
+        {data.varer.map((vare) => (
+          <Vare key={vare.id} vare={vare} />
+        ))}
       </SimpleGrid>
     </>
   );
