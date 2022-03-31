@@ -1,7 +1,6 @@
 import {
   Box,
   Container,
-  Flex,
   useBreakpointValue,
   useColorModeValue,
 } from "@chakra-ui/react";
@@ -19,9 +18,7 @@ export const Navbar = () => {
       boxShadow={useColorModeValue("sm", "sm-dark")}
     >
       <Container py={{ base: "3", lg: "4" }}>
-        <Flex justify="space-between" alignItems="center">
-          {isDesktop ? <DesktopNavBar /> : <MobileNavBar />}
-        </Flex>
+        {isDesktop ? <DesktopNavBar /> : <MobileNavBar />}
       </Container>
     </Box>
   );

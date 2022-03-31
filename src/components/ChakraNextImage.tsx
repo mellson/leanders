@@ -61,15 +61,6 @@ const ChakraNextImage = (
       className="group"
       overflow="hidden"
       rounded="md"
-      transition="all 0.2s"
-      _hover={
-        hoverEffect
-          ? {
-              transform: "scale(1.05)",
-              shadow: "md",
-            }
-          : {}
-      }
       {...rest}
     >
       <ChakraNextUnwrappedImage

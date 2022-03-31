@@ -24,8 +24,6 @@ export const CenterModal: FC<CenterModalProps> = ({
 }) => {
   return (
     <>
-      {/* <Button onClick={onOpen}>Trigger modal</Button> */}
-
       <Modal onClose={onClose} isOpen={isOpen} isCentered>
         <ModalOverlay />
         <ModalContent>

@@ -1,7 +1,7 @@
 import { SimpleGrid } from "@chakra-ui/react";
 import type { InferGetServerSidePropsType } from "next";
 import * as React from "react";
-import { Vare } from "../src/components/vare";
+import { Vare } from "../src/components/Vare";
 import { supabase } from "../src/utils/supabase";
 
 export const getStaticProps = async () => {

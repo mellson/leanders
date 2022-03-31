@@ -10,7 +10,7 @@ import {
 import * as React from "react";
 import { navn } from "../Logo";
 import { OekoLogo } from "./OekoLogo";
-import { SoMeLinks } from "./SoMeLinks";
+import { SoMeLinks } from "../../components/SoMeLinks";
 
 export const Footer = () => (
   <Box as="footer" bg="gray.100">

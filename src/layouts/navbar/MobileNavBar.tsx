@@ -7,7 +7,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import * as React from "react";
-import { SoMeLinks } from "../footer/SoMeLinks";
+import { SoMeLinks } from "../../components/SoMeLinks";
 import { Logo } from "../Logo";
 import { Sidebar } from "../Sidebar";
 import { ToggleButton } from "../ToggleButton";

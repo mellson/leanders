@@ -25,6 +25,11 @@ export const Vare: FC<VareProps> = ({ vare }) => {
           width={200}
           height={200}
           onClick={onOpen}
+          transition="all 0.2s"
+          _hover={{
+            transform: "scale(1.05)",
+            shadow: "md",
+          }}
         />
 
         <NumberInput />

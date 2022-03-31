@@ -1,10 +1,10 @@
-import { IconButton } from "@chakra-ui/react";
+import { HStack, IconButton } from "@chakra-ui/react";
 import * as React from "react";
 import { FaFacebook, FaInstagram } from "react-icons/fa";
 
 export function SoMeLinks() {
   return (
-    <>
+    <HStack spacing={0}>
       <IconButton
         as="a"
         href="https://www.facebook.com/broedkompagniet/"
@@ -21,6 +21,6 @@ export function SoMeLinks() {
         variant="ghost"
         icon={<FaInstagram fontSize="1.25rem" />}
       />
-    </>
+    </HStack>
   );
 }
