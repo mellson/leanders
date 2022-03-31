@@ -34,19 +34,3 @@ export function DesktopNavBar() {
     </Flex>
   );
 }
-
-function Routes({ route, undefined }) {
-  return (
-    <ButtonGroup variant="ghost" spacing="1">
-      {routes.map((route) => (
-        <NextLink href={route.href} key={route.href} passHref>
-          <Button
-            aria-current={router.asPath === route.href ? "page" : undefined}
-          >
-            {route.label}
-          </Button>
-        </NextLink>
-      ))}
-    </ButtonGroup>
-  );
-}
