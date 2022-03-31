@@ -20,7 +20,11 @@ export const getStaticProps = async () => {
 function Home({ data }: InferGetServerSidePropsType<typeof getStaticProps>) {
   return (
     <>
-      <SimpleGrid columns={{ base: 2, md: 3, lg: 5 }} spacing={10}>
+      <SimpleGrid
+        columns={{ base: 2, md: 3, lg: 5 }}
+        spacing={10}
+        justifyItems="center"
+      >
         {data.varer.map((vare) => (
           <Vare key={vare.id} vare={vare} />
         ))}
