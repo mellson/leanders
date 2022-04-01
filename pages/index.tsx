@@ -1,12 +1,13 @@
 import { SimpleGrid } from "@chakra-ui/react";
 import type { InferGetServerSidePropsType } from "next";
 import * as React from "react";
-import { Vare, VareComponent } from "../src/components/VareComponent";
+import { Vare } from "../src/components/Vare";
+import { definitions } from "../src/types/supabase";
 import { supabase } from "../src/utils/supabase";
 
 export const getStaticProps = async () => {
-  const { data, error } = await supabase
-    .from<Vare>("varer")
+  const { data } = await supabase
+    .from<definitions["varer"]>("varer")
     .select("*")
     .order("id");
 
@@ -29,7 +30,7 @@ function Home({ data }: InferGetServerSidePropsType<typeof getStaticProps>) {
         justifyItems="center"
       >
         {data.varer.map((vare) => (
-          <VareComponent key={vare.id} vare={vare} />
+          <Vare key={vare.id} vare={vare} />
         ))}
       </SimpleGrid>
     </>

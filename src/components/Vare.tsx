@@ -1,24 +1,16 @@
 import { Heading, Text, useDisclosure, VStack } from "@chakra-ui/react";
 import * as React from "react";
 import { FC } from "react";
+import { definitions } from "../types/supabase";
 import { CenterModal } from "./CenterModal";
 import ChakraNextImage from "./ChakraNextImage";
 import { NumberInput } from "./NumberInput";
 
-export interface Vare {
-  id: number;
-  navn: string;
-  beskrivelse: string;
-  billede: string;
-  created_at: string;
-  pris: number;
-}
-
 interface VareComponentProps {
-  vare: Vare;
+  vare: definitions["varer"];
 }
 
-export const VareComponent: FC<VareComponentProps> = ({ vare }) => {
+export const Vare: FC<VareComponentProps> = ({ vare }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
