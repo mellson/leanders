@@ -25,7 +25,6 @@ const toBase64 = (str: string) =>
 
 const shimmer = (w: number, h: number) => {
   const shimmerColor = theme.colors.gray[300];
-  console.log(shimmerColor);
 
   return `
     <svg width="${w}" height="${h}" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">

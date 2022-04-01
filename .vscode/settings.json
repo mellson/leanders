@@ -1,5 +1,48 @@
 {
   "cSpell.words": ["leanders"],
   "cSpell.language": "en,da",
-  "cSpell.diagnosticLevel": "Hint"
+  "cSpell.diagnosticLevel": "Hint",
+
+  "files.exclude": {
+    ".idea": true,
+    ".vercel": true,
+    ".next": true,
+    "node_modules": true,
+    ".pnpm-store": true
+  },
+
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": true,
+  "editor.formatOnSave": true,
+  "files.autoSave": "onFocusChange",
+  "editor.renderWhitespace": "all",
+  "editor.inlineSuggest.enabled": true,
+
+  "npm.packageManager": "pnpm",
+
+  "githubIssues.queries": [
+    {
+      "label": "Mine opgaver",
+      "query": "is:open assignee:${user} repo:mellson/leanders"
+    },
+    {
+      "label": "Alle opgaver",
+      "query": "state:open repo:mellson/leanders sort:created-desc"
+    }
+  ],
+
+  "githubPullRequests.queries": [
+    {
+      "label": "Afventer mit review",
+      "query": "is:open review-requested:${user} repo:mellson/leanders"
+    },
+    {
+      "label": "Mine reviews",
+      "query": "is:open assignee:${user} repo:mellson/leanders"
+    },
+    {
+      "label": "Oprettet af mig",
+      "query": "is:open author:${user} repo:mellson/leanders"
+    }
+  ]
 }

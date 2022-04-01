@@ -33,7 +33,9 @@ export const Vare: FC<VareComponentProps> = ({ vare }) => {
           }}
         />
 
-        <NumberInput />
+        <NumberInput
+          onChange={(antal) => console.log(`${antal} ${vare.navn} i kurven`)}
+        />
       </VStack>
       <CenterModal titel={vare.navn} isOpen={isOpen} onClose={onClose}>
         <VStack spacing={2}>
