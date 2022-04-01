@@ -6,10 +6,12 @@ export const ordreMaskine =
     {
       tsTypes: {} as import("./ordreMaskine.typegen").Typegen0,
       schema: {
-        context: {} as { varer: Map<number, number> },
+        context: {} as {
+          aktivDato: Date;
+          varer: Map<Date, Map<number, number>>;
+        },
         events: {} as
-          | { type: "TILFOEJ_VARE"; vareId: number }
-          | { type: "FJERN_VARE"; vareId: number }
+          | { type: "TILFOEJ_VARE"; vareId: number; antal: number }
           | { type: "OPRET" }
           | { type: "OPRETTET" }
           | { type: "NULSTIL" },
@@ -17,6 +19,7 @@ export const ordreMaskine =
       id: "ordre maskine",
       initial: "idle",
       context: {
+        aktivDato: new Date(),
         varer: new Map(),
       },
       states: {
@@ -32,9 +35,6 @@ export const ordreMaskine =
           on: {
             TILFOEJ_VARE: {
               actions: "tilfoejVareTilOrdre",
-            },
-            FJERN_VARE: {
-              actions: "fjernVareTilOrdre",
             },
             OPRET: {
               target: "opretter",
@@ -58,24 +58,26 @@ export const ordreMaskine =
     {
       actions: {
         tilfoejVareTilOrdre: assign((context, event) => {
-          const eksisterendeAntal = context.varer.get(event.vareId) ?? 0;
-          context.varer.set(event.vareId, eksisterendeAntal + 1);
-          return {
-            varer: context.varer,
-          };
+          if (context.varer.has(context.aktivDato)) {
+            return {
+              varer: context.varer.set(
+                context.aktivDato,
+                context.varer
+                  .get(context.aktivDato)!
+                  .set(event.vareId, event.antal)
+              ),
+            };
+          } else {
+            return {
+              varer: new Map([
+                [context.aktivDato, new Map([[event.vareId, event.antal]])],
+              ]),
+            };
+          }
         }),
-        fjernVareTilOrdre: assign((context, event) => {
-          const eksisterendeAntal = context.varer.get(event.vareId) ?? 0;
-          if (eksisterendeAntal > 0)
-            context.varer.set(event.vareId, eksisterendeAntal - 1);
+        nulstil: assign((_) => {
           return {
-            varer: context.varer,
-          };
-        }),
-        nulstil: assign((context, event) => {
-          context.varer.clear();
-          return {
-            varer: context.varer,
+            varer: new Map(),
           };
         }),
       },

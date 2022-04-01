@@ -1,11 +1,9 @@
-import { SimpleGrid, Text } from "@chakra-ui/react";
-import { useActor } from "@xstate/react";
+import { SimpleGrid } from "@chakra-ui/react";
 import type { InferGetServerSidePropsType } from "next";
 import * as React from "react";
 import { Vare } from "../src/components/Vare";
 import { definitions } from "../src/types/supabase";
 import { supabase } from "../src/utils/supabase";
-import { AppContext } from "./_app";
 
 export const getStaticProps = async () => {
   const { data } = await supabase
@@ -24,14 +22,8 @@ export const getStaticProps = async () => {
 };
 
 function Home({ data }: InferGetServerSidePropsType<typeof getStaticProps>) {
-  const appServices = React.useContext(AppContext);
-  const [state] = useActor(appServices.ordreService);
-
   return (
     <>
-      {state.matches("bestiller") && (
-        <Text>{state.context.varer.size} produkter i kurven</Text>
-      )}
       <SimpleGrid
         columns={{ base: 2, md: 3, lg: 5 }}
         spacing={10}

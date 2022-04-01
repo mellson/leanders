@@ -1,12 +1,10 @@
-import { Button, Heading, Text, useDisclosure, VStack } from "@chakra-ui/react";
-import { useActor } from "@xstate/react";
+import { Heading, Text, useDisclosure, VStack } from "@chakra-ui/react";
 import * as React from "react";
-import { FC, useContext } from "react";
-import { AppContext } from "../../pages/_app";
+import { FC } from "react";
 import { definitions } from "../types/supabase";
 import { CenterModal } from "./CenterModal";
 import ChakraNextImage from "./ChakraNextImage";
-import { NumberInput } from "./NumberInput";
+import { VareInput } from "./VareInput";
 
 interface VareComponentProps {
   vare: definitions["varer"];
@@ -14,10 +12,6 @@ interface VareComponentProps {
 
 export const Vare: FC<VareComponentProps> = ({ vare }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const appServices = useContext(AppContext);
-  const { send } = appServices.ordreService;
-  const [state] = useActor(appServices.ordreService);
-  const antal = state.context.varer.get(vare.id) ?? 0;
 
   return (
     <>
@@ -39,15 +33,7 @@ export const Vare: FC<VareComponentProps> = ({ vare }) => {
           }}
         />
 
-        <NumberInput vareId={vare.id} />
-
-        <Button
-          onClick={() => {
-            send("NULSTIL");
-          }}
-        >
-          Nulstil
-        </Button>
+        <VareInput vareId={vare.id} />
       </VStack>
       <CenterModal titel={vare.navn} isOpen={isOpen} onClose={onClose}>
         <VStack spacing={2}>

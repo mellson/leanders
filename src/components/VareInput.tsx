@@ -7,7 +7,7 @@ interface NumberInputProps {
   vareId: number;
 }
 
-export const NumberInput = ({ vareId }: NumberInputProps) => {
+export const VareInput = ({ vareId }: NumberInputProps) => {
   const appServices = useContext(AppContext);
   const { send } = appServices.ordreService;
   const [{ context }] = useActor(appServices.ordreService);

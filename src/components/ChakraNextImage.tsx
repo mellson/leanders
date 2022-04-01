@@ -24,7 +24,7 @@ const toBase64 = (str: string) =>
     : window.btoa(str);
 
 const shimmer = (w: number, h: number) => {
-  const shimmerColor = theme.colors.gray[300];
+  const shimmerColor = theme.colors.brand[300];
 
   return `
     <svg width="${w}" height="${h}" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -67,7 +67,7 @@ const ChakraNextImage = (
       <ChakraNextUnwrappedImage
         w="auto"
         h="auto"
-        bg="gray.300"
+        bg="brand.300"
         loader={myLoader}
         width={width}
         quality={quality}
