@@ -14,8 +14,11 @@ export const Navbar = () => {
   return (
     <Box
       as="nav"
-      bg="bg-surface"
+      bg="rgba(255, 255, 255, 0.8)"
       boxShadow={useColorModeValue("sm", "sm-dark")}
+      pos="sticky"
+      zIndex={10}
+      top={0}
     >
       <Container py={{ base: "3", lg: "4" }}>
         {isDesktop ? <DesktopNavBar /> : <MobileNavBar />}

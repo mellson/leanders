@@ -14,18 +14,18 @@ export const AppLayout: React.FC = ({ children }) => {
         <meta name="description" content={navn} />
         <Favicon />
       </Head>
-      <Flex height="100vh" direction="column">
-        <Navbar />
-        <Flex justify="space-between" direction="column" height="100%">
-          <Container
-            as="main"
-            pt={{ base: "8", lg: "12" }}
-            pb={{ base: "12", lg: "24" }}
-          >
-            {children}
-          </Container>
-          <Footer />
-        </Flex>
+
+      <Navbar />
+
+      <Flex justify="space-between" direction="column" height="100%">
+        <Container
+          as="main"
+          pt={{ base: "8", lg: "12" }}
+          pb={{ base: "12", lg: "24" }}
+        >
+          {children}
+        </Container>
+        <Footer />
       </Flex>
     </>
   );
