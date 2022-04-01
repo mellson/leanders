@@ -9,6 +9,7 @@ export const ordreMaskine =
         context: {} as { varer: Map<number, number> },
         events: {} as
           | { type: "TILFOEJ_VARE"; vareId: number }
+          | { type: "FJERN_VARE"; vareId: number }
           | { type: "OPRET" }
           | { type: "OPRETTET" }
           | { type: "NULSTIL" },
@@ -32,8 +33,15 @@ export const ordreMaskine =
             TILFOEJ_VARE: {
               actions: "tilfoejVareTilOrdre",
             },
+            FJERN_VARE: {
+              actions: "fjernVareTilOrdre",
+            },
             OPRET: {
               target: "opretter",
+            },
+            NULSTIL: {
+              actions: "nulstil",
+              target: "idle",
             },
           },
         },
@@ -50,13 +58,22 @@ export const ordreMaskine =
     {
       actions: {
         tilfoejVareTilOrdre: assign((context, event) => {
-          console.log("tilfoejTilOrdre", event);
-
           const eksisterendeAntal = context.varer.get(event.vareId) ?? 0;
           context.varer.set(event.vareId, eksisterendeAntal + 1);
-
-          console.log(context.varer);
-
+          return {
+            varer: context.varer,
+          };
+        }),
+        fjernVareTilOrdre: assign((context, event) => {
+          const eksisterendeAntal = context.varer.get(event.vareId) ?? 0;
+          if (eksisterendeAntal > 0)
+            context.varer.set(event.vareId, eksisterendeAntal - 1);
+          return {
+            varer: context.varer,
+          };
+        }),
+        nulstil: assign((context, event) => {
+          context.varer.clear();
           return {
             varer: context.varer,
           };

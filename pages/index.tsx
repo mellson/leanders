@@ -1,4 +1,5 @@
 import { SimpleGrid, Text } from "@chakra-ui/react";
+import { useActor } from "@xstate/react";
 import type { InferGetServerSidePropsType } from "next";
 import * as React from "react";
 import { Vare } from "../src/components/Vare";
@@ -24,14 +25,12 @@ export const getStaticProps = async () => {
 
 function Home({ data }: InferGetServerSidePropsType<typeof getStaticProps>) {
   const appServices = React.useContext(AppContext);
-  const { state } = appServices.ordreService;
+  const [state] = useActor(appServices.ordreService);
+
   return (
     <>
-      {state && state.matches("bestiller") && (
-        <>
-          <Text>Bestilling:</Text>
-          <pre>{JSON.stringify(state.context.varer, null, 2)}</pre>
-        </>
+      {state.matches("bestiller") && (
+        <Text>{state.context.varer.size} produkter i kurven</Text>
       )}
       <SimpleGrid
         columns={{ base: 2, md: 3, lg: 5 }}

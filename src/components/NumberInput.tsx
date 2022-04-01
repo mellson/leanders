@@ -1,37 +1,42 @@
-import {
-  Button,
-  forwardRef,
-  HStack,
-  Input,
-  useNumberInput,
-} from "@chakra-ui/react";
+import { Button, HStack, Input, useNumberInput } from "@chakra-ui/react";
+import { useActor } from "@xstate/react";
+import { useContext } from "react";
+import { AppContext } from "../../pages/_app";
 
 interface NumberInputProps {
-  defaultValue?: number;
-  onChange: (value: number) => void;
+  vareId: number;
 }
 
-export const NumberInput = forwardRef<NumberInputProps, "input">(
-  ({ defaultValue = 0, onChange }, ref) => {
-    const { getInputProps, getIncrementButtonProps, getDecrementButtonProps } =
-      useNumberInput({
-        step: 1,
-        defaultValue: defaultValue,
-        min: 0,
-        inputMode: "numeric",
-        onChange: (_, valueAsNumber) => onChange(valueAsNumber),
-      });
+export const NumberInput = ({ vareId }: NumberInputProps) => {
+  const appServices = useContext(AppContext);
+  const { send } = appServices.ordreService;
+  const [state] = useActor(appServices.ordreService);
+  const antal = state.context.varer.get(vareId) ?? 0;
 
-    const inc = getIncrementButtonProps();
-    const dec = getDecrementButtonProps();
-    const input = getInputProps();
+  const { getInputProps, getIncrementButtonProps, getDecrementButtonProps } =
+    useNumberInput({
+      step: 1,
+      value: antal,
+      min: 0,
+      inputMode: "numeric",
+      onChange: (_, valueAsNumber) => {
+        if (valueAsNumber < antal) {
+          send({ type: "FJERN_VARE", vareId });
+        } else if (valueAsNumber > antal) {
+          send({ type: "TILFOEJ_VARE", vareId });
+        }
+      },
+    });
 
-    return (
-      <HStack maxW="320px">
-        <Button {...dec}>-</Button>
-        <Input {...input} ref={ref} />
-        <Button {...inc}>+</Button>
-      </HStack>
-    );
-  }
-);
+  const inc = getIncrementButtonProps();
+  const dec = getDecrementButtonProps();
+  const input = getInputProps();
+
+  return (
+    <HStack maxW="320px">
+      <Button {...dec}>-</Button>
+      <Input {...input} />
+      <Button {...inc}>+</Button>
+    </HStack>
+  );
+};
