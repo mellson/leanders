@@ -21,7 +21,9 @@ export const getStaticProps = async () => {
   };
 };
 
-function Home({ data }: InferGetServerSidePropsType<typeof getStaticProps>) {
+export default function Home({
+  data,
+}: InferGetServerSidePropsType<typeof getStaticProps>) {
   return (
     <>
       <SimpleGrid
@@ -36,5 +38,3 @@ function Home({ data }: InferGetServerSidePropsType<typeof getStaticProps>) {
     </>
   );
 }
-
-export default Home;

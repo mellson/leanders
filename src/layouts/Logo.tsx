@@ -4,14 +4,16 @@ import * as React from "react";
 
 export const navn = "Leanders";
 
-export const Logo = () => (
-  <NextLink href="/" passHref>
-    <Heading
-      cursor="pointer"
-      size={useBreakpointValue({ base: "xs", lg: "sm" })}
-      fontWeight="bold"
-    >
-      {navn} 🥐
-    </Heading>
-  </NextLink>
-);
+export function Logo() {
+  return (
+    <NextLink href="/" passHref>
+      <Heading
+        cursor="pointer"
+        size={useBreakpointValue({ base: "xs", lg: "sm" })}
+        fontWeight="bold"
+      >
+        {navn} 🥐
+      </Heading>
+    </NextLink>
+  );
+}

@@ -1,6 +1,5 @@
 import { Heading, Text, useDisclosure, VStack } from "@chakra-ui/react";
 import * as React from "react";
-import { FC } from "react";
 import { definitions } from "../types/supabase";
 import { CenterModal } from "./CenterModal";
 import ChakraNextImage from "./ChakraNextImage";
@@ -10,7 +9,7 @@ interface VareComponentProps {
   vare: definitions["varer"];
 }
 
-export const Vare: FC<VareComponentProps> = ({ vare }) => {
+export function Vare({ vare }: VareComponentProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -49,4 +48,4 @@ export const Vare: FC<VareComponentProps> = ({ vare }) => {
       </CenterModal>
     </>
   );
-};
+}

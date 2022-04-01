@@ -1,6 +1,6 @@
 import { Heading, Text } from "@chakra-ui/react";
 
-function Om() {
+export default function Om() {
   return (
     <>
       <Heading size="md">Manden bag Brødkompagniet</Heading>
@@ -27,5 +27,3 @@ function Om() {
     </>
   );
 }
-
-export default Om;

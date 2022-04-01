@@ -8,7 +8,7 @@ import * as React from "react";
 import { DesktopNavBar } from "./DesktopNavBar";
 import { MobileNavBar } from "./MobileNavBar";
 
-export const Navbar = () => {
+export function Navbar() {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
 
   return (
@@ -25,4 +25,4 @@ export const Navbar = () => {
       </Container>
     </Box>
   );
-};
+}

@@ -15,7 +15,7 @@ interface AppContext {
 
 export const AppContext = createContext<AppContext>({} as AppContext);
 
-function App({ Component, pageProps }: AppProps) {
+export default function App({ Component, pageProps }: AppProps) {
   const ordreService = useInterpret(ordreMaskine);
 
   return (
@@ -29,5 +29,3 @@ function App({ Component, pageProps }: AppProps) {
     </ChakraProvider>
   );
 }
-
-export default App;

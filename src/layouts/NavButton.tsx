@@ -9,7 +9,7 @@ interface NavButtonProps extends ButtonProps {
   href: string;
 }
 
-export const NavButton = (props: NavButtonProps) => {
+export function NavButton(props: NavButtonProps) {
   const { icon, label, ...buttonProps } = props;
   return (
     <Link href={props.href} passHref>
@@ -21,4 +21,4 @@ export const NavButton = (props: NavButtonProps) => {
       </Button>
     </Link>
   );
-};
+}

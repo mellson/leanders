@@ -42,9 +42,7 @@ interface ChakraNextImageProps {
   hoverEffect?: boolean;
 }
 
-const ChakraNextImage = (
-  props: ImageProps & FlexProps & ChakraNextImageProps
-) => {
+function ChakraNextImage(props: ImageProps & FlexProps & ChakraNextImageProps) {
   const {
     src,
     width,
@@ -83,6 +81,6 @@ const ChakraNextImage = (
       />
     </Flex>
   );
-};
+}
 
 export default ChakraNextImage;

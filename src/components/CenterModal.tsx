@@ -8,7 +8,7 @@ import {
   ModalHeader,
   ModalOverlay,
 } from "@chakra-ui/react";
-import React, { FC } from "react";
+import React, { PropsWithChildren } from "react";
 
 interface CenterModalProps {
   titel: string;
@@ -16,12 +16,12 @@ interface CenterModalProps {
   onClose: () => void;
 }
 
-export const CenterModal: FC<CenterModalProps> = ({
+export function CenterModal({
   isOpen,
   onClose,
   titel,
   children,
-}) => {
+}: PropsWithChildren<CenterModalProps>) {
   return (
     <>
       <Modal onClose={onClose} isOpen={isOpen} isCentered>
@@ -37,4 +37,4 @@ export const CenterModal: FC<CenterModalProps> = ({
       </Modal>
     </>
   );
-};
+}

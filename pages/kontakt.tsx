@@ -1,6 +1,6 @@
 import { AspectRatio, Heading } from "@chakra-ui/react";
 
-function Om() {
+export default function Kontakt() {
   return (
     <>
       <Heading size="md">Kontakt</Heading>
@@ -14,5 +14,3 @@ function Om() {
     </>
   );
 }
-
-export default Om;

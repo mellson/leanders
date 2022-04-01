@@ -9,7 +9,7 @@ interface SidebarProps {
   onClose: () => void;
 }
 
-export const Sidebar = (props: SidebarProps) => {
+export function Sidebar(props: SidebarProps) {
   const router = useRouter();
 
   return (
@@ -46,4 +46,4 @@ export const Sidebar = (props: SidebarProps) => {
       </Stack>
     </Flex>
   );
-};
+}

@@ -1,6 +1,6 @@
 import { navn } from "../layouts/Logo";
 
-const Favicon = (): JSX.Element => {
+function Favicon() {
   return (
     <>
       <link
@@ -27,6 +27,6 @@ const Favicon = (): JSX.Element => {
       <meta name="theme-color" content="#ffffff" />
     </>
   );
-};
+}
 
 export default Favicon;

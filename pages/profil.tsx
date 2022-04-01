@@ -1,11 +1,9 @@
 import { Heading } from "@chakra-ui/react";
 
-function Om() {
+export default function Profil() {
   return (
     <>
       <Heading size="md">Profil</Heading>
     </>
   );
 }
-
-export default Om;

@@ -3,11 +3,11 @@ import { useActor } from "@xstate/react";
 import { useContext } from "react";
 import { AppContext } from "../../pages/_app";
 
-interface NumberInputProps {
+interface VareInputProps {
   vareId: number;
 }
 
-export const VareInput = ({ vareId }: NumberInputProps) => {
+export function VareInput({ vareId }: VareInputProps) {
   const appServices = useContext(AppContext);
   const { send } = appServices.ordreService;
   const [{ context }] = useActor(appServices.ordreService);
@@ -35,4 +35,4 @@ export const VareInput = ({ vareId }: NumberInputProps) => {
       <Button {...inc}>+</Button>
     </HStack>
   );
-};
+}

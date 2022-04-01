@@ -15,7 +15,7 @@ const Bar = chakra("span", {
   },
 });
 
-const ToggleIcon = (props: { active: boolean }) => {
+function ToggleIcon(props: { active: boolean }) {
   const { active } = props;
   return (
     <Box
@@ -39,13 +39,13 @@ const ToggleIcon = (props: { active: boolean }) => {
       />
     </Box>
   );
-};
+}
 
 interface ToggleButtonProps extends IconButtonProps {
   isOpen: boolean;
 }
 
-export const ToggleButton = (props: ToggleButtonProps) => {
+export function ToggleButton(props: ToggleButtonProps) {
   const { isOpen, ...iconButtonProps } = props;
   return (
     <IconButton
@@ -58,4 +58,4 @@ export const ToggleButton = (props: ToggleButtonProps) => {
       {...iconButtonProps}
     />
   );
-};
+}
