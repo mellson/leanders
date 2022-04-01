@@ -1,6 +1,7 @@
-import { Heading, Text, useDisclosure, VStack } from "@chakra-ui/react";
+import { Button, Heading, Text, useDisclosure, VStack } from "@chakra-ui/react";
 import * as React from "react";
-import { FC } from "react";
+import { FC, useContext } from "react";
+import { AppContext } from "../../pages/_app";
 import { definitions } from "../types/supabase";
 import { CenterModal } from "./CenterModal";
 import ChakraNextImage from "./ChakraNextImage";
@@ -12,6 +13,9 @@ interface VareComponentProps {
 
 export const Vare: FC<VareComponentProps> = ({ vare }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const numberInputRef = React.useRef<HTMLInputElement>(null);
+  const appServices = useContext(AppContext);
+  const { send } = appServices.ordreService;
 
   return (
     <>
@@ -34,8 +38,23 @@ export const Vare: FC<VareComponentProps> = ({ vare }) => {
         />
 
         <NumberInput
-          onChange={(antal) => console.log(`${antal} ${vare.navn} i kurven`)}
+          onChange={(antal) => send({ type: "TILFOEJ_VARE", vareId: vare.id })}
+          ref={numberInputRef}
         />
+
+        <Button
+          onClick={() => {
+            console.log("hej 1");
+
+            if (numberInputRef.current) {
+              console.log("hej 2");
+              numberInputRef.current.value = "0";
+              numberInputRef.current.defaultValue = "0";
+            }
+          }}
+        >
+          Reset
+        </Button>
       </VStack>
       <CenterModal titel={vare.navn} isOpen={isOpen} onClose={onClose}>
         <VStack spacing={2}>

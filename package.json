@@ -11,7 +11,8 @@
     "install-vercel-cli": "npm i -g vercel",
     "pull-env-variables": "vercel pull",
     "install-pnpm": "npm install -g pnpm",
-    "update-pnpm": "pnpm add -g pnpm"
+    "update-pnpm": "pnpm add -g pnpm",
+    "postinstall": "xstate typegen \"./src/**/*.ts?(x)\""
   },
   "dependencies": {
     "@chakra-ui/icons": "^1.1.7",
@@ -32,6 +33,7 @@
   "devDependencies": {
     "@types/node": "17.0.23",
     "@types/react": "17.0.43",
+    "@xstate/cli": "^0.1.5",
     "eslint": "8.12.0",
     "eslint-config-next": "12.1.4",
     "prettier": "^2.6.1",
