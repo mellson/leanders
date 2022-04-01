@@ -1,11 +1,14 @@
 import { SimpleGrid } from "@chakra-ui/react";
 import type { InferGetServerSidePropsType } from "next";
 import * as React from "react";
-import { Vare } from "../src/components/Vare";
+import { Vare, VareComponent } from "../src/components/VareComponent";
 import { supabase } from "../src/utils/supabase";
 
 export const getStaticProps = async () => {
-  const { data, error } = await supabase.from("varer").select("*").order("id");
+  const { data, error } = await supabase
+    .from<Vare>("varer")
+    .select("*")
+    .order("id");
 
   // Overvej at bruge ISR i stedet for SSG - https://nextjs.org/docs/basic-features/data-fetching/incremental-static-regeneration
   return {
@@ -26,7 +29,7 @@ function Home({ data }: InferGetServerSidePropsType<typeof getStaticProps>) {
         justifyItems="center"
       >
         {data.varer.map((vare) => (
-          <Vare key={vare.id} vare={vare} />
+          <VareComponent key={vare.id} vare={vare} />
         ))}
       </SimpleGrid>
     </>

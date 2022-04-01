@@ -5,11 +5,20 @@ import { CenterModal } from "./CenterModal";
 import ChakraNextImage from "./ChakraNextImage";
 import { NumberInput } from "./NumberInput";
 
-interface VareProps {
-  vare: any;
+export interface Vare {
+  id: number;
+  navn: string;
+  beskrivelse: string;
+  billede: string;
+  created_at: string;
+  pris: number;
 }
 
-export const Vare: FC<VareProps> = ({ vare }) => {
+interface VareComponentProps {
+  vare: Vare;
+}
+
+export const VareComponent: FC<VareComponentProps> = ({ vare }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
