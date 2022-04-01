@@ -1,9 +1,10 @@
 import { assign, createMachine } from "xstate";
 
 export const ordreMaskine =
-  /** @xstate-layout N4IgpgJg5mDOIC5QHsBOFVgAQFsCGsA1gJYB2YAdMRADZgDEAKgJIAyAYgPICiAUgPoA1AIIAlbolAAHZLGIAXYslKSQAD0QBGAGwAGCgE4jR3QCZdAZgAsFgBwBWCwBoQATy16KV4wc2nr2vZBAL7BLmgY2PhEZJQARnCKNHSoTGxcfEJiEkggMnKKyqoaCBbWFLrapt62Vo6aAOx1Lu4IvhW6nZr2BrZ22hb2pqHh6Ji4BCTkFAmwSSn0nAAK4oyq+QpKKrkl9roNFH57lQ1mvrpWDS1atgYdXZq9DbcN2tojIBHj0VOUyFKYeTyMCpZarRjcNa5DaFbagEoNIIUOymWqWKyonrXBCaW73XSaR62Z4GV7vD6kZAQOCqL5RSaxKi0MDrWSbIo7RAY7GNKz4vzVeynR4fOkTGLTWbzEGsgpbYqIay2CjaYneXENXxvbo8vr43QGRzEoWmBqisb0iV-AFgIEy6Fs2EKhDaTT6IW2PynKo2Ky6iz6w12RENU3myLi34UOn8PAAM1gNAArnb5LL2XD1IhbA5kYjLL5bD7tP7A0aQ2Gwp8LZHYumnZycbZdfiLKZ20ELH4HKFQkA */
+  /** @xstate-layout N4IgpgJg5mDOIC5QHsBOFVgAQFsCGsA1gJYB2YAdMRADZgDEAKgJIAyAYgPICiAUgPoA1AIIAlbolAAHZLGIAXYslKSQAD0QBGAGzaKABkOGAzNoCsADgCcV-RYA0IAJ5aA7K4o2vxn5tdnXOwBfIMc0DGx8IjJKACM4RRo6VCY2Lj4hMQkkEBk5RWVVDQQfKwNtACYAFhtdTWMq-TNHFwRNfU1PLytdcwtXCzMqkLD0TFwCEnIKeNhE5PpOAAVxRlU8hSUVHOKzTQqKfZqrM11TWwqWrRsum2sazR1NKuHQkHDxqKm4hOIksBSADkAKqsADKLFY61km0KO0QFWM+kOVQsVWMtiG7WMrmMVwQtluNiqFTsFgxwTeH0ikxiFGQUkw8nkAMWK24jEYHOh+S2RUQrm0yOMFgqFn2xjMJ1R2nxmhu3XuVke2merzepGQEDgqmpE2i02odB5sO2oGKJLl4oovTOJP05l0FhG7zGNINPzmf2SJoKZvUiElxht-Rq2gGdisOOazmuwe6JwG-R6ZmMLr1XzpDKZLNQvr58IQqrMFAC4oqFTMVZs+iqcqjRMTFmT5jTVLd+u+9Ld-DwADNYDQAK7MsDyfNw82IazC1zHOfuVzPVz1+PdMst1PpjuZ8gT-3FTQOWNtCwGIwXy-PEIhIA */
   createMachine(
     {
+      context: { aktivDato: new Date(), varer: new Map() },
       tsTypes: {} as import("./ordreMaskine.typegen").Typegen0,
       schema: {
         context: {} as {
@@ -18,10 +19,6 @@ export const ordreMaskine =
       },
       id: "ordre maskine",
       initial: "idle",
-      context: {
-        aktivDato: new Date(),
-        varer: new Map(),
-      },
       states: {
         idle: {
           on: {
