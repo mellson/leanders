@@ -10,8 +10,9 @@ interface NumberInputProps {
 export const NumberInput = ({ vareId }: NumberInputProps) => {
   const appServices = useContext(AppContext);
   const { send } = appServices.ordreService;
-  const [state] = useActor(appServices.ordreService);
-  const antal = state.context.varer.get(vareId) ?? 0;
+  const [{ context }] = useActor(appServices.ordreService);
+  const aktiveVarer = context.varer.get(context.aktivDato);
+  const antal = aktiveVarer ? aktiveVarer.get(vareId) ?? 0 : 0;
 
   const { getInputProps, getIncrementButtonProps, getDecrementButtonProps } =
     useNumberInput({
@@ -19,13 +20,8 @@ export const NumberInput = ({ vareId }: NumberInputProps) => {
       value: antal,
       min: 0,
       inputMode: "numeric",
-      onChange: (_, valueAsNumber) => {
-        if (valueAsNumber < antal) {
-          send({ type: "FJERN_VARE", vareId });
-        } else if (valueAsNumber > antal) {
-          send({ type: "TILFOEJ_VARE", vareId });
-        }
-      },
+      onChange: (_, valueAsNumber) =>
+        send({ type: "TILFOEJ_VARE", vareId, antal: valueAsNumber }),
     });
 
   const inc = getIncrementButtonProps();
