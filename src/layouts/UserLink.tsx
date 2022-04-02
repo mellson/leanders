@@ -1,4 +1,4 @@
-import { Button, Link } from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
 import { useUser } from "@supabase/supabase-auth-helpers/react";
 import NextLink from "next/link";
 import * as React from "react";
@@ -17,7 +17,7 @@ export function UserLink() {
 
   return (
     <NextLink href="/profil" passHref>
-      <Link>{user.email}</Link>
+      <Button variant="outline">Min side</Button>
     </NextLink>
   );
 }

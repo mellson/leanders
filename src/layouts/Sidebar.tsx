@@ -1,6 +1,8 @@
-import { Avatar, Flex, Icon, Stack, useColorModeValue } from "@chakra-ui/react";
+import { Flex, Icon, Stack, useColorModeValue } from "@chakra-ui/react";
+import { useUser } from "@supabase/supabase-auth-helpers/react";
 import { useRouter } from "next/router";
 import * as React from "react";
+import { FiUser } from "react-icons/fi";
 import { routes } from "../utils/routes";
 import { Logo } from "./Logo";
 import { NavButton } from "./NavButton";
@@ -10,7 +12,10 @@ interface SidebarProps {
 }
 
 export function Sidebar(props: SidebarProps) {
+  const { user } = useUser();
   const router = useRouter();
+
+  const minSideLabel = user ? "Min side" : "Log ind";
 
   return (
     <Flex
@@ -38,8 +43,8 @@ export function Sidebar(props: SidebarProps) {
           <NavButton
             onClick={props.onClose}
             href="/profil"
-            label="Min Side"
-            icon={<Avatar src="https://tinyurl.com/yhkm2ek8" boxSize={6} />}
+            label={minSideLabel}
+            icon={<Icon as={FiUser} boxSize="6" color="subtle" />}
             aria-current={router.asPath === "/profil" ? "page" : undefined}
           />
         </Stack>
