@@ -1,5 +1,7 @@
 import { ChakraProvider } from "@chakra-ui/react";
 import "@fontsource/inter/variable.css";
+import { supabaseClient } from "@supabase/supabase-auth-helpers/nextjs";
+import { UserProvider } from "@supabase/supabase-auth-helpers/react";
 import { useInterpret } from "@xstate/react";
 import type { AppProps } from "next/app";
 import { createContext } from "react";
@@ -19,13 +21,15 @@ export default function App({ Component, pageProps }: AppProps) {
   const ordreService = useInterpret(ordreMaskine);
 
   return (
-    <ChakraProvider theme={theme}>
-      <AppContext.Provider value={{ ordreService }}>
-        <AppLayout>
-          <Component {...pageProps} />
-          <OrdreInfo />
-        </AppLayout>
-      </AppContext.Provider>
-    </ChakraProvider>
+    <UserProvider supabaseClient={supabaseClient}>
+      <ChakraProvider theme={theme}>
+        <AppContext.Provider value={{ ordreService }}>
+          <AppLayout>
+            <Component {...pageProps} />
+            <OrdreInfo />
+          </AppLayout>
+        </AppContext.Provider>
+      </ChakraProvider>
+    </UserProvider>
   );
 }
