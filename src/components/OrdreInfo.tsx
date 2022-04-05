@@ -80,12 +80,14 @@ export function OrdreInfo() {
         <Input
           type="date"
           value={state.context.aktivDato.toLocaleDateString("en-CA")}
-          onChange={(e) =>
+          onChange={(e) => {
+            e.preventDefault();
             send({
               type: "AENDRE_DATO",
               dato: e.target.valueAsDate ?? new Date(),
-            })
-          }
+            });
+            setVisDatoVaelger(false);
+          }}
         />
       </CenterModal>
       <CenterModal
@@ -96,6 +98,7 @@ export function OrdreInfo() {
         <Input
           type="date"
           onChange={(e) => {
+            e.preventDefault();
             send({
               type: "TILFOEJ_DATO",
               dato: e.target.valueAsDate ?? new Date(),
