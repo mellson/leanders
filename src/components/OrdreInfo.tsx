@@ -1,18 +1,27 @@
 import { Button, HStack, Slide, Text, VStack } from "@chakra-ui/react";
 import { useActor } from "@xstate/react";
+import { SingleDatepicker } from "chakra-dayzed-datepicker";
 import * as React from "react";
+import { useState } from "react";
 import { AppContext } from "../../pages/_app";
+import { CenterModal } from "./CenterModal";
 
 export function OrdreInfo() {
   const appServices = React.useContext(AppContext);
   const [state] = useActor(appServices.ordreService);
   const { send } = appServices.ordreService;
+  const [visDatoVaelger, setVisDatoVaelger] = useState(false);
 
-  const antalVarer = Array.from(state.context.varer.values()).reduce(
-    (acc, cur) =>
-      acc + Array.from(cur.values()).reduce((total, antal) => total + antal, 0),
-    0
-  );
+  const antalVarer = (dato: Date) => {
+    const varer = state.context.varer.get(dato);
+    if (varer) {
+      return Array.from(varer.values()).reduce((acc, cur) => acc + cur, 0);
+    } else {
+      return 0;
+    }
+  };
+
+  const sorteredeDatoer = Array.from(state.context.varer.keys()).sort();
 
   return (
     <Slide
@@ -22,21 +31,34 @@ export function OrdreInfo() {
     >
       <HStack
         roundedTop="md"
-        spacing={10}
         padding={4}
         opacity={state.matches("bestiller") ? 0.9 : 0.0}
         width="100%"
         bg="brand.300"
         justify="space-between"
       >
-        <VStack alignItems="start" spacing={0}>
-          <Text fontSize="xs">
-            {state.context.aktivDato.toLocaleDateString()}
-          </Text>
-          <Text>{antalVarer} brød i kurven</Text>
-        </VStack>
+        <HStack spacing={10}>
+          {sorteredeDatoer.map((dato) => (
+            <VStack key={dato.toString()} alignItems="start" spacing={0}>
+              <Text fontSize="xs" onClick={() => setVisDatoVaelger(true)}>
+                {dato.toLocaleDateString()}
+              </Text>
+              <Text>{antalVarer(dato)} brød i kurven</Text>
+            </VStack>
+          ))}
+        </HStack>
         <Button onClick={(_) => send("NULSTIL")}>Nulstil</Button>
       </HStack>
+      <CenterModal
+        titel="Vælg ny dato"
+        isOpen={visDatoVaelger}
+        onClose={() => setVisDatoVaelger(false)}
+      >
+        <SingleDatepicker
+          date={state.context.aktivDato}
+          onDateChange={(nyDato) => send({ type: "AENDRE_DATO", nyDato })}
+        />
+      </CenterModal>
     </Slide>
   );
 }
