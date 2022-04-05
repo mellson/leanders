@@ -1,6 +1,6 @@
 import { assign, createMachine } from "xstate";
 
-const imorgen = new Date(Date.now() + 24 * 60 * 60 * 1000);
+export const imorgen = new Date(Date.now() + 24 * 60 * 60 * 1000);
 
 function defaultVarerMap() {
   return new Map().set(imorgen, new Map());

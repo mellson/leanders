@@ -3,6 +3,7 @@ import { useActor } from "@xstate/react";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { AppContext } from "../../pages/_app";
+import { imorgen } from "../xstate/ordreMaskine";
 import { CenterModal } from "./CenterModal";
 
 export function OrdreInfo() {
@@ -37,7 +38,7 @@ export function OrdreInfo() {
         roundedTop="md"
         padding={4}
         opacity={state.matches("bestiller") ? 0.95 : 0.0}
-        width="100%"
+        w="full"
         bg="brand.300"
         justify="space-between"
       >
@@ -67,10 +68,14 @@ export function OrdreInfo() {
             </VStack>
           ))}
         </HStack>
-        <HStack spacing={4}>
-          <Button onClick={(_) => setVisNyDatoVaelger(true)}>Tilføj dag</Button>
-          <Button onClick={(_) => send("NULSTIL")}>Nulstil</Button>
-        </HStack>
+        <VStack justify="space-between">
+          <Button size="sm" w="full" onClick={(_) => setVisNyDatoVaelger(true)}>
+            Tilføj dag
+          </Button>
+          <Button size="sm" w="full" onClick={(_) => send("NULSTIL")}>
+            Nulstil
+          </Button>
+        </VStack>
       </HStack>
       <CenterModal
         titel="Vælg ny dato"
@@ -97,13 +102,15 @@ export function OrdreInfo() {
       >
         <Input
           type="date"
+          value={imorgen.toLocaleDateString("en-CA")}
           onChange={(e) => {
-            e.preventDefault();
-            send({
-              type: "TILFOEJ_DATO",
-              dato: e.target.valueAsDate ?? new Date(),
-            });
-            setVisNyDatoVaelger(false);
+            if (e.target.valueAsDate) {
+              send({
+                type: "TILFOEJ_DATO",
+                dato: e.target.valueAsDate,
+              });
+              setVisNyDatoVaelger(false);
+            }
           }}
         />
       </CenterModal>
