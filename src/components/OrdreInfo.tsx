@@ -1,6 +1,5 @@
 import { Button, HStack, Input, Slide, Text, VStack } from "@chakra-ui/react";
 import { useActor } from "@xstate/react";
-import { SingleDatepicker } from "chakra-dayzed-datepicker";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { AppContext } from "../../pages/_app";
@@ -10,15 +9,10 @@ export function OrdreInfo() {
   const appServices = React.useContext(AppContext);
   const [state] = useActor(appServices.ordreService);
   const { send } = appServices.ordreService;
-  const [visDatoVaelger, setVisDatoVaelger] = useState(true);
-  const dateRef = React.useRef<HTMLInputElement>(null);
+  const [visDatoVaelger, setVisDatoVaelger] = useState(false);
+  const [visNyDatoVaelger, setVisNyDatoVaelger] = useState(false);
 
-  useEffect(() => {
-    if (dateRef.current) {
-      console.log(state.context.aktivDato);
-      dateRef.current.valueAsDate = state.context.aktivDato;
-    }
-  }, [state.context.aktivDato]);
+  useEffect(() => {}, [state.context.aktivDato]);
 
   const antalVarer = (dato: Date) => {
     const varer = state.context.varer.get(dato);
@@ -29,7 +23,9 @@ export function OrdreInfo() {
     }
   };
 
-  const sorteredeDatoer = Array.from(state.context.varer.keys()).sort();
+  const sorteredeDatoer = Array.from(state.context.varer.keys()).sort(
+    (a, b) => a.getTime() - b.getTime()
+  );
 
   return (
     <Slide
@@ -40,42 +36,72 @@ export function OrdreInfo() {
       <HStack
         roundedTop="md"
         padding={4}
-        opacity={state.matches("bestiller") ? 0.9 : 0.0}
+        opacity={state.matches("bestiller") ? 0.95 : 0.0}
         width="100%"
         bg="brand.300"
         justify="space-between"
       >
-        <HStack spacing={10}>
+        <HStack spacing={4}>
           {sorteredeDatoer.map((dato) => (
-            <VStack key={dato.toString()} alignItems="start" spacing={0}>
-              <Text fontSize="xs" onClick={() => setVisDatoVaelger(true)}>
-                {dato.toLocaleDateString()}
-              </Text>
+            <VStack
+              key={dato.toString()}
+              alignItems="start"
+              bg={dato === state.context.aktivDato ? "brand.200" : "brand.400"}
+              cursor="pointer"
+              onClick={() => send({ type: "SET_AKTIV_DATO", dato })}
+              padding={2}
+              rounded="lg"
+            >
+              {dato === state.context.aktivDato ? (
+                <Text
+                  fontSize="xs"
+                  cursor="pointer"
+                  onClick={() => setVisDatoVaelger(true)}
+                >
+                  {dato.toLocaleDateString("da-DK")}
+                </Text>
+              ) : (
+                <Text fontSize="xs">{dato.toLocaleDateString("da-DK")}</Text>
+              )}
               <Text>{antalVarer(dato)} brød i kurven</Text>
             </VStack>
           ))}
         </HStack>
-        <Button onClick={(_) => send("NULSTIL")}>Nulstil</Button>
+        <HStack spacing={4}>
+          <Button onClick={(_) => setVisNyDatoVaelger(true)}>Tilføj dag</Button>
+          <Button onClick={(_) => send("NULSTIL")}>Nulstil</Button>
+        </HStack>
       </HStack>
       <CenterModal
         titel="Vælg ny dato"
         isOpen={visDatoVaelger}
         onClose={() => setVisDatoVaelger(false)}
       >
-        <SingleDatepicker
-          date={state.context.aktivDato}
-          onDateChange={(nyDato) => send({ type: "AENDRE_DATO", nyDato })}
-        />
-
         <Input
           type="date"
           value={state.context.aktivDato.toLocaleDateString("en-CA")}
           onChange={(e) =>
             send({
               type: "AENDRE_DATO",
-              nyDato: e.target.valueAsDate ?? new Date(),
+              dato: e.target.valueAsDate ?? new Date(),
             })
           }
+        />
+      </CenterModal>
+      <CenterModal
+        titel="Tilføj ny dato"
+        isOpen={visNyDatoVaelger}
+        onClose={() => setVisNyDatoVaelger(false)}
+      >
+        <Input
+          type="date"
+          onChange={(e) => {
+            send({
+              type: "TILFOEJ_DATO",
+              dato: e.target.valueAsDate ?? new Date(),
+            });
+            setVisNyDatoVaelger(false);
+          }}
         />
       </CenterModal>
     </Slide>

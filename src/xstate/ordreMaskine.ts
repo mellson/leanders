@@ -3,7 +3,7 @@ import { assign, createMachine } from "xstate";
 const imorgen = new Date(Date.now() + 24 * 60 * 60 * 1000);
 
 function defaultVarerMap() {
-  return new Map().set(imorgen, new Map()).set(new Date(), new Map());
+  return new Map().set(imorgen, new Map());
 }
 
 export const ordreMaskine =
@@ -22,7 +22,9 @@ export const ordreMaskine =
         },
         events: {} as
           | { type: "TILFOEJ_VARE"; vareId: number; antal: number }
-          | { type: "AENDRE_DATO"; nyDato: Date }
+          | { type: "SET_AKTIV_DATO"; dato: Date }
+          | { type: "AENDRE_DATO"; dato: Date }
+          | { type: "TILFOEJ_DATO"; dato: Date }
           | { type: "OPRET" }
           | { type: "OPRETTET" }
           | { type: "NULSTIL" },
@@ -50,8 +52,14 @@ export const ordreMaskine =
               actions: "nulstil",
               target: "idle",
             },
+            SET_AKTIV_DATO: {
+              actions: "setAktivDato",
+            },
             AENDRE_DATO: {
               actions: "aendreDato",
+            },
+            TILFOEJ_DATO: {
+              actions: "tilfoejDato",
             },
           },
         },
@@ -87,7 +95,16 @@ export const ordreMaskine =
           aktivDato: (_) => imorgen,
           varer: (_) => defaultVarerMap(),
         }),
-        aendreDato: assign({ aktivDato: (_, event) => event.nyDato }),
+        setAktivDato: assign({ aktivDato: (_, event) => event.dato }),
+        aendreDato: assign((context, event) => {
+          context.varer.set(event.dato, context.varer.get(context.aktivDato)!);
+          context.varer.delete(context.aktivDato);
+          return { aktivDato: event.dato, varer: context.varer };
+        }),
+        tilfoejDato: assign({
+          aktivDato: (_, event) => event.dato,
+          varer: (context, event) => context.varer.set(event.dato, new Map()),
+        }),
       },
     }
   );
