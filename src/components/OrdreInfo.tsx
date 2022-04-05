@@ -1,8 +1,8 @@
-import { Button, HStack, Slide, Text, VStack } from "@chakra-ui/react";
+import { Button, HStack, Input, Slide, Text, VStack } from "@chakra-ui/react";
 import { useActor } from "@xstate/react";
 import { SingleDatepicker } from "chakra-dayzed-datepicker";
 import * as React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AppContext } from "../../pages/_app";
 import { CenterModal } from "./CenterModal";
 
@@ -10,7 +10,15 @@ export function OrdreInfo() {
   const appServices = React.useContext(AppContext);
   const [state] = useActor(appServices.ordreService);
   const { send } = appServices.ordreService;
-  const [visDatoVaelger, setVisDatoVaelger] = useState(false);
+  const [visDatoVaelger, setVisDatoVaelger] = useState(true);
+  const dateRef = React.useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (dateRef.current) {
+      console.log(state.context.aktivDato);
+      dateRef.current.valueAsDate = state.context.aktivDato;
+    }
+  }, [state.context.aktivDato]);
 
   const antalVarer = (dato: Date) => {
     const varer = state.context.varer.get(dato);
@@ -57,6 +65,17 @@ export function OrdreInfo() {
         <SingleDatepicker
           date={state.context.aktivDato}
           onDateChange={(nyDato) => send({ type: "AENDRE_DATO", nyDato })}
+        />
+
+        <Input
+          type="date"
+          value={state.context.aktivDato.toLocaleDateString("en-CA")}
+          onChange={(e) =>
+            send({
+              type: "AENDRE_DATO",
+              nyDato: e.target.valueAsDate ?? new Date(),
+            })
+          }
         />
       </CenterModal>
     </Slide>
