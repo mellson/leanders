@@ -12,7 +12,7 @@ export default function Login() {
   }
 
   return (
-    <Container maxW="640px">
+    <Container maxW={{ base: "full", md: "640px" }}>
       {error && <p>{error.message}</p>}
       <Auth
         supabaseClient={supabaseClient}

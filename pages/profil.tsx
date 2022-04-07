@@ -7,8 +7,6 @@ interface ProfilProps {
 }
 
 export default function Profil({ user }: ProfilProps) {
-  console.log(user);
-
   return (
     <>
       <Heading size="md">Profil</Heading>
