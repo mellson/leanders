@@ -13,6 +13,10 @@ export function AppLayout({ children }: PropsWithChildren<{}>) {
       <Head>
         <title>{navn}</title>
         <meta name="description" content={navn} />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1"
+        />
         <Favicon />
       </Head>
 
