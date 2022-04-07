@@ -3,7 +3,7 @@ import { useActor } from "@xstate/react";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { AppContext } from "../../pages/_app";
-import { imorgen } from "../xstate/ordreMaskine";
+import { imorgen } from "../utils/ordre";
 import { CenterModal } from "./CenterModal";
 
 export function OrdreInfo() {
@@ -31,13 +31,13 @@ export function OrdreInfo() {
   return (
     <Slide
       direction="bottom"
-      in={state.matches("bestiller")}
+      in={state.matches("Ordre opbygges")}
       style={{ zIndex: 10 }}
     >
       <HStack
         roundedTop="md"
         padding={4}
-        opacity={state.matches("bestiller") ? 0.95 : 0.0}
+        opacity={state.matches("Ordre opbygges") ? 0.95 : 0.0}
         w="full"
         bg="brand.300"
         justify="space-between"
@@ -49,7 +49,7 @@ export function OrdreInfo() {
               alignItems="start"
               bg={dato === state.context.aktivDato ? "brand.200" : "brand.400"}
               cursor="pointer"
-              onClick={() => send({ type: "SET_AKTIV_DATO", dato })}
+              onClick={() => send({ type: "Sæt aktiv dato", dato })}
               padding={2}
               rounded="lg"
             >
@@ -72,8 +72,8 @@ export function OrdreInfo() {
           <Button size="sm" w="full" onClick={(_) => setVisNyDatoVaelger(true)}>
             Tilføj dag
           </Button>
-          <Button size="sm" w="full" onClick={(_) => send("NULSTIL")}>
-            Nulstil
+          <Button size="sm" w="full" onClick={(_) => send("Nulstil ordre")}>
+            Nulstil ordre
           </Button>
         </VStack>
       </HStack>
@@ -81,6 +81,10 @@ export function OrdreInfo() {
         titel="Vælg ny dato"
         isOpen={visDatoVaelger}
         onClose={() => setVisDatoVaelger(false)}
+        onDelete={() => {
+          send({ type: "Slet aktiv dato" });
+          setVisDatoVaelger(false);
+        }}
       >
         <Input
           type="date"
@@ -88,7 +92,7 @@ export function OrdreInfo() {
           onChange={(e) => {
             e.preventDefault();
             send({
-              type: "AENDRE_DATO",
+              type: "Udskift aktiv dato",
               dato: e.target.valueAsDate ?? new Date(),
             });
             setVisDatoVaelger(false);
@@ -106,7 +110,7 @@ export function OrdreInfo() {
           onChange={(e) => {
             if (e.target.valueAsDate) {
               send({
-                type: "TILFOEJ_DATO",
+                type: "Tilføj dato",
                 dato: e.target.valueAsDate,
               });
               setVisNyDatoVaelger(false);

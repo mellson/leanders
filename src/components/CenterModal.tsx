@@ -1,5 +1,6 @@
 import {
   Button,
+  ButtonGroup,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -14,11 +15,13 @@ interface CenterModalProps {
   titel: string;
   isOpen: boolean;
   onClose: () => void;
+  onDelete?: () => void;
 }
 
 export function CenterModal({
   isOpen,
   onClose,
+  onDelete,
   titel,
   children,
 }: PropsWithChildren<CenterModalProps>) {
@@ -31,7 +34,18 @@ export function CenterModal({
           <ModalCloseButton />
           <ModalBody>{children}</ModalBody>
           <ModalFooter>
-            <Button onClick={onClose}>Luk</Button>
+            <ButtonGroup
+              variant="outline"
+              justifyContent={onDelete ? "space-between" : "flex-end"}
+              w="full"
+            >
+              {onDelete && (
+                <Button colorScheme="red" onClick={onDelete}>
+                  Fjern dato
+                </Button>
+              )}
+              <Button onClick={onClose}>Luk</Button>
+            </ButtonGroup>
           </ModalFooter>
         </ModalContent>
       </Modal>

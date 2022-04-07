@@ -21,7 +21,7 @@ export function VareInput({ vareId }: VareInputProps) {
       min: 0,
       inputMode: "numeric",
       onChange: (_, valueAsNumber) =>
-        send({ type: "TILFOEJ_VARE", vareId, antal: valueAsNumber }),
+        send({ type: "Tilføj vare", vareId, antal: valueAsNumber }),
     });
 
   const inc = getIncrementButtonProps();

@@ -1,9 +1,13 @@
 import { assign, createMachine } from "xstate";
+import {
+  defaultVarerMap,
+  imorgen,
+  sorteredeDatoerFraVarer,
+} from "../utils/ordre";
 
-export const imorgen = new Date(Date.now() + 24 * 60 * 60 * 1000);
-
-function defaultVarerMap() {
-  return new Map().set(imorgen, new Map());
+export interface OrdreMaskineContext {
+  aktivDato: Date;
+  varer: Map<Date, Map<number, number>>;
 }
 
 export const ordreMaskine =
@@ -16,66 +20,67 @@ export const ordreMaskine =
       },
       tsTypes: {} as import("./ordreMaskine.typegen").Typegen0,
       schema: {
-        context: {} as {
-          aktivDato: Date;
-          varer: Map<Date, Map<number, number>>;
-        },
+        context: {} as OrdreMaskineContext,
         events: {} as
-          | { type: "TILFOEJ_VARE"; vareId: number; antal: number }
-          | { type: "SET_AKTIV_DATO"; dato: Date }
-          | { type: "AENDRE_DATO"; dato: Date }
-          | { type: "TILFOEJ_DATO"; dato: Date }
-          | { type: "OPRET" }
-          | { type: "OPRETTET" }
-          | { type: "NULSTIL" },
+          | { type: "Tilføj vare"; vareId: number; antal: number }
+          | { type: "Sæt aktiv dato"; dato: Date }
+          | { type: "Udskift aktiv dato"; dato: Date }
+          | { type: "Slet aktiv dato" }
+          | { type: "Tilføj dato"; dato: Date }
+          | { type: "Opret ordre" }
+          | { type: "Ordre oprettet" }
+          | { type: "Nulstil ordre" },
       },
       id: "ordre maskine",
       initial: "idle",
       states: {
         idle: {
           on: {
-            TILFOEJ_VARE: {
-              actions: "tilfoejVareTilOrdre",
-              target: "bestiller",
+            "Tilføj vare": {
+              actions: "Tilføj vare til ordre",
+              target: "Ordre opbygges",
             },
           },
         },
-        bestiller: {
+        "Ordre opbygges": {
           on: {
-            TILFOEJ_VARE: {
-              actions: "tilfoejVareTilOrdre",
+            "Tilføj vare": {
+              actions: "Tilføj vare til ordre",
             },
-            OPRET: {
-              target: "opretter",
+            "Opret ordre": {
+              target: "Opretter ordre",
             },
-            NULSTIL: {
-              actions: "nulstil",
+            "Nulstil ordre": {
+              actions: "Nulstil ordre",
               target: "idle",
             },
-            SET_AKTIV_DATO: {
-              actions: "setAktivDato",
+            "Sæt aktiv dato": {
+              actions: "Sæt aktiv dato",
             },
-            AENDRE_DATO: {
-              actions: "aendreDato",
+            "Udskift aktiv dato": {
+              actions: "Udskift aktiv dato",
             },
-            TILFOEJ_DATO: {
-              actions: "tilfoejDato",
+            "Tilføj dato": {
+              actions: "Tilføj dato",
+            },
+            "Slet aktiv dato": {
+              actions: "Slet aktiv dato",
             },
           },
         },
-        opretter: {
+        "Opretter ordre": {
           on: {
-            OPRETTET: {
-              target: "ordre_afsluttet",
+            "Ordre oprettet": {
+              target: "Ordre afsluttet",
             },
           },
         },
-        ordre_afsluttet: {},
+        "Ordre afsluttet": {},
       },
     },
     {
       actions: {
-        tilfoejVareTilOrdre: assign({
+        "Tilføj vare til ordre": assign({
           varer: (context, event) => {
             if (context.varer.has(context.aktivDato)) {
               return context.varer.set(
@@ -91,19 +96,32 @@ export const ordreMaskine =
             }
           },
         }),
-        nulstil: assign({
+        "Nulstil ordre": assign({
           aktivDato: (_) => imorgen,
           varer: (_) => defaultVarerMap(),
         }),
-        setAktivDato: assign({ aktivDato: (_, event) => event.dato }),
-        aendreDato: assign((context, event) => {
+        "Sæt aktiv dato": assign({ aktivDato: (_, event) => event.dato }),
+        "Udskift aktiv dato": assign((context, event) => {
           context.varer.set(event.dato, context.varer.get(context.aktivDato)!);
           context.varer.delete(context.aktivDato);
           return { aktivDato: event.dato, varer: context.varer };
         }),
-        tilfoejDato: assign({
+        "Tilføj dato": assign({
           aktivDato: (_, event) => event.dato,
           varer: (context, event) => context.varer.set(event.dato, new Map()),
+        }),
+        "Slet aktiv dato": assign((context) => {
+          context.varer.delete(context.aktivDato);
+
+          const varer =
+            context.varer.size > 0 ? context.varer : defaultVarerMap();
+
+          const sorteredeDatoer = sorteredeDatoerFraVarer(varer);
+
+          return {
+            aktivDato: sorteredeDatoer[0],
+            varer,
+          };
         }),
       },
     }
