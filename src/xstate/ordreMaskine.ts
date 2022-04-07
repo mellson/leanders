@@ -7,7 +7,7 @@ import {
 
 export interface OrdreMaskineContext {
   aktivDato: Date;
-  varer: Map<Date, Map<number, number>>;
+  varer: Map<number, Map<number, number>>;
 }
 
 export const ordreMaskine =
@@ -82,16 +82,19 @@ export const ordreMaskine =
       actions: {
         "Tilføj vare til ordre": assign({
           varer: (context, event) => {
-            if (context.varer.has(context.aktivDato)) {
+            if (context.varer.has(context.aktivDato.getTime())) {
               return context.varer.set(
-                context.aktivDato,
+                context.aktivDato.getTime(),
                 context.varer
-                  .get(context.aktivDato)!
+                  .get(context.aktivDato.getTime())!
                   .set(event.vareId, event.antal)
               );
             } else {
               return new Map([
-                [context.aktivDato, new Map([[event.vareId, event.antal]])],
+                [
+                  context.aktivDato.getTime(),
+                  new Map([[event.vareId, event.antal]]),
+                ],
               ]);
             }
           },
@@ -102,16 +105,25 @@ export const ordreMaskine =
         }),
         "Sæt aktiv dato": assign({ aktivDato: (_, event) => event.dato }),
         "Udskift aktiv dato": assign((context, event) => {
-          context.varer.set(event.dato, context.varer.get(context.aktivDato)!);
-          context.varer.delete(context.aktivDato);
+          context.varer.set(
+            event.dato.getTime(),
+            context.varer.get(context.aktivDato.getTime())!
+          );
+          context.varer.delete(context.aktivDato.getTime());
           return { aktivDato: event.dato, varer: context.varer };
         }),
         "Tilføj dato": assign({
           aktivDato: (_, event) => event.dato,
-          varer: (context, event) => context.varer.set(event.dato, new Map()),
+          varer: (context, event) => {
+            if (context.varer.has(event.dato.getTime())) {
+              return context.varer;
+            } else {
+              return context.varer.set(event.dato.getTime(), new Map());
+            }
+          },
         }),
         "Slet aktiv dato": assign((context) => {
-          context.varer.delete(context.aktivDato);
+          context.varer.delete(context.aktivDato.getTime());
 
           const varer =
             context.varer.size > 0 ? context.varer : defaultVarerMap();
@@ -119,7 +131,7 @@ export const ordreMaskine =
           const sorteredeDatoer = sorteredeDatoerFraVarer(varer);
 
           return {
-            aktivDato: sorteredeDatoer[0],
+            aktivDato: new Date(sorteredeDatoer[0]),
             varer,
           };
         }),

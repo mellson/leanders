@@ -3,7 +3,7 @@ import { useActor } from "@xstate/react";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { AppContext } from "../../pages/_app";
-import { imorgen } from "../utils/ordre";
+import { imorgen, sammeDato, sorteredeDatoerFraVarer } from "../utils/ordre";
 import { CenterModal } from "./CenterModal";
 
 export function OrdreInfo() {
@@ -16,7 +16,7 @@ export function OrdreInfo() {
   useEffect(() => {}, [state.context.aktivDato]);
 
   const antalVarer = (dato: Date) => {
-    const varer = state.context.varer.get(dato);
+    const varer = state.context.varer.get(dato.getTime());
     if (varer) {
       return Array.from(varer.values()).reduce((acc, cur) => acc + cur, 0);
     } else {
@@ -24,8 +24,8 @@ export function OrdreInfo() {
     }
   };
 
-  const sorteredeDatoer = Array.from(state.context.varer.keys()).sort(
-    (a, b) => a.getTime() - b.getTime()
+  const sorteredeDatoer = sorteredeDatoerFraVarer(state.context.varer).map(
+    (time) => new Date(time)
   );
 
   return (
@@ -47,13 +47,17 @@ export function OrdreInfo() {
             <VStack
               key={dato.toString()}
               alignItems="start"
-              bg={dato === state.context.aktivDato ? "brand.200" : "brand.400"}
+              bg={
+                sammeDato(dato, state.context.aktivDato)
+                  ? "brand.200"
+                  : "brand.400"
+              }
               cursor="pointer"
               onClick={() => send({ type: "Sæt aktiv dato", dato })}
               padding={2}
               rounded="lg"
             >
-              {dato === state.context.aktivDato ? (
+              {sammeDato(dato, state.context.aktivDato) ? (
                 <Text
                   fontSize="xs"
                   cursor="pointer"
@@ -70,7 +74,7 @@ export function OrdreInfo() {
         </HStack>
         <VStack justify="space-between">
           <Button size="sm" w="full" onClick={(_) => setVisNyDatoVaelger(true)}>
-            Tilføj dag
+            Tilføj dato
           </Button>
           <Button size="sm" w="full" onClick={(_) => send("Nulstil ordre")}>
             Nulstil ordre
