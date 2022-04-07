@@ -18,7 +18,7 @@ export default function Login() {
         supabaseClient={supabaseClient}
         providers={["google"]}
         socialLayout="horizontal"
-        socialButtonSize="xlarge"
+        socialButtonSize="large"
       />
     </Container>
   );

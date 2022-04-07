@@ -27,7 +27,7 @@ export function CenterModal({
 }: PropsWithChildren<CenterModalProps>) {
   return (
     <>
-      <Modal onClose={onClose} isOpen={isOpen} isCentered>
+      <Modal onClose={onClose} isOpen={isOpen} isCentered preserveScrollBarGap>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>{titel}</ModalHeader>

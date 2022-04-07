@@ -21,6 +21,7 @@ specifiers:
   prettier: ^2.6.2
   react: 17.0.2
   react-dom: 17.0.2
+  react-hook-form: ^7.29.0
   react-icons: ^4.3.1
   typescript: 4.6.3
   xstate: ^4.30.6
@@ -39,6 +40,7 @@ dependencies:
   next: 12.1.4_react-dom@17.0.2+react@17.0.2
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
+  react-hook-form: 7.29.0_react@17.0.2
   react-icons: 4.3.1_react@17.0.2
   xstate: 4.30.6
 
@@ -3370,6 +3372,15 @@ packages:
       use-sidecar: 1.0.5_react@17.0.2
     transitivePeerDependencies:
       - '@types/react'
+    dev: false
+
+  /react-hook-form/7.29.0_react@17.0.2:
+    resolution: {integrity: sha512-NcJqWRF6el5HMW30fqZRt27s+lorvlCCDbTpAyHoodQeYWXgQCvZJJQLC1kRMKdrJknVH0NIg3At6TUzlZJFOQ==}
+    engines: {node: '>=12.22.0'}
+    peerDependencies:
+      react: ^16.8.0 || ^17 || ^18
+    dependencies:
+      react: 17.0.2
     dev: false
 
   /react-icons/4.3.1_react@17.0.2:

@@ -6,7 +6,7 @@ import { definitions } from "../src/types/supabase";
 import { supabase } from "../src/utils/supabase";
 
 export const getStaticProps = async () => {
-  const { data } = await supabase
+  const { data } = await supabase()
     .from<definitions["varer"]>("varer")
     .select("*")
     .order("id");
