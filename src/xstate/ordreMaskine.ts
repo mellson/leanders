@@ -11,13 +11,10 @@ export interface OrdreMaskineContext {
 }
 
 export const ordreMaskine =
-  /** @xstate-layout N4IgpgJg5mDOIC5QHsBOFVgAQFsCGsA1gJYB2YAdMRADZgDEAKgJIAyAYgPICiAUgPoA1AIIAlbolAAHZLGIAXYslKSQAD0QBGAGzaKABkOGAzNoCsADgCcV-RYA0IAJ5aA7K4o2vxn5tdnXOwBfIMc0DGx8IjJKACM4RRo6VCY2Lj4hMQkkEBk5RWVVDQQfKwNtACYAFhtdTWMq-TNHFwRNfU1PLytdcwtXCzMqkLD0TFwCEnIKeNhE5PpOAAVxRlU8hSUVHOKzTQqKfZqrM11TWwqWrRsum2sazR1NKuHQkHDxqKm4hOIksBSADkAKqsADKLFY61km0KO0QFWM+kOVQsVWMtiG7WMrmMVwQtluNiqFTsFgxwTeH0ikxiFGQUkw8nkAMWK24jEYHOh+S2RUQrm0yOMFgqFn2xjMJ1R2nxmhu3XuVke2merzepGQEDgqmpE2i02odB5sO2oGKJLl4oovTOJP05l0FhG7zGNINPzmf2SJoKZvUiElxht-Rq2gGdisOOazmuwe6JwG-R6ZmMLr1XzpDKZLNQvr58IQqrMFAC4oqFTMVZs+iqcqjRMTFmT5jTVLd+u+9Ld-DwADNYDQAK7MsDyfNw82IazC1zHOfuVzPVz1+PdMst1PpjuZ8gT-3FTQOWNtCwGIwXy-PEIhIA */
+  /** @xstate-layout N4IgpgJg5mDOIC5QHsBOFVgAQFsCGsA1gJYB2YAdMRADZgDEAKsTQGYAfAVlgG56aJQAB2SxiAF2LJSgkAA9EAWgAsAVgBMFAJxaAbOt3LlARkPGAzLoA0IAJ6ILuigHZ1y86oAM6gBzHXPqoAvkE2aBjY+ERklADy6JhYyEIARrZQMLBMLBzcfAJIICJiktKyCgiKetrOus6equbqHqrK1naIyloubk1qnhaeHiFhCZEEJOQU8RFJqemZ9LFCmOJJY7LFElIyhRWKzqoUurrePlrOWgYDqlo29gjGqj497qq16lrGXXUjIOGJKKTOJjOZpDJwegAOQArjRYJIaOsIptRNsynslCZum0vMYtA1dOdPJ5nPdEOZPC4fM4jOp1CTfM4LH8AeNolMZolkuDFgBlABnazwhEkPCwEDw4mQqJKO3KSnexgobXMWmUnz86q0qnJlQZVPUh1plxMugJPmUrNBQJi01BPIWkIAqhBoqxhaLiOLJdLZejdqB9t9zBRKe8GqoiVpLepdR19SSKEb3spTaYLVbQv8bRM7VzsI6IVlmGwuBKpTLCltSoH5EoDC8fJ4dOZLVG9Oq9YoDcnjWn1RnPJbrbNbZyHfNi-Q+XRPWKK37q2jawrKhrlBRLSTjAy9P5Gt3eymTYPzcOs6Mx3nOSswOJxGBUMjMEtJ6tH+J-avMQg3EdWl8BpKXUYwGg1PUnheVw3g+L4fmcEJs1IZAIDgWQ2VwG9KGoOhv3lX9FHeJwdH0VpdHxQJ6Ug5QqTVMD9CeElnHMWpR0BbD7VmItMnwjEgwbWoKA0Q5vE8Exmz0SCNFeFpjGbEktGGbNMPHOI7wfJ8XzAPi6wqZ4KAPMwNEUwxPHaB4nk0GC5IUltlKvDiORBWY8FYWAaBhTSv2XOV+PrBA1ReBkiXOC4mmZaTrN6VRVHkkl7OCFTc2c3S10UU4qVIuM2kojR1CPFi+2ItU41i9wkKCIA */
   createMachine(
     {
-      context: {
-        aktivDato: imorgen,
-        varer: defaultVarerMap(),
-      },
+      context: { aktivDato: imorgen, varer: defaultVarerMap() },
       tsTypes: {} as import("./ordreMaskine.typegen").Typegen0,
       schema: {
         context: {} as OrdreMaskineContext,
