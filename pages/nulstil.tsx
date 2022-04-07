@@ -46,8 +46,8 @@ export default function Nulstil() {
     }
   };
 
-  // console.log(access_token);
-  // console.log(type);
+  console.log(access_token);
+  console.log(type);
 
   async function nulstilKode(nyKode: string) {
     if (
