@@ -4,6 +4,7 @@ specifiers:
   '@chakra-ui/icons': ^1.1.7
   '@chakra-ui/pro-theme': ^0.0.43
   '@chakra-ui/react': ^1.8.8
+  '@chakra-ui/theme-tools': ^1.3.6
   '@emotion/react': ^11
   '@emotion/styled': ^11
   '@fontsource/inter': ^4.5.7
@@ -30,6 +31,7 @@ dependencies:
   '@chakra-ui/icons': 1.1.7_react@17.0.2
   '@chakra-ui/pro-theme': 0.0.43_@chakra-ui+react@1.8.8
   '@chakra-ui/react': 1.8.8_50278d5156da8d43d5fff90829dc3133
+  '@chakra-ui/theme-tools': 1.3.6
   '@emotion/react': 11.8.2_03a98942b76c57740a9573edba2d1cc1
   '@emotion/styled': 11.8.1_ab60dc3cf3b46d6599c9cb98d57741dd
   '@fontsource/inter': 4.5.7
