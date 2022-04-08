@@ -16,7 +16,7 @@ export default function Login() {
       {error && <p>{error.message}</p>}
       <Auth
         supabaseClient={supabaseClient}
-        providers={["azure", "google"]}
+        providers={["facebook", "google", "azure"]}
         socialLayout="horizontal"
         socialButtonSize="large"
       />
