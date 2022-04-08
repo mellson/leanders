@@ -40,7 +40,7 @@ export function Footer() {
             <Heading as="h6" size="xs">
               Kontaktoplysninger
             </Heading>
-            <Text>{navn} IVS CVR: 38996371</Text>
+            <Text>{navn} ApS CVR: 38996371</Text>
             <br />
             <Text fontWeight="bold">Adresse</Text>
             <Link href="https://www.google.com/maps?ll=55.058195,10.611426&z=17&t=m&hl=da&gl=DK&mapclient=embed&cid=11340513616249243461">

@@ -8,7 +8,7 @@ import { createContext } from "react";
 import { InterpreterFrom } from "xstate";
 import { OrdreInfo } from "../src/components/OrdreInfo";
 import { AppLayout } from "../src/layouts/AppLayout";
-import theme from "../src/theme";
+import theme from "../src/utils/theme";
 import { ordreMaskine } from "../src/xstate/ordreMaskine";
 
 interface AppContext {
