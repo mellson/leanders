@@ -8,7 +8,7 @@ interface Route {
 }
 
 export const routes: Route[] = [
-  { href: "/", label: "Hjem", icon: FiHome },
+  { href: "/", label: "Bestil", icon: FiHome },
   { href: "/om", label: "Om", icon: FiCoffee },
   { href: "/kontakt", label: "Kontakt", icon: FiMapPin },
 ];
