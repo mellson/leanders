@@ -21,9 +21,12 @@ export const ordreMaskine =
         events: {} as
           | { type: "Tilføj vare"; vareId: number; antal: number }
           | { type: "Sæt aktiv dato"; dato: Date }
+          | { type: "Start udskift aktiv dato" }
           | { type: "Udskift aktiv dato"; dato: Date }
           | { type: "Slet aktiv dato" }
+          | { type: "Start tilføj dato" }
           | { type: "Tilføj dato"; dato: Date }
+          | { type: "Gå til opbygning af ordre" }
           | { type: "Opret ordre" }
           | { type: "Ordre oprettet" }
           | { type: "Nulstil ordre" },
@@ -54,15 +57,30 @@ export const ordreMaskine =
             "Sæt aktiv dato": {
               actions: "Sæt aktiv dato",
             },
+            "Start udskift aktiv dato": "Udskifter dato",
+            "Start tilføj dato": "Tilføjer dato",
+          },
+        },
+        "Udskifter dato": {
+          on: {
             "Udskift aktiv dato": {
               actions: "Udskift aktiv dato",
-            },
-            "Tilføj dato": {
-              actions: "Tilføj dato",
+              target: "Ordre opbygges",
             },
             "Slet aktiv dato": {
               actions: "Slet aktiv dato",
+              target: "Ordre opbygges",
             },
+            "Gå til opbygning af ordre": "Ordre opbygges",
+          },
+        },
+        "Tilføjer dato": {
+          on: {
+            "Tilføj dato": {
+              actions: "Tilføj dato",
+              target: "Ordre opbygges",
+            },
+            "Gå til opbygning af ordre": "Ordre opbygges",
           },
         },
         "Opretter ordre": {
@@ -109,15 +127,15 @@ export const ordreMaskine =
           context.varer.delete(context.aktivDato.getTime());
           return { aktivDato: event.dato, varer: context.varer };
         }),
-        "Tilføj dato": assign({
-          aktivDato: (_, event) => event.dato,
-          varer: (context, event) => {
-            if (context.varer.has(event.dato.getTime())) {
-              return context.varer;
-            } else {
-              return context.varer.set(event.dato.getTime(), new Map());
-            }
-          },
+        "Tilføj dato": assign((context, event) => {
+          if (context.varer.has(event.dato.getTime())) {
+            return { aktivDato: event.dato, varer: context.varer };
+          } else {
+            return {
+              aktivDato: event.dato,
+              varer: context.varer.set(event.dato.getTime(), new Map()),
+            };
+          }
         }),
         "Slet aktiv dato": assign((context) => {
           context.varer.delete(context.aktivDato.getTime());

@@ -5,14 +5,14 @@ import { UserProvider } from "@supabase/supabase-auth-helpers/react";
 import { useInterpret } from "@xstate/react";
 import type { AppProps } from "next/app";
 import { createContext } from "react";
-import { InterpreterFrom } from "xstate";
-import { OrdreInfo } from "../src/components/OrdreInfo";
+import { ActorRefFrom } from "xstate";
+import { OrdreInfo } from "../src/components/ordre/OrdreInfo";
 import { AppLayout } from "../src/layouts/AppLayout";
 import theme from "../src/utils/theme";
 import { ordreMaskine } from "../src/xstate/ordreMaskine";
 
 interface AppContext {
-  ordreService: InterpreterFrom<typeof ordreMaskine>;
+  ordreService: ActorRefFrom<typeof ordreMaskine>;
 }
 
 export const AppContext = createContext<AppContext>({} as AppContext);
