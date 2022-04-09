@@ -1,5 +1,5 @@
 import { Input } from "@chakra-ui/react";
-import { useActor } from "@xstate/react";
+import { useSelector } from "@xstate/react";
 import * as React from "react";
 import { AppContext } from "../../../pages/_app";
 import { imorgen } from "../../utils/ordre";
@@ -7,13 +7,15 @@ import { CenterModal } from "../CenterModal";
 
 export default function TilfoejDatoModal() {
   const appServices = React.useContext(AppContext);
-  const [state] = useActor(appServices.ordreService);
+  const tilfoejerDato = useSelector(appServices.ordreService, (state) =>
+    state.matches("Tilføjer dato")
+  );
   const { send } = appServices.ordreService;
 
   return (
     <CenterModal
       titel="Tilføj ny dato"
-      isOpen={state.matches("Tilføjer dato")}
+      isOpen={tilfoejerDato}
       onClose={() => send({ type: "Gå til opbygning af ordre" })}
     >
       <Input
