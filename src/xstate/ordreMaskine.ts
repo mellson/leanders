@@ -11,7 +11,7 @@ export interface OrdreMaskineContext {
 }
 
 export const ordreMaskine =
-  /** @xstate-layout N4IgpgJg5mDOIC5QHsBOFVgAQFsCGsA1gJYB2YAdMRADZgDEAKsTQGYAfAVlgG56aJQAB2SxiAF2LJSgkAA9EAWgAsAVgBMFAJxaAbOt3LlARkPGAzLoA0IAJ6ILuigHZ1y86oAM6gBzHXPqoAvkE2aBjY+ERklADy6JhYyEIARrZQMLBMLBzcfAJIICJiktKyCgiKetrOus6equbqHqrK1naIyloubk1qnhaeHiFhCZEEJOQU8RFJqemZ9LFCmOJJY7LFElIyhRWKzqoUurrePlrOWgYDqlo29gjGqj497qq16lrGXXUjIOGJKKTOJjOZpDJwegAOQArjRYJIaOsIptRNsynslCZum0vMYtA1dOdPJ5nPdEOZPC4fM4jOp1CTfM4LH8AeNolMZolkuDFgBlABnazwhEkPCwEDw4mQqJKO3KSnexgobXMWmUnz86q0qnJlQZVPUh1plxMugJPmUrNBQJi01BPIWkIAqhBoqxhaLiOLJdLZejdqB9t9zBRKe8GqoiVpLepdR19SSKEb3spTaYLVbQv8bRM7VzsI6IVlmGwuBKpTLCltSoH5EoDC8fJ4dOZLVG9Oq9YoDcnjWn1RnPJbrbNbZyHfNi-Q+XRPWKK37q2jawrKhrlBRLSTjAy9P5Gt3eymTYPzcOs6Mx3nOSswOJxGBUMjMEtJ6tH+J-avMQg3EdWl8BpKXUYwGg1PUnheVw3g+L4fmcEJs1IZAIDgWQ2VwG9KGoOhv3lX9FHeJwdH0VpdHxQJ6Ug5QqTVMD9CeElnHMWpR0BbD7VmItMnwjEgwbWoKA0Q5vE8Exmz0SCNFeFpjGbEktGGbNMPHOI7wfJ8XzAPi6wqZ4KAPMwNEUwxPHaB4nk0GC5IUltlKvDiORBWY8FYWAaBhTSv2XOV+PrBA1ReBkiXOC4mmZaTrN6VRVHkkl7OCFTc2c3S10UU4qVIuM2kojR1CPFi+2ItU41i9wkKCIA */
+  /** @xstate-layout N4IgpgJg5mDOIC5QHsBOFVgAQFsCGsA1gJYB2YAdMRADZgDEAKsTQGYAfAVlgG56aJQAB2SxiAF2LJSgkAA9EAJgAsARgoBOZQFZFGgOwAGVYf2rtANm0AaEAE8l+gMyaNb-bo2GvT7coC+-rZoGNj4RGSUAPLomFjIQgBGdlAwsEwsHNx8AkggImKS0rIKCNrahhSKABzaqsqGhhYainrVtg5l5RSGOmrVTqruyhaBwbFhBCTkFDGh8UkpafRRQpji8ROyBRJSMnmlzhYUOoOGdfr6DU4aHYhWLr3aTvoWFiPKii9jICFx4dNohMFslUnB6AA5ACuNFgkhom1C21Eu2KB0QTlaFHe1TUjRUGm0bgsdwQTgslTcbiGBkUhichmqPz+kwiMzmcQSoOWAGUAGcbPCESQ8LAQPDiZDIwp7EqISzqVQ1aoDfTubQeUkjao9PqKDw3fTVN6jIK-YEAyKzYFcpbgnnifgbKEQCKsQXC4ii8WS6Wo-agUqKCyKhoWL7mCkvEn2e7NVxuG51ar0xTaZkWqZWjnYW1g9IOp1YeFZMUSqV5HZFAPyDFKnp+Cy4vwaN7GUleBMaaqtAyt0wBM0s3BZmYAVVdJHdYFQZcl9Anbo9IrnFeEKOrcoQKnUWk8RhMZksNljCGUyn0XcstSVaqcGfmlvHk+I09nPuQ9B5dGXXtXfs3dFtzUTQdD0A9TEjE9OmeZQuwvCxBhGfRFAff5R0oRcp3EGdV3oABxABT4sWBBFJSDIKAsDwVhEVydcZTRQMlBAvdwOMSDj1JcNdypJxcVUVQrHTIdMzZShmDYLhcI-DIpO4D8ANlICd1A-cOKPKxSVUfiuwGBplCcfjUNEx8MIoSSshk8sCOI+EyKgCjSComi6LAJSmNrYDdzAgwNKg0lWm0LsrlUZtg0ZNDWUBWY1jAcQcNnFkVhtOKEvijya1KEwNWxSxWhDOkmzebjnl1Z5Xned4vn0QIzVIZAIDgWRhyfShqDoTKt0PNSGRbPRPlqUlyUvIS3iE6o1SbJUopHcTrXmPM0i6oDnmC7Rag0MLmnMAYnG4i9yoaLbGiEtNZraigsNfRL-0rDdlOYs9FG4+oeipZRCWNJpnAu8zLOk99yxWp7ctMQw9EaekrFxZRtM+vTXj6C5atM9D5tWdZbpZEGvMmyoai8HRqiVep21Pd5LyeY6TGMcMRPGMyMeBGjYBoKF0vEXHssUEwKExCGvD289zAOqm+m8WmzoZ80mcBbnEDC7TLypAxmgqEYDHPOr-CAA */
   createMachine(
     {
       context: { aktivDato: imorgen, varer: defaultVarerMap() },
@@ -57,8 +57,12 @@ export const ordreMaskine =
             "Sæt aktiv dato": {
               actions: "Sæt aktiv dato",
             },
-            "Start udskift aktiv dato": "Udskifter dato",
-            "Start tilføj dato": "Tilføjer dato",
+            "Start udskift aktiv dato": {
+              target: "Udskifter dato",
+            },
+            "Start tilføj dato": {
+              target: "Tilføjer dato",
+            },
           },
         },
         "Udskifter dato": {
@@ -71,16 +75,21 @@ export const ordreMaskine =
               actions: "Slet aktiv dato",
               target: "Ordre opbygges",
             },
-            "Gå til opbygning af ordre": "Ordre opbygges",
+            "Gå til opbygning af ordre": {
+              target: "Ordre opbygges",
+            },
           },
         },
         "Tilføjer dato": {
           on: {
             "Tilføj dato": {
               actions: "Tilføj dato",
+              cond: "Dato eksisterer ikke",
               target: "Ordre opbygges",
             },
-            "Gå til opbygning af ordre": "Ordre opbygges",
+            "Gå til opbygning af ordre": {
+              target: "Ordre opbygges",
+            },
           },
         },
         "Opretter ordre": {
@@ -128,14 +137,10 @@ export const ordreMaskine =
           return { aktivDato: event.dato, varer: context.varer };
         }),
         "Tilføj dato": assign((context, event) => {
-          if (context.varer.has(event.dato.getTime())) {
-            return { aktivDato: event.dato, varer: context.varer };
-          } else {
-            return {
-              aktivDato: event.dato,
-              varer: context.varer.set(event.dato.getTime(), new Map()),
-            };
-          }
+          return {
+            aktivDato: event.dato,
+            varer: context.varer.set(event.dato.getTime(), new Map()),
+          };
         }),
         "Slet aktiv dato": assign((context) => {
           context.varer.delete(context.aktivDato.getTime());
@@ -150,6 +155,11 @@ export const ordreMaskine =
             varer,
           };
         }),
+      },
+      guards: {
+        "Dato eksisterer ikke": (context, event) => {
+          return !context.varer.has(event.dato.getTime());
+        },
       },
     }
   );
