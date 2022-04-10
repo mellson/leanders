@@ -20,7 +20,7 @@ export default function VaelgNyDatoModal() {
       titel="Vælg ny dato"
       isOpen={udskifterDato}
       onDelete={() => send({ type: "Slet aktiv dato" })}
-      onClose={() => send({ type: "Gå til opbygning af ordre" })}
+      onClose={() => send({ type: "Afbryd" })}
     >
       <Input
         type="date"

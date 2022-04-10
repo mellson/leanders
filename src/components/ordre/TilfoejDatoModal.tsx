@@ -16,7 +16,7 @@ export default function TilfoejDatoModal() {
     <CenterModal
       titel="Tilføj ny dato"
       isOpen={tilfoejerDato}
-      onClose={() => send({ type: "Gå til opbygning af ordre" })}
+      onClose={() => send({ type: "Afbryd" })}
     >
       <Input
         type="date"

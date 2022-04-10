@@ -26,7 +26,7 @@ export const ordreMaskine =
           | { type: "Slet aktiv dato" }
           | { type: "Start tilføj dato" }
           | { type: "Tilføj dato"; dato: Date }
-          | { type: "Gå til opbygning af ordre" }
+          | { type: "Afbryd" }
           | { type: "Opret ordre" }
           | { type: "Ordre oprettet" }
           | { type: "Nulstil ordre" },
@@ -75,19 +75,26 @@ export const ordreMaskine =
               actions: "Slet aktiv dato",
               target: "Ordre opbygges",
             },
-            "Gå til opbygning af ordre": {
+            Afbryd: {
               target: "Ordre opbygges",
             },
           },
         },
         "Tilføjer dato": {
           on: {
-            "Tilføj dato": {
-              actions: "Tilføj dato",
-              cond: "Dato eksisterer ikke",
-              target: "Ordre opbygges",
-            },
-            "Gå til opbygning af ordre": {
+            "Tilføj dato": [
+              {
+                actions: "Tilføj dato",
+                cond: "Dato eksisterer ikke",
+                target: "Ordre opbygges",
+              },
+              {
+                actions: "Sæt aktiv dato",
+                cond: "Dato eksisterer",
+                target: "Ordre opbygges",
+              },
+            ],
+            Afbryd: {
               target: "Ordre opbygges",
             },
           },
@@ -157,6 +164,9 @@ export const ordreMaskine =
         }),
       },
       guards: {
+        "Dato eksisterer": (context, event) => {
+          return context.varer.has(event.dato.getTime());
+        },
         "Dato eksisterer ikke": (context, event) => {
           return !context.varer.has(event.dato.getTime());
         },
