@@ -47,9 +47,6 @@ export const ordreMaskine =
             "Tilføj vare": {
               actions: "Tilføj vare til ordre",
             },
-            "Opret ordre": {
-              target: "Opretter ordre",
-            },
             "Nulstil ordre": {
               actions: "Nulstil ordre",
               target: "idle",
@@ -57,12 +54,9 @@ export const ordreMaskine =
             "Sæt aktiv dato": {
               actions: "Sæt aktiv dato",
             },
-            "Start udskift aktiv dato": {
-              target: "Udskifter dato",
-            },
-            "Start tilføj dato": {
-              target: "Tilføjer dato",
-            },
+            "Opret ordre": "Opretter ordre",
+            "Start udskift aktiv dato": "Udskifter dato",
+            "Start tilføj dato": "Tilføjer dato",
           },
         },
         "Udskifter dato": {
@@ -75,9 +69,7 @@ export const ordreMaskine =
               actions: "Slet aktiv dato",
               target: "Ordre opbygges",
             },
-            Afbryd: {
-              target: "Ordre opbygges",
-            },
+            Afbryd: "Ordre opbygges",
           },
         },
         "Tilføjer dato": {
@@ -94,16 +86,12 @@ export const ordreMaskine =
                 target: "Ordre opbygges",
               },
             ],
-            Afbryd: {
-              target: "Ordre opbygges",
-            },
+            Afbryd: "Ordre opbygges",
           },
         },
         "Opretter ordre": {
           on: {
-            "Ordre oprettet": {
-              target: "Ordre afsluttet",
-            },
+            "Ordre oprettet": "Ordre afsluttet",
           },
         },
         "Ordre afsluttet": {},
