@@ -146,7 +146,7 @@ export const ordreMaskine =
           const sorteredeDatoer = sorteredeDatoerFraVarer(varer);
 
           return {
-            aktivDato: new Date(sorteredeDatoer[0]),
+            aktivDato: new Date(sorteredeDatoer[0] ?? Date.now()),
             varer,
           };
         }),
