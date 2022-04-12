@@ -1,12 +1,4 @@
-import {
-  Box,
-  Button,
-  Heading,
-  SimpleGrid,
-  Slide,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
+import { Button, SimpleGrid, Slide, Text, VStack } from "@chakra-ui/react";
 import { useActor } from "@xstate/react";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
@@ -46,6 +38,8 @@ export function OrdreInfo() {
 
   const aktivDato = state.context.aktivDato.toLocaleDateString("da-DK");
 
+  const antalDatoer = sorteredeDatoer.length;
+
   return (
     <>
       <Slide
@@ -60,10 +54,6 @@ export function OrdreInfo() {
           bg="brand.300"
           align="start"
         >
-          <Heading size="xs">
-            Du er i gang med at bestille {antalVarerForHeleOrdren} brød
-          </Heading>
-
           <SimpleGrid spacing={4} columns={{ base: 2, md: 3, lg: 5 }} w="full">
             {sorteredeDatoer.map((dato) => (
               <VStack
@@ -92,7 +82,18 @@ export function OrdreInfo() {
                 <Text>{antalVarer(dato)} brød i kurven</Text>
               </VStack>
             ))}
-            <VStack>
+            <VStack
+              gridRow={{
+                base: 2,
+                md: antalDatoer > 1 ? 2 : 1,
+                lg: antalDatoer > 3 ? 2 : 1,
+              }}
+              gridColumn={{
+                base: 2,
+                md: antalDatoer > 1 ? 3 : 2,
+                lg: antalDatoer > 3 ? 5 : 4,
+              }}
+            >
               <Button
                 leftIcon={<FiCalendar />}
                 colorScheme="brand"
@@ -115,18 +116,21 @@ export function OrdreInfo() {
                 Tilføj ny dato
               </Button>
             </VStack>
-            <Box gridColumn="end">
-              <NextLink href="/ordre" passHref>
-                <Button
-                  size="lg"
-                  rightIcon={<FiShoppingCart />}
-                  colorScheme="green"
-                  onClick={() => send({ type: "Opret ordre" })}
-                >
-                  Opret ordre
-                </Button>
-              </NextLink>
-            </Box>
+
+            <NextLink href="/ordre" passHref>
+              <Button
+                size="lg"
+                rightIcon={<FiShoppingCart />}
+                colorScheme="green"
+                h="full"
+                fontSize="lg"
+                gridRow={1}
+                gridColumn={{ base: 2, md: 3, lg: 5 }}
+                onClick={() => send({ type: "Opret ordre" })}
+              >
+                Opret ordre
+              </Button>
+            </NextLink>
           </SimpleGrid>
         </VStack>
       </Slide>
