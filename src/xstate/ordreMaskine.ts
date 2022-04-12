@@ -58,9 +58,6 @@ export const ordreMaskine =
             "Opret ordre": "Opretter ordre",
             "Start udskift aktiv dato": "Udskifter dato",
             "Start tilføj dato": "Tilføjer dato",
-            "Slet aktiv dato": {
-              actions: "Slet aktiv dato",
-            },
           },
         },
         "Udskifter dato": {

@@ -1,8 +1,7 @@
 import {
+  Box,
   Button,
-  ButtonGroup,
   Heading,
-  HStack,
   SimpleGrid,
   Slide,
   Text,
@@ -12,7 +11,7 @@ import { useActor } from "@xstate/react";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import * as React from "react";
-import { FiCalendar, FiMinus, FiPlus, FiShoppingCart } from "react-icons/fi";
+import { FiCalendar, FiPlus, FiShoppingCart } from "react-icons/fi";
 import { AppContext } from "../../../pages/_app";
 import { sammeDato, sorteredeDatoerFraVarer } from "../../utils/ordre";
 import TilfoejDatoModal from "./TilfoejDatoModal";
@@ -93,41 +92,42 @@ export function OrdreInfo() {
                 <Text>{antalVarer(dato)} brød i kurven</Text>
               </VStack>
             ))}
-          </SimpleGrid>
-          <HStack justify="space-between" w="full" pt={0}>
-            <ButtonGroup colorScheme="brand" variant="outline">
+            <VStack>
               <Button
                 leftIcon={<FiCalendar />}
+                colorScheme="brand"
+                variant="outline"
+                size="sm"
+                width="full"
                 onClick={() => send({ type: "Start udskift aktiv dato" })}
               >
-                Udskift {aktivDato}
-              </Button>
-
-              <Button
-                leftIcon={<FiMinus />}
-                onClick={() => send({ type: "Slet aktiv dato" })}
-              >
-                Slet {aktivDato}
+                Rediger dato
               </Button>
 
               <Button
                 leftIcon={<FiPlus />}
+                colorScheme="brand"
+                variant="outline"
+                size="sm"
+                width="full"
                 onClick={() => send({ type: "Start tilføj dato" })}
               >
                 Tilføj ny dato
               </Button>
-            </ButtonGroup>
-            <NextLink href="/ordre" passHref>
-              <Button
-                size="lg"
-                rightIcon={<FiShoppingCart />}
-                colorScheme="green"
-                onClick={() => send({ type: "Opret ordre" })}
-              >
-                Opret ordre
-              </Button>
-            </NextLink>
-          </HStack>
+            </VStack>
+            <Box gridColumn="end">
+              <NextLink href="/ordre" passHref>
+                <Button
+                  size="lg"
+                  rightIcon={<FiShoppingCart />}
+                  colorScheme="green"
+                  onClick={() => send({ type: "Opret ordre" })}
+                >
+                  Opret ordre
+                </Button>
+              </NextLink>
+            </Box>
+          </SimpleGrid>
         </VStack>
       </Slide>
       <VaelgNyDatoModal />
