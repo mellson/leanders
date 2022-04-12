@@ -39,7 +39,7 @@
   "devDependencies": {
     "@tsconfig/next": "^1.0.2",
     "@types/node": "17.0.23",
-    "@types/react": "18.0.2",
+    "@types/react": "18.0.1",
     "@xstate/cli": "^0.1.6",
     "concurrently": "^7.1.0",
     "eslint": "8.13.0",

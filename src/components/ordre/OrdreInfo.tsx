@@ -122,7 +122,6 @@ export function OrdreInfo() {
                 size="lg"
                 rightIcon={<FiShoppingCart />}
                 colorScheme="green"
-                h="full"
                 fontSize="lg"
                 gridRow={1}
                 gridColumn={{ base: 2, md: 3, lg: 5 }}
