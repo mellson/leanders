@@ -29,7 +29,8 @@ export const ordreMaskine =
           | { type: "Afbryd" }
           | { type: "Opret ordre" }
           | { type: "Ordre oprettet" }
-          | { type: "Nulstil ordre" },
+          | { type: "Nulstil ordre" }
+          | { type: "Affyr Confetti" },
       },
       id: "ordre maskine",
       initial: "idle",
@@ -57,6 +58,9 @@ export const ordreMaskine =
             "Opret ordre": "Opretter ordre",
             "Start udskift aktiv dato": "Udskifter dato",
             "Start tilføj dato": "Tilføjer dato",
+            "Slet aktiv dato": {
+              actions: "Slet aktiv dato",
+            },
           },
         },
         "Udskifter dato": {
@@ -91,6 +95,7 @@ export const ordreMaskine =
         },
         "Opretter ordre": {
           on: {
+            "Affyr Confetti": "Ordre afsluttet",
             "Ordre oprettet": "Ordre afsluttet",
           },
         },

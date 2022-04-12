@@ -1,12 +1,26 @@
-import { Button, HStack, Slide, Text, VStack } from "@chakra-ui/react";
+import {
+  Button,
+  ButtonGroup,
+  Heading,
+  HStack,
+  SimpleGrid,
+  Slide,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 import { useActor } from "@xstate/react";
+import NextLink from "next/link";
+import { useRouter } from "next/router";
 import * as React from "react";
+import { FiCalendar, FiMinus, FiPlus, FiShoppingCart } from "react-icons/fi";
 import { AppContext } from "../../../pages/_app";
 import { sammeDato, sorteredeDatoerFraVarer } from "../../utils/ordre";
 import TilfoejDatoModal from "./TilfoejDatoModal";
 import VaelgNyDatoModal from "./VaelgNyDatoModal";
 
 export function OrdreInfo() {
+  const router = useRouter();
+  const erPaaOrdreSiden = router.pathname === "/ordre";
   const appServices = React.useContext(AppContext);
   const [state] = useActor(appServices.ordreService);
   const { send } = appServices.ordreService;
@@ -31,64 +45,90 @@ export function OrdreInfo() {
 
   const ordrenOpbygges = antalVarerForHeleOrdren > 0;
 
+  const aktivDato = state.context.aktivDato.toLocaleDateString("da-DK");
+
   return (
     <>
-      <Slide direction="bottom" in={ordrenOpbygges} style={{ zIndex: 10 }}>
-        <HStack
+      <Slide
+        direction="bottom"
+        in={ordrenOpbygges && !erPaaOrdreSiden}
+        style={{ zIndex: 10 }}
+      >
+        <VStack
           roundedTop="md"
           padding={4}
           opacity={ordrenOpbygges ? 0.95 : 0.0}
-          w="full"
           bg="brand.300"
-          justify="space-between"
+          align="start"
         >
-          <HStack spacing={4}>
+          <Heading size="xs">
+            Du er i gang med at bestille {antalVarerForHeleOrdren} brød
+          </Heading>
+
+          <SimpleGrid spacing={4} columns={{ base: 2, md: 3, lg: 5 }} w="full">
             {sorteredeDatoer.map((dato) => (
               <VStack
+                justify="space-between"
                 key={dato.toString()}
                 alignItems="start"
                 bg={
                   sammeDato(dato, state.context.aktivDato)
                     ? "brand.200"
-                    : "brand.400"
+                    : "transparent"
                 }
+                border="2px solid"
+                borderColor="brand.200"
                 cursor="pointer"
+                transition="all 0.2s"
+                _hover={{
+                  transform: "scale(1.05)",
+                  backgroundColor: "brand.200",
+                  shadow: "sm",
+                }}
                 onClick={() => send({ type: "Sæt aktiv dato", dato })}
                 padding={2}
                 rounded="lg"
               >
-                {sammeDato(dato, state.context.aktivDato) ? (
-                  <Text
-                    fontSize="xs"
-                    cursor="pointer"
-                    onClick={() => send({ type: "Start udskift aktiv dato" })}
-                  >
-                    {dato.toLocaleDateString("da-DK")}
-                  </Text>
-                ) : (
-                  <Text fontSize="xs">{dato.toLocaleDateString("da-DK")}</Text>
-                )}
+                <Text fontSize="xs">{dato.toLocaleDateString("da-DK")}</Text>
                 <Text>{antalVarer(dato)} brød i kurven</Text>
               </VStack>
             ))}
+          </SimpleGrid>
+          <HStack justify="space-between" w="full" pt={0}>
+            <ButtonGroup colorScheme="brand" variant="outline">
+              <Button
+                leftIcon={<FiCalendar />}
+                onClick={() => send({ type: "Start udskift aktiv dato" })}
+              >
+                Udskift {aktivDato}
+              </Button>
+
+              <Button
+                leftIcon={<FiMinus />}
+                onClick={() => send({ type: "Slet aktiv dato" })}
+              >
+                Slet {aktivDato}
+              </Button>
+
+              <Button
+                leftIcon={<FiPlus />}
+                onClick={() => send({ type: "Start tilføj dato" })}
+              >
+                Tilføj ny dato
+              </Button>
+            </ButtonGroup>
+            <NextLink href="/ordre" passHref>
+              <Button
+                size="lg"
+                rightIcon={<FiShoppingCart />}
+                colorScheme="green"
+                onClick={() => send({ type: "Opret ordre" })}
+              >
+                Opret ordre
+              </Button>
+            </NextLink>
           </HStack>
-          <VStack justify="space-between">
-            <Button
-              size="sm"
-              w="full"
-              onClick={() => send({ type: "Start tilføj dato" })}
-            >
-              Tilføj dato
-            </Button>
-            <Button
-              size="sm"
-              w="full"
-              onClick={() => send({ type: "Nulstil ordre" })}
-            >
-              Nulstil ordre
-            </Button>
-          </VStack>
-        </HStack>
+        </VStack>
       </Slide>
       <VaelgNyDatoModal />
       <TilfoejDatoModal />

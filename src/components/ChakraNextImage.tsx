@@ -38,20 +38,8 @@ const myLoader = (resolverProps: ImageLoaderProps): string => {
   return `${resolverProps.src}?w=${resolverProps.width}&q=${resolverProps.quality}`;
 };
 
-interface ChakraNextImageProps {
-  hoverEffect?: boolean;
-}
-
-function ChakraNextImage(props: ImageProps & FlexProps & ChakraNextImageProps) {
-  const {
-    src,
-    width,
-    height,
-    alt,
-    quality = 50,
-    hoverEffect = true,
-    ...rest
-  } = props;
+function ChakraNextImage(props: ImageProps & FlexProps) {
+  const { src, width, height, alt, quality = 50, ...rest } = props;
 
   return (
     <Flex

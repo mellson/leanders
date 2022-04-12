@@ -41,7 +41,6 @@ export function Vare({ vare }: VareComponentProps) {
             src={`/billeder/${vare.billede}.jpeg`}
             width={600}
             height={400}
-            hoverEffect={false}
           />
           <Text>{vare.beskrivelse}</Text>
         </VStack>
