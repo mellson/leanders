@@ -27,23 +27,36 @@ export default function Ordre({ user }: OrdreProps) {
   const [state] = useActor(appServices.ordreService);
   const { send } = appServices.ordreService;
 
-  if (state.matches("Ordre linjer oprettet") || state.matches("idle"))
-    return (
-      <>
-        <Heading size="md">Tak for din ordre 🎉🎉🎉</Heading>
-        <NextLink href="/" passHref>
-          <Button>Gå til forsiden</Button>
-        </NextLink>
-      </>
-    );
+  const arbejder =
+    state.matches("Opretter ordre id") ||
+    state.matches("Opretter ordre linjer");
 
   return (
     <>
-      <Heading size="md">
-        Bekræft din ordre på {antalVarerForHeleOrdren} brød 🥐
-      </Heading>
+      {(state.matches("Bekræfter ordre") || arbejder) && (
+        <>
+          <Heading size="md">
+            Bekræft din ordre på {antalVarerForHeleOrdren} brød 🥐
+          </Heading>
 
-      <Button onClick={() => send({ type: "Opret ordre" })}>Afgiv ordre</Button>
+          <Button
+            onClick={() => send({ type: "Opret ordre" })}
+            isLoading={arbejder}
+          >
+            Afgiv ordre
+          </Button>
+        </>
+      )}
+
+      {state.matches("Ordre afsluttet") ||
+        (state.matches("idle") && (
+          <>
+            <Heading size="md">Tak for din ordre 🎉🎉🎉</Heading>
+            <NextLink href="/" passHref>
+              <Button>Gå til forsiden</Button>
+            </NextLink>
+          </>
+        ))}
 
       {state.matches("Vi har en fejl") && (
         <>
@@ -58,6 +71,7 @@ export default function Ordre({ user }: OrdreProps) {
           </Text>
         </>
       )}
+
       <Confetti />
     </>
   );

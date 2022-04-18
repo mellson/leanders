@@ -107,14 +107,14 @@ export const ordreMaskine =
         },
         "Bekræfter ordre": {
           on: {
-            "Opret ordre": "Opretter ordre",
+            "Opret ordre": "Opretter ordre id",
           },
         },
-        "Opretter ordre": {
+        "Opretter ordre id": {
           invoke: {
             src: "Opret ordre id",
             onDone: {
-              target: "Ordre id oprettet",
+              target: "Opretter ordre linjer",
               actions: assign({
                 nytOrdreId: (_: any, event) => event.data.data[0].id,
               }),
@@ -127,10 +127,10 @@ export const ordreMaskine =
             },
           },
         },
-        "Ordre id oprettet": {
+        "Opretter ordre linjer": {
           invoke: {
             src: "Opret ordre linjer",
-            onDone: "Ordre linjer oprettet",
+            onDone: "Ordre afsluttet",
             onError: {
               target: "Vi har en fejl",
               actions: assign({
@@ -139,7 +139,7 @@ export const ordreMaskine =
             },
           },
         },
-        "Ordre linjer oprettet": {
+        "Ordre afsluttet": {
           entry: [send("Affyr Confetti"), send("Nulstil ordre")],
           on: {
             "Nulstil ordre": {
@@ -150,7 +150,7 @@ export const ordreMaskine =
         },
         "Vi har en fejl": {
           on: {
-            "Opret ordre": "Opretter ordre",
+            "Opret ordre": "Opretter ordre id",
           },
         },
       },
