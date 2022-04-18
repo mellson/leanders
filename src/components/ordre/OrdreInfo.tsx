@@ -36,8 +36,6 @@ export function OrdreInfo() {
 
   const ordrenOpbygges = antalVarerForHeleOrdren > 0;
 
-  const aktivDato = state.context.aktivDato.toLocaleDateString("da-DK");
-
   const antalDatoer = sorteredeDatoer.length;
 
   return (
