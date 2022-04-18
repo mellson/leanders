@@ -13,8 +13,6 @@ export function UserLink() {
       </NextLink>
     );
 
-  console.log(user);
-
   return (
     <NextLink href="/profil" passHref>
       <Button variant="outline">Min side</Button>

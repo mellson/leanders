@@ -1,4 +1,3 @@
-import { supabase } from "@/utils/supabase";
 import {
   Button,
   FormControl,
@@ -6,6 +5,7 @@ import {
   FormLabel,
   Input,
 } from "@chakra-ui/react";
+import { supabaseClient } from "@supabase/supabase-auth-helpers/nextjs";
 import { useRouter } from "next/router";
 import { SubmitHandler, useForm } from "react-hook-form";
 
@@ -30,7 +30,7 @@ export default function NulstilKode() {
       typeof access_token === "string" &&
       type === "recovery"
     ) {
-      return await supabase().auth.api.updateUser(access_token, {
+      return await supabaseClient.auth.api.updateUser(access_token, {
         password: data.kode,
       });
     }
@@ -45,7 +45,7 @@ export default function NulstilKode() {
       typeof access_token === "string" &&
       type === "recovery"
     ) {
-      return await supabase().auth.api.updateUser(access_token, {
+      return await supabaseClient.auth.api.updateUser(access_token, {
         password: nyKode,
       });
     }

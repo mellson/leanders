@@ -2,12 +2,12 @@
 export $(cat .env | grep -v '#' | awk '/=/ {print $1}')
 
 # Fjern \" fra SUPABASE_URL
-opt=$SUPABASE_URL
+opt=$NEXT_PUBLIC_SUPABASE_URL
 supabase_url="${opt%\"}"
 supabase_url="${supabase_url#\"}"
 
 # Fjern \" fra SUPABASE_PUBLIC_KEY
-opt=$SUPABASE_PUBLIC_KEY
+opt=$NEXT_PUBLIC_SUPABASE_ANON_KEY
 supabase_public_key="${opt%\"}"
 supabase_public_key="${supabase_public_key#\"}"
 

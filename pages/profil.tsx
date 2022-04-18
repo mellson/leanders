@@ -11,6 +11,7 @@ export default function Profil({ user }: ProfilProps) {
     <>
       <Heading size="md">Profil</Heading>
       <Text>{user.email}</Text>
+      <Text>{user.id}</Text>
       <NextLink href="/api/auth/logout" passHref>
         <Button variant="outline">Log ud</Button>
       </NextLink>

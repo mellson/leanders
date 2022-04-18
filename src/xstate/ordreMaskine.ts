@@ -1,13 +1,26 @@
+import { definitions } from "@/types/supabase";
 import {
   defaultVarerMap,
   imorgen,
   sorteredeDatoerFraVarer,
 } from "@/utils/ordre";
-import { assign, createMachine } from "xstate";
+import { supabaseClient } from "@supabase/supabase-auth-helpers/nextjs";
+import { assign, createMachine, send } from "xstate";
 
 export interface OrdreMaskineContext {
   aktivDato: Date;
   varer: Map<number, Map<number, number>>;
+  nytOrdreId?: number;
+  fejl?: string;
+}
+
+function getInitialContext(): OrdreMaskineContext {
+  return {
+    aktivDato: imorgen,
+    varer: defaultVarerMap(),
+    fejl: undefined,
+    nytOrdreId: undefined,
+  };
 }
 
 export const ordreMaskine =
@@ -15,7 +28,7 @@ export const ordreMaskine =
   createMachine(
     {
       preserveActionOrder: true, // https://xstate.js.org/docs/guides/context.html#action-order
-      context: { aktivDato: imorgen, varer: defaultVarerMap() },
+      context: getInitialContext(),
       tsTypes: {} as import("./ordreMaskine.typegen").Typegen0,
       schema: {
         context: {} as OrdreMaskineContext,
@@ -28,6 +41,7 @@ export const ordreMaskine =
           | { type: "Start tilføj dato" }
           | { type: "Tilføj dato"; dato: Date }
           | { type: "Afbryd" }
+          | { type: "Bekræft ordre" }
           | { type: "Opret ordre" }
           | { type: "Ordre oprettet" }
           | { type: "Nulstil ordre" }
@@ -56,7 +70,7 @@ export const ordreMaskine =
             "Sæt aktiv dato": {
               actions: "Sæt aktiv dato",
             },
-            "Opret ordre": "Opretter ordre",
+            "Bekræft ordre": "Bekræfter ordre",
             "Start udskift aktiv dato": "Udskifter dato",
             "Start tilføj dato": "Tilføjer dato",
           },
@@ -91,13 +105,54 @@ export const ordreMaskine =
             Afbryd: "Ordre opbygges",
           },
         },
-        "Opretter ordre": {
+        "Bekræfter ordre": {
           on: {
-            "Affyr Confetti": "Ordre afsluttet",
-            "Ordre oprettet": "Ordre afsluttet",
+            "Opret ordre": "Opretter ordre",
           },
         },
-        "Ordre afsluttet": {},
+        "Opretter ordre": {
+          invoke: {
+            src: "Opret ordre id",
+            onDone: {
+              target: "Ordre id oprettet",
+              actions: assign({
+                nytOrdreId: (_: any, event) => event.data.data[0].id,
+              }),
+            },
+            onError: {
+              target: "Vi har en fejl",
+              actions: assign({
+                fejl: (_: any, event) => event.data.message,
+              }),
+            },
+          },
+        },
+        "Ordre id oprettet": {
+          invoke: {
+            src: "Opret ordre linjer",
+            onDone: "Ordre linjer oprettet",
+            onError: {
+              target: "Vi har en fejl",
+              actions: assign({
+                fejl: (_: any, event) => event.data.message,
+              }),
+            },
+          },
+        },
+        "Ordre linjer oprettet": {
+          entry: [send("Affyr Confetti"), send("Nulstil ordre")],
+          on: {
+            "Nulstil ordre": {
+              actions: "Nulstil ordre",
+              target: "idle",
+            },
+          },
+        },
+        "Vi har en fejl": {
+          on: {
+            "Opret ordre": "Opretter ordre",
+          },
+        },
       },
     },
     {
@@ -121,10 +176,7 @@ export const ordreMaskine =
             }
           },
         }),
-        "Nulstil ordre": assign({
-          aktivDato: (_) => imorgen,
-          varer: (_) => defaultVarerMap(),
-        }),
+        "Nulstil ordre": assign((_) => getInitialContext()),
         "Sæt aktiv dato": assign({ aktivDato: (_, event) => event.dato }),
         "Udskift aktiv dato": assign((context, event) => {
           context.varer.set(
@@ -160,6 +212,42 @@ export const ordreMaskine =
         },
         "Dato eksisterer ikke": (context, event) => {
           return !context.varer.has(event.dato.getTime());
+        },
+      },
+      services: {
+        "Opret ordre id": async () =>
+          await supabaseClient
+            .from<definitions["ordrer"]>("ordrer")
+            .insert([{}]) // User Id bliver sat af serveren
+            .throwOnError(),
+        "Opret ordre linjer": async (context) => {
+          if (context.nytOrdreId) {
+            const varer = sorteredeDatoerFraVarer(context.varer).map(
+              (time) => new Date(time)
+            );
+
+            const ordreLinjer = varer.flatMap((dato) => {
+              const data = context.varer.get(dato.getTime());
+              if (data) {
+                return Array.from(data.keys()).map((vareId) => {
+                  return {
+                    ordre_id: context.nytOrdreId!,
+                    vare_id: vareId,
+                    dato: dato.toISOString(),
+                    antal: data.get(vareId)!,
+                  };
+                });
+              } else {
+                return [];
+              }
+            });
+            return await supabaseClient
+              .from<definitions["ordre_linjer"]>("ordre_linjer")
+              .insert(ordreLinjer)
+              .throwOnError();
+          } else {
+            throw new Error("Ordre id mangler");
+          }
         },
       },
     }

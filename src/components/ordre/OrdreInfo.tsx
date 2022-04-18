@@ -119,7 +119,7 @@ export function OrdreInfo() {
                 fontSize="lg"
                 gridRow={1}
                 gridColumn={{ base: 2, md: 3, lg: 5 }}
-                onClick={() => send({ type: "Opret ordre" })}
+                onClick={() => send({ type: "Bekræft ordre" })}
               >
                 Opret ordre
               </Button>

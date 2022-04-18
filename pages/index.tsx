@@ -2,14 +2,14 @@ import { CenterModal } from "@/components/CenterModal";
 import NulstilKode from "@/components/nulstilKode";
 import { Vare } from "@/components/Vare";
 import { definitions } from "@/types/supabase";
-import { supabase } from "@/utils/supabase";
 import { SimpleGrid } from "@chakra-ui/react";
+import { supabaseClient } from "@supabase/supabase-auth-helpers/nextjs";
 import type { InferGetServerSidePropsType } from "next";
 import { useRouter } from "next/router";
 import * as React from "react";
 
 export const getStaticProps = async () => {
-  const { data } = await supabase()
+  const { data } = await supabaseClient
     .from<definitions["varer"]>("varer")
     .select("*")
     .order("id");
