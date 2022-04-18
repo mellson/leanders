@@ -1,6 +1,6 @@
+import { AppContext } from "@/utils/context";
 import React, { useCallback, useRef } from "react";
 import ReactCanvasConfetti from "react-canvas-confetti";
-import { AppContext } from "../../../pages/_app";
 
 const canvasStyles: React.CSSProperties = {
   position: "fixed",

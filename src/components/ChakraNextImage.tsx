@@ -1,8 +1,8 @@
+import theme from "@/utils/theme";
 import type { FlexProps } from "@chakra-ui/react";
 import { chakra, Flex } from "@chakra-ui/react";
 import type { ImageLoaderProps, ImageProps } from "next/image";
 import NextImage from "next/image";
-import theme from "../utils/theme";
 
 const ChakraNextUnwrappedImage = chakra(NextImage, {
   shouldForwardProp: (prop) =>

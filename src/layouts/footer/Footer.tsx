@@ -1,3 +1,5 @@
+import { SoMeLinks } from "@/components/SoMeLinks";
+import { navn } from "@/layouts/Logo";
 import {
   Box,
   Container,
@@ -7,8 +9,6 @@ import {
   Text,
 } from "@chakra-ui/react";
 import * as React from "react";
-import { SoMeLinks } from "../../components/SoMeLinks";
-import { navn } from "../Logo";
 import { OekoLogo } from "./OekoLogo";
 
 export function Footer() {

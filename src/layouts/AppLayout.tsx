@@ -1,8 +1,8 @@
+import Favicon from "@/components/Favicon";
 import { Container, Flex } from "@chakra-ui/react";
 import Head from "next/head";
 import * as React from "react";
 import { PropsWithChildren } from "react";
-import Favicon from "../components/Favicon";
 import { Footer } from "./footer/Footer";
 import { navn } from "./Logo";
 import { Navbar } from "./navbar/Navbar";

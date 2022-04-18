@@ -1,9 +1,9 @@
+import { CenterModal } from "@/components/CenterModal";
+import { AppContext } from "@/utils/context";
+import { imorgen } from "@/utils/ordre";
 import { Input } from "@chakra-ui/react";
 import { useSelector } from "@xstate/react";
 import * as React from "react";
-import { AppContext } from "../../../pages/_app";
-import { imorgen } from "../../utils/ordre";
-import { CenterModal } from "../CenterModal";
 
 export default function TilfoejDatoModal() {
   const appServices = React.useContext(AppContext);

@@ -1,3 +1,7 @@
+import { SoMeLinks } from "@/components/SoMeLinks";
+import { Logo } from "@/layouts/Logo";
+import { Sidebar } from "@/layouts/Sidebar";
+import { ToggleButton } from "@/layouts/ToggleButton";
 import {
   Drawer,
   DrawerContent,
@@ -7,10 +11,6 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import * as React from "react";
-import { SoMeLinks } from "../../components/SoMeLinks";
-import { Logo } from "../Logo";
-import { Sidebar } from "../Sidebar";
-import { ToggleButton } from "../ToggleButton";
 
 export function MobileNavBar() {
   const { isOpen, onToggle, onClose } = useDisclosure();

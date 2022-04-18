@@ -1,11 +1,11 @@
+import { SoMeLinks } from "@/components/SoMeLinks";
+import { Logo } from "@/layouts/Logo";
+import { UserLink } from "@/layouts/UserLink";
+import { routes } from "@/utils/routes";
 import { Button, ButtonGroup, Flex, HStack } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import * as React from "react";
-import { SoMeLinks } from "../../components/SoMeLinks";
-import { routes } from "../../utils/routes";
-import { Logo } from "../Logo";
-import { UserLink } from "../UserLink";
 
 export function DesktopNavBar() {
   const router = useRouter();

@@ -1,9 +1,9 @@
+import { CenterModal } from "@/components/CenterModal";
+import ChakraNextImage from "@/components/ChakraNextImage";
+import { VareInput } from "@/components/VareInput";
+import { definitions } from "@/types/supabase";
 import { Heading, Text, useDisclosure, VStack } from "@chakra-ui/react";
 import * as React from "react";
-import { definitions } from "../types/supabase";
-import { CenterModal } from "./CenterModal";
-import ChakraNextImage from "./ChakraNextImage";
-import { VareInput } from "./VareInput";
 
 interface VareComponentProps {
   vare: definitions["varer"];

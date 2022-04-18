@@ -1,3 +1,4 @@
+import { supabase } from "@/utils/supabase";
 import {
   Button,
   FormControl,
@@ -7,7 +8,6 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { supabase } from "../utils/supabase";
 
 type FormValues = {
   kode: string;

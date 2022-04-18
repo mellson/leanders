@@ -1,4 +1,4 @@
-import { navn } from "../layouts/Logo";
+import { navn } from "@/layouts/Logo";
 
 function Favicon() {
   return (

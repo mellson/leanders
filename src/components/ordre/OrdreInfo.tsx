@@ -1,11 +1,15 @@
+import { AppContext } from "@/utils/context";
+import { antalVarerPaaDato, sammeDato } from "@/utils/ordre";
+import {
+  antalVarerForHeleOrdrenSelector,
+  sorteredeDatoerSelector,
+} from "@/xstate/selectors";
 import { Button, SimpleGrid, Slide, Text, VStack } from "@chakra-ui/react";
-import { useActor } from "@xstate/react";
+import { useActor, useSelector } from "@xstate/react";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import * as React from "react";
 import { FiCalendar, FiPlus, FiShoppingCart } from "react-icons/fi";
-import { AppContext } from "../../../pages/_app";
-import { sammeDato, sorteredeDatoerFraVarer } from "../../utils/ordre";
 import TilfoejDatoModal from "./TilfoejDatoModal";
 import VaelgNyDatoModal from "./VaelgNyDatoModal";
 
@@ -13,26 +17,16 @@ export function OrdreInfo() {
   const router = useRouter();
   const erPaaOrdreSiden = router.pathname === "/ordre";
   const appServices = React.useContext(AppContext);
+  const sorteredeDatoer = useSelector(
+    appServices.ordreService,
+    sorteredeDatoerSelector
+  );
+  const antalVarerForHeleOrdren = useSelector(
+    appServices.ordreService,
+    antalVarerForHeleOrdrenSelector(sorteredeDatoer)
+  );
   const [state] = useActor(appServices.ordreService);
   const { send } = appServices.ordreService;
-
-  const antalVarer = (dato: Date) => {
-    const varer = state.context.varer.get(dato.getTime());
-    if (varer) {
-      return Array.from(varer.values()).reduce((acc, cur) => acc + cur, 0);
-    } else {
-      return 0;
-    }
-  };
-
-  const sorteredeDatoer = sorteredeDatoerFraVarer(state.context.varer).map(
-    (time) => new Date(time)
-  );
-
-  const antalVarerForHeleOrdren = sorteredeDatoer.reduce(
-    (acc, dato) => acc + antalVarer(dato),
-    0
-  );
 
   const ordrenOpbygges = antalVarerForHeleOrdren > 0;
 
@@ -77,7 +71,9 @@ export function OrdreInfo() {
                 rounded="lg"
               >
                 <Text fontSize="xs">{dato.toLocaleDateString("da-DK")}</Text>
-                <Text>{antalVarer(dato)} brød i kurven</Text>
+                <Text>
+                  {antalVarerPaaDato(dato, state.context.varer)} brød i kurven
+                </Text>
               </VStack>
             ))}
             <VStack

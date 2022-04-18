@@ -1,8 +1,8 @@
+import { CenterModal } from "@/components/CenterModal";
+import { AppContext } from "@/utils/context";
 import { Input } from "@chakra-ui/react";
 import { useSelector } from "@xstate/react";
 import * as React from "react";
-import { AppContext } from "../../../pages/_app";
-import { CenterModal } from "../CenterModal";
 
 export default function VaelgNyDatoModal() {
   const appServices = React.useContext(AppContext);

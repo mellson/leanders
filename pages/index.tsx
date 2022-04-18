@@ -1,12 +1,12 @@
+import { CenterModal } from "@/components/CenterModal";
+import NulstilKode from "@/components/nulstilKode";
+import { Vare } from "@/components/Vare";
+import { definitions } from "@/types/supabase";
+import { supabase } from "@/utils/supabase";
 import { SimpleGrid } from "@chakra-ui/react";
 import type { InferGetServerSidePropsType } from "next";
 import { useRouter } from "next/router";
 import * as React from "react";
-import { CenterModal } from "../src/components/CenterModal";
-import NulstilKode from "../src/components/nulstilKode";
-import { Vare } from "../src/components/Vare";
-import { definitions } from "../src/types/supabase";
-import { supabase } from "../src/utils/supabase";
 
 export const getStaticProps = async () => {
   const { data } = await supabase()

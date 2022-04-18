@@ -1,7 +1,7 @@
+import { AppContext } from "@/utils/context";
 import { Button, HStack, Input, useNumberInput } from "@chakra-ui/react";
 import { useActor } from "@xstate/react";
 import { useContext } from "react";
-import { AppContext } from "../../pages/_app";
 
 interface VareInputProps {
   vareId: number;

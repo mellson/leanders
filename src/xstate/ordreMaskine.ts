@@ -1,9 +1,9 @@
-import { assign, createMachine } from "xstate";
 import {
   defaultVarerMap,
   imorgen,
   sorteredeDatoerFraVarer,
-} from "../utils/ordre";
+} from "@/utils/ordre";
+import { assign, createMachine } from "xstate";
 
 export interface OrdreMaskineContext {
   aktivDato: Date;
@@ -14,6 +14,7 @@ export const ordreMaskine =
   /** @xstate-layout N4IgpgJg5mDOIC5QHsBOFVgAQFsCGsA1gJYB2YAdMRADZgDEAKsTQGYAfAVlgG56aJQAB2SxiAF2LJSgkAA9EAJgAsARgoBOZQFZFGgOwAGVYf2rtANm0AaEAE8l+gMyaNb-bo2GvT7coC+-rZoGNj4RGSUAPLomFjIQgBGdlAwsEwsHNx8AkggImKS0rIKCNrahhSKABzaqsqGhhYainrVtg5l5RSGOmrVTqruyhaBwbFhBCTkFDGh8UkpafRRQpji8ROyBRJSMnmlzhYUOoOGdfr6DU4aHYhWLr3aTvoWFiPKii9jICFx4dNohMFslUnB6AA5ACuNFgkhom1C21Eu2KB0QTlaFHe1TUjRUGm0bgsdwQTgslTcbiGBkUhichmqPz+kwiMzmcQSoOWAGUAGcbPCESQ8LAQPDiZDIwp7EqISzqVQ1aoDfTubQeUkjao9PqKDw3fTVN6jIK-YEAyKzYFcpbgnnifgbKEQCKsQXC4ii8WS6Wo-agUqKCyKhoWL7mCkvEn2e7NVxuG51ar0xTaZkWqZWjnYW1g9IOp1YeFZMUSqV5HZFAPyDFKnp+Cy4vwaN7GUleBMaaqtAyt0wBM0s3BZmYAVVdJHdYFQZcl9Anbo9IrnFeEKOrcoQKnUWk8RhMZksNljCGUyn0XcstSVaqcGfmlvHk+I09nPuQ9B5dGXXtXfs3dFtzUTQdD0A9TEjE9OmeZQuwvCxBhGfRFAff5R0oRcp3EGdV3oABxABT4sWBBFJSDIKAsDwVhEVydcZTRQMlBAvdwOMSDj1JcNdypJxcVUVQrHTIdMzZShmDYLhcI-DIpO4D8ANlICd1A-cOKPKxSVUfiuwGBplCcfjUNEx8MIoSSshk8sCOI+EyKgCjSComi6LAJSmNrYDdzAgwNKg0lWm0LsrlUZtg0ZNDWUBWY1jAcQcNnFkVhtOKEvijya1KEwNWxSxWhDOkmzebjnl1Z5Xned4vn0QIzVIZAIDgWRhyfShqDoTKt0PNSGRbPRPlqUlyUvIS3iE6o1SbJUopHcTrXmPM0i6oDnmC7Rag0MLmnMAYnG4i9yoaLbGiEtNZraigsNfRL-0rDdlOYs9FG4+oeipZRCWNJpnAu8zLOk99yxWp7ctMQw9EaekrFxZRtM+vTXj6C5atM9D5tWdZbpZEGvMmyoai8HRqiVep21Pd5LyeY6TGMcMRPGMyMeBGjYBoKF0vEXHssUEwKExCGvD289zAOqm+m8WmzoZ80mcBbnEDC7TLypAxmgqEYDHPOr-CAA */
   createMachine(
     {
+      preserveActionOrder: true, // https://xstate.js.org/docs/guides/context.html#action-order
       context: { aktivDato: imorgen, varer: defaultVarerMap() },
       tsTypes: {} as import("./ordreMaskine.typegen").Typegen0,
       schema: {
