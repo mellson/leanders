@@ -5,7 +5,11 @@ import {
   sorteredeDatoerFraVarer,
 } from "@/utils/ordre";
 import { supabaseClient } from "@supabase/supabase-auth-helpers/nextjs";
+import { PostgrestResponse } from "@supabase/supabase-js";
 import { assign, createMachine, send } from "xstate";
+
+export const convertError = (error: any) =>
+  error.data ?? error.data?.message ?? String(error);
 
 export interface OrdreMaskineContext {
   aktivDato: Date;
@@ -46,6 +50,14 @@ export const ordreMaskine =
           | { type: "Ordre oprettet" }
           | { type: "Nulstil ordre" }
           | { type: "Affyr Confetti" },
+        services: {} as {
+          "Opret ordre id": {
+            data: PostgrestResponse<definitions["ordrer"]>;
+          };
+          "Opret ordre linjer": {
+            data: PostgrestResponse<definitions["ordre_linjer"]>;
+          };
+        },
       },
       id: "ordre maskine",
       initial: "idle",
@@ -115,15 +127,11 @@ export const ordreMaskine =
             src: "Opret ordre id",
             onDone: {
               target: "Opretter ordre linjer",
-              actions: assign({
-                nytOrdreId: (_: any, event) => event.data.data[0].id,
-              }),
+              actions: "setOrdreId",
             },
             onError: {
               target: "Vi har en fejl",
-              actions: assign({
-                fejl: (_: any, event) => event.data.message,
-              }),
+              actions: "setFejl",
             },
           },
         },
@@ -133,9 +141,7 @@ export const ordreMaskine =
             onDone: "Ordre afsluttet",
             onError: {
               target: "Vi har en fejl",
-              actions: assign({
-                fejl: (_: any, event) => event.data.message,
-              }),
+              actions: "setFejl",
             },
           },
         },
@@ -204,6 +210,13 @@ export const ordreMaskine =
             aktivDato: new Date(sorteredeDatoer[0] ?? Date.now()),
             varer,
           };
+        }),
+        setOrdreId: assign({
+          nytOrdreId: (_: any, event) =>
+            event.data.data ? event.data.data[0]?.id : undefined,
+        }),
+        setFejl: assign({
+          fejl: (_: any, event) => convertError(event.data),
         }),
       },
       guards: {
