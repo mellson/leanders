@@ -1,7 +1,6 @@
 import { CenterModal } from "@/components/CenterModal";
 import Kalender from "@/components/Kalender";
 import { AppContext } from "@/utils/context";
-import { imorgen } from "@/utils/ordre";
 import { Center } from "@chakra-ui/react";
 import { useSelector } from "@xstate/react";
 import * as React from "react";
@@ -12,7 +11,6 @@ export default function SaetAktivDatoModal() {
     state.matches("Vælg aktiv dato")
   );
   const { send } = appServices.ordreService;
-  const imorgenDato = imorgen.toLocaleDateString("en-CA");
 
   return (
     <CenterModal
