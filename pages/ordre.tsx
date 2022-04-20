@@ -8,13 +8,15 @@ import { Button, Heading, Text } from "@chakra-ui/react";
 import { User, withAuthRequired } from "@supabase/supabase-auth-helpers/nextjs";
 import { useActor, useSelector } from "@xstate/react";
 import NextLink from "next/link";
-import React from "react";
+import { useRouter } from "next/router";
+import React, { useEffect } from "react";
 
 interface OrdreProps {
   user: User;
 }
 
 export default function Ordre({ user }: OrdreProps) {
+  const router = useRouter();
   const appServices = React.useContext(AppContext);
   const sorteredeDatoer = useSelector(
     appServices.ordreService,
@@ -26,6 +28,21 @@ export default function Ordre({ user }: OrdreProps) {
   );
   const [state] = useActor(appServices.ordreService);
   const { send } = appServices.ordreService;
+
+  useEffect(() => {
+    const handleRouteChange = () => {
+      // Hvis vi er i gang med at bekræftige en ordre og siden skifter skal vi afbryde
+      if (state.matches("Bekræfter ordre")) {
+        send("Afbryd");
+      }
+    };
+
+    router.events.on("routeChangeStart", handleRouteChange);
+
+    return () => {
+      router.events.off("routeChangeStart", handleRouteChange);
+    };
+  }, []);
 
   const arbejder =
     state.matches("Opretter ordre id") ||

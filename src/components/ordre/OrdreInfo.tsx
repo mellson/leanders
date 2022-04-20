@@ -17,6 +17,8 @@ export function OrdreInfo() {
   const router = useRouter();
   const erPaaOrdreSiden = router.pathname === "/ordre";
   const appServices = React.useContext(AppContext);
+  const { send } = appServices.ordreService;
+  const [state] = useActor(appServices.ordreService);
   const sorteredeDatoer = useSelector(
     appServices.ordreService,
     sorteredeDatoerSelector
@@ -25,8 +27,6 @@ export function OrdreInfo() {
     appServices.ordreService,
     antalVarerForHeleOrdrenSelector(sorteredeDatoer)
   );
-  const [state] = useActor(appServices.ordreService);
-  const { send } = appServices.ordreService;
 
   const ordrenOpbygges = antalVarerForHeleOrdren > 0;
 

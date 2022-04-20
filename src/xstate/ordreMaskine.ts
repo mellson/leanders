@@ -120,6 +120,7 @@ export const ordreMaskine =
         "Bekræfter ordre": {
           on: {
             "Opret ordre": "Opretter ordre id",
+            Afbryd: "Ordre opbygges",
           },
         },
         "Opretter ordre id": {
