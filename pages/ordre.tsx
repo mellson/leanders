@@ -68,7 +68,7 @@ export default function Ordre({ user }: OrdreProps) {
       {state.matches("Ordre afsluttet") ||
         (state.matches("idle") && (
           <>
-            <Heading size="md">Tak for din ordre 🎉🎉🎉</Heading>
+            <Heading size="md">Tak for din ordre 🎉</Heading>
             <NextLink href="/" passHref>
               <Button>Gå til forsiden</Button>
             </NextLink>
