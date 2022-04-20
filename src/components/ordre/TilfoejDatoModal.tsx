@@ -1,39 +1,39 @@
 import { CenterModal } from "@/components/CenterModal";
+import Kalender from "@/components/Kalender";
 import { AppContext } from "@/utils/context";
-import { imorgen } from "@/utils/ordre";
-import { Input } from "@chakra-ui/react";
+import { sorteredeDatoerSelector } from "@/xstate/selectors";
+import { Center } from "@chakra-ui/react";
 import { useSelector } from "@xstate/react";
 import * as React from "react";
-
 export default function TilfoejDatoModal() {
   const appServices = React.useContext(AppContext);
   const tilfoejerDato = useSelector(appServices.ordreService, (state) =>
     state.matches("Tilføjer dato")
   );
+  const sorteredeDatoer = useSelector(
+    appServices.ordreService,
+    sorteredeDatoerSelector
+  );
   const { send } = appServices.ordreService;
-  const imorgenDato = imorgen.toLocaleDateString("en-CA");
 
   return (
     <CenterModal
       titel="Tilføj ny dato"
       isOpen={tilfoejerDato}
-      acceptText={`Tilføj ${imorgen.toLocaleDateString()}`}
-      onAccept={() => send({ type: "Sæt aktiv dato", dato: imorgen })}
       onClose={() => send({ type: "Afbryd" })}
+      small
     >
-      <Input
-        type="date"
-        min={imorgenDato}
-        value={imorgenDato}
-        onChange={(e) => {
-          if (e.target.valueAsDate) {
+      <Center>
+        <Kalender
+          disabledDates={sorteredeDatoer}
+          onChange={(nyDato) =>
             send({
               type: "Tilføj dato",
-              dato: e.target.valueAsDate,
-            });
+              dato: nyDato,
+            })
           }
-        }}
-      />
+        />
+      </Center>
     </CenterModal>
   );
 }

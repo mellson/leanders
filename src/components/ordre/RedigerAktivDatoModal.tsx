@@ -1,7 +1,8 @@
 import { CenterModal } from "@/components/CenterModal";
+import Kalender from "@/components/Kalender";
 import { AppContext } from "@/utils/context";
-import { imorgen } from "@/utils/ordre";
-import { Input } from "@chakra-ui/react";
+import { sorteredeDatoerSelector } from "@/xstate/selectors";
+import { Center } from "@chakra-ui/react";
 import { useSelector } from "@xstate/react";
 import * as React from "react";
 
@@ -14,27 +15,33 @@ export default function RedigerAktivDatoModal() {
     appServices.ordreService,
     (state) => state.context.aktivDato
   );
+  const sorteredeDatoer = useSelector(
+    appServices.ordreService,
+    sorteredeDatoerSelector
+  );
   const { send } = appServices.ordreService;
 
   return (
     <CenterModal
       titel="Rediger dato"
       isOpen={udskifterDato}
+      deleteText="Fjern dato"
       onDelete={() => send({ type: "Slet aktiv dato" })}
       onClose={() => send({ type: "Afbryd" })}
+      small
     >
-      <Input
-        type="date"
-        min={imorgen.toLocaleDateString("en-CA")}
-        value={aktivDato ? aktivDato.toLocaleDateString("en-CA") : undefined}
-        onChange={(e) => {
-          if (e.target.valueAsDate)
+      <Center>
+        <Kalender
+          disabledDates={sorteredeDatoer}
+          value={aktivDato}
+          onChange={(nyDato) =>
             send({
               type: "Udskift aktiv dato",
-              dato: e.target.valueAsDate,
-            });
-        }}
-      />
+              dato: nyDato,
+            })
+          }
+        />
+      </Center>
     </CenterModal>
   );
 }

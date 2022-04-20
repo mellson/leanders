@@ -14,9 +14,11 @@ import React, { PropsWithChildren } from "react";
 interface CenterModalProps {
   titel: string;
   isOpen: boolean;
+  small?: boolean;
   onClose: () => void;
   acceptText?: string;
   onAccept?: () => void;
+  deleteText?: string;
   onDelete?: () => void;
 }
 
@@ -25,13 +27,21 @@ export function CenterModal({
   onClose,
   acceptText,
   onAccept,
+  deleteText,
   onDelete,
   titel,
+  small = false,
   children,
 }: PropsWithChildren<CenterModalProps>) {
   return (
     <>
-      <Modal onClose={onClose} isOpen={isOpen} isCentered preserveScrollBarGap>
+      <Modal
+        onClose={onClose}
+        isOpen={isOpen}
+        isCentered
+        preserveScrollBarGap
+        size={small ? "sm" : "md"}
+      >
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>{titel}</ModalHeader>
@@ -45,7 +55,7 @@ export function CenterModal({
             >
               {onDelete && (
                 <Button colorScheme="red" onClick={onDelete}>
-                  Fjern dato
+                  {deleteText ?? "Slet"}
                 </Button>
               )}
               {onAccept && (

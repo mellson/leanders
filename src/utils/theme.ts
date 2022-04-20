@@ -6,6 +6,8 @@ import {
   StyleFunctionProps,
   transparentize,
 } from "@chakra-ui/theme-tools";
+import { CalendarDefaultTheme } from "@uselessdev/datepicker";
+import { mergeDeep } from "./general";
 import { variantOutline } from "./theme-button";
 
 const theme = extendTheme(
@@ -42,6 +44,29 @@ const theme = extendTheme(
           },
         },
       },
+      Calendar: {
+        parts: ["calendar"],
+
+        baseStyle: {
+          calendar: {
+            borderWidth: "0",
+            shadow: "none",
+          },
+        },
+      },
+
+      CalendarDay: {
+        variants: {
+          selected: {
+            bgColor: proTheme.colors.orange[500],
+            color: "white",
+
+            _hover: {
+              bgColor: proTheme.colors.orange[300],
+            },
+          },
+        },
+      },
     },
     // fonts: {
     //   body: "Roboto, sans-serif",
@@ -49,7 +74,7 @@ const theme = extendTheme(
     //   mono: "Menlo, monospace",
     // },
   },
-  proTheme
+  mergeDeep(CalendarDefaultTheme, proTheme)
 );
 
 export default theme;

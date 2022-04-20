@@ -17,6 +17,7 @@ export interface OrdreMaskineContext {
 
 function getInitialContext(): OrdreMaskineContext {
   return {
+    aktivDato: undefined,
     varer: defaultVarerMap(),
     fejl: undefined,
     nytOrdreId: undefined,
@@ -106,10 +107,18 @@ export const ordreMaskine =
               actions: "Udskift aktiv dato",
               target: "Ordre opbygges",
             },
-            "Slet aktiv dato": {
-              actions: "Slet aktiv dato",
-              target: "Ordre opbygges",
-            },
+            "Slet aktiv dato": [
+              {
+                actions: "Nulstil ordre",
+                target: "idle",
+                cond: "Kun varer på aktiv dato",
+              },
+              {
+                actions: "Slet aktiv dato",
+                target: "Ordre opbygges",
+                cond: "Varer på flere datoer",
+              },
+            ],
             Afbryd: "Ordre opbygges",
           },
         },
@@ -261,6 +270,14 @@ export const ordreMaskine =
         "Dato eksisterer ikke": (context, event) => {
           return !context.varer.has(event.dato.getTime());
         },
+        "Kun varer på aktiv dato": (context) => {
+          return (
+            context.aktivDato !== undefined &&
+            context.varer.size === 1 &&
+            context.varer.has(context.aktivDato.getTime())
+          );
+        },
+        "Varer på flere datoer": (context) => context.varer.size > 1,
       },
       services: {
         "Opret ordre id": async () =>
