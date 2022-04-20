@@ -1,6 +1,5 @@
 import { CenterModal } from "@/components/CenterModal";
 import { AppContext } from "@/utils/context";
-import { imorgen } from "@/utils/ordre";
 import { Input } from "@chakra-ui/react";
 import { useSelector } from "@xstate/react";
 import * as React from "react";
@@ -20,7 +19,6 @@ export default function TilfoejDatoModal() {
     >
       <Input
         type="date"
-        value={imorgen.toLocaleDateString("en-CA")}
         onChange={(e) => {
           if (e.target.valueAsDate) {
             send({

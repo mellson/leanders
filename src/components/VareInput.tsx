@@ -11,7 +11,9 @@ export function VareInput({ vareId }: VareInputProps) {
   const appServices = useContext(AppContext);
   const { send } = appServices.ordreService;
   const [{ context }] = useActor(appServices.ordreService);
-  const aktiveVarer = context.varer.get(context.aktivDato.getTime());
+  const aktiveVarer = context.aktivDato
+    ? context.varer.get(context.aktivDato.getTime())
+    : undefined;
   const antal = aktiveVarer ? aktiveVarer.get(vareId) ?? 0 : 0;
 
   const { getInputProps, getIncrementButtonProps, getDecrementButtonProps } =

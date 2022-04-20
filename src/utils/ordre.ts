@@ -25,6 +25,6 @@ export function sorteredeDatoerFraVarer(varer: OrdreMaskineContext["varer"]) {
   return Array.from(varer.keys()).sort();
 }
 
-export function sammeDato(dato1: Date, dato2: Date) {
-  return dato1.getTime() === dato2.getTime();
+export function sammeDato(dato1: Date, dato2?: Date) {
+  return dato2 && dato1.getTime() === dato2.getTime();
 }

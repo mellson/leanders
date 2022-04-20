@@ -10,8 +10,9 @@ import NextLink from "next/link";
 import { useRouter } from "next/router";
 import * as React from "react";
 import { FiCalendar, FiPlus, FiShoppingCart } from "react-icons/fi";
+import SaetAktivDatoModal from "./SaetAktivDatoModal";
 import TilfoejDatoModal from "./TilfoejDatoModal";
-import VaelgNyDatoModal from "./VaelgNyDatoModal";
+import RedigerAktivDatoModal from "./VaelgNyDatoModal";
 
 export function OrdreInfo() {
   const router = useRouter();
@@ -127,7 +128,8 @@ export function OrdreInfo() {
           </SimpleGrid>
         </VStack>
       </Slide>
-      <VaelgNyDatoModal />
+      <SaetAktivDatoModal />
+      <RedigerAktivDatoModal />
       <TilfoejDatoModal />
     </>
   );

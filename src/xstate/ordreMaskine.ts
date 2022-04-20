@@ -1,9 +1,5 @@
 import { definitions } from "@/types/supabase";
-import {
-  defaultVarerMap,
-  imorgen,
-  sorteredeDatoerFraVarer,
-} from "@/utils/ordre";
+import { defaultVarerMap, sorteredeDatoerFraVarer } from "@/utils/ordre";
 import { supabaseClient } from "@supabase/supabase-auth-helpers/nextjs";
 import { PostgrestResponse } from "@supabase/supabase-js";
 import { assign, createMachine, send } from "xstate";
@@ -12,7 +8,8 @@ export const convertError = (error: any) =>
   error.data ?? error.data?.message ?? String(error);
 
 export interface OrdreMaskineContext {
-  aktivDato: Date;
+  aktivDato?: Date;
+  midlertidigVare?: number;
   varer: Map<number, Map<number, number>>;
   nytOrdreId?: number;
   fejl?: string;
@@ -20,7 +17,6 @@ export interface OrdreMaskineContext {
 
 function getInitialContext(): OrdreMaskineContext {
   return {
-    aktivDato: imorgen,
     varer: defaultVarerMap(),
     fejl: undefined,
     nytOrdreId: undefined,
@@ -64,8 +60,24 @@ export const ordreMaskine =
       states: {
         idle: {
           on: {
-            "Tilføj vare": {
-              actions: "Tilføj vare til ordre",
+            "Tilføj vare": [
+              {
+                actions: "Tilføj vare til ordre",
+                target: "Ordre opbygges",
+                cond: "Aktiv dato eksisterer",
+              },
+              {
+                actions: "Gem midlertidigt vare",
+                target: "Vælg aktiv dato",
+                cond: "Aktiv dato eksisterer ikke",
+              },
+            ],
+          },
+        },
+        "Vælg aktiv dato": {
+          on: {
+            "Sæt aktiv dato": {
+              actions: "Sæt aktiv dato",
               target: "Ordre opbygges",
             },
           },
@@ -164,8 +176,13 @@ export const ordreMaskine =
     },
     {
       actions: {
+        "Gem midlertidigt vare": assign({
+          midlertidigVare: (_, event) => event.vareId,
+        }),
         "Tilføj vare til ordre": assign({
           varer: (context, event) => {
+            if (!context.aktivDato) return context.varer;
+
             if (context.varer.has(context.aktivDato.getTime())) {
               return context.varer.set(
                 context.aktivDato.getTime(),
@@ -184,8 +201,19 @@ export const ordreMaskine =
           },
         }),
         "Nulstil ordre": assign((_) => getInitialContext()),
-        "Sæt aktiv dato": assign({ aktivDato: (_, event) => event.dato }),
+        "Sæt aktiv dato": assign({
+          aktivDato: (_, event) => event.dato,
+          varer: (context, event) => {
+            if (!context.midlertidigVare) return context.varer;
+
+            return new Map([
+              [event.dato.getTime(), new Map([[context.midlertidigVare, 1]])],
+            ]);
+          },
+          midlertidigVare: (_) => undefined,
+        }),
         "Udskift aktiv dato": assign((context, event) => {
+          if (!context.aktivDato) return context;
           context.varer.set(
             event.dato.getTime(),
             context.varer.get(context.aktivDato.getTime())!
@@ -200,6 +228,8 @@ export const ordreMaskine =
           };
         }),
         "Slet aktiv dato": assign((context) => {
+          if (!context.aktivDato) return context;
+
           context.varer.delete(context.aktivDato.getTime());
 
           const varer =
@@ -221,6 +251,9 @@ export const ordreMaskine =
         }),
       },
       guards: {
+        "Aktiv dato eksisterer": (context) => context.aktivDato !== undefined,
+        "Aktiv dato eksisterer ikke": (context) =>
+          context.aktivDato === undefined,
         "Dato eksisterer": (context, event) => {
           return context.varer.has(event.dato.getTime());
         },
