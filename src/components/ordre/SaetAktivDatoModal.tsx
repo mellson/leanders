@@ -11,16 +11,20 @@ export default function SaetAktivDatoModal() {
     state.matches("Vælg aktiv dato")
   );
   const { send } = appServices.ordreService;
+  const imorgenDato = imorgen.toLocaleDateString("en-CA");
 
   return (
     <CenterModal
       titel="Vælg dato til ordren"
       isOpen={vaelgerDato}
+      acceptText={`Vælg ${imorgen.toLocaleDateString()}`}
+      onAccept={() => send({ type: "Sæt aktiv dato", dato: imorgen })}
       onClose={() => send({ type: "Afbryd" })}
     >
       <Input
         type="date"
-        min={imorgen.toLocaleDateString("en-CA")}
+        min={imorgenDato}
+        value={imorgenDato}
         onChange={(e) => {
           if (e.target.valueAsDate)
             send({

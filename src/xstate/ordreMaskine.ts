@@ -80,6 +80,7 @@ export const ordreMaskine =
               actions: "Sæt aktiv dato",
               target: "Ordre opbygges",
             },
+            Afbryd: "idle",
           },
         },
         "Ordre opbygges": {

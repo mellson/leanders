@@ -15,12 +15,16 @@ interface CenterModalProps {
   titel: string;
   isOpen: boolean;
   onClose: () => void;
+  acceptText?: string;
+  onAccept?: () => void;
   onDelete?: () => void;
 }
 
 export function CenterModal({
   isOpen,
   onClose,
+  acceptText,
+  onAccept,
   onDelete,
   titel,
   children,
@@ -44,7 +48,9 @@ export function CenterModal({
                   Fjern dato
                 </Button>
               )}
-              <Button onClick={onClose}>Luk</Button>
+              {onAccept && (
+                <Button onClick={onAccept}>{acceptText ?? "Ok"}</Button>
+              )}
             </ButtonGroup>
           </ModalFooter>
         </ModalContent>

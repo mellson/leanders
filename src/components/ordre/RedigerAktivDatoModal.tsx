@@ -1,5 +1,6 @@
 import { CenterModal } from "@/components/CenterModal";
 import { AppContext } from "@/utils/context";
+import { imorgen } from "@/utils/ordre";
 import { Input } from "@chakra-ui/react";
 import { useSelector } from "@xstate/react";
 import * as React from "react";
@@ -24,6 +25,7 @@ export default function RedigerAktivDatoModal() {
     >
       <Input
         type="date"
+        min={imorgen.toLocaleDateString("en-CA")}
         value={aktivDato ? aktivDato.toLocaleDateString("en-CA") : undefined}
         onChange={(e) => {
           if (e.target.valueAsDate)

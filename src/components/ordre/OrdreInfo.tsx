@@ -10,9 +10,9 @@ import NextLink from "next/link";
 import { useRouter } from "next/router";
 import * as React from "react";
 import { FiCalendar, FiPlus, FiShoppingCart } from "react-icons/fi";
+import RedigerAktivDatoModal from "./RedigerAktivDatoModal";
 import SaetAktivDatoModal from "./SaetAktivDatoModal";
 import TilfoejDatoModal from "./TilfoejDatoModal";
-import RedigerAktivDatoModal from "./VaelgNyDatoModal";
 
 export function OrdreInfo() {
   const router = useRouter();
