@@ -10,6 +10,7 @@ import { UserProvider } from "@supabase/supabase-auth-helpers/react";
 import { inspect } from "@xstate/inspect";
 import { useInterpret } from "@xstate/react";
 import type { AppProps } from "next/app";
+import NextNProgress from "nextjs-progressbar";
 
 const xstateInspect =
   process.env.NEXT_PUBLIC_XSTATE_INSPECT === "true" &&
@@ -25,6 +26,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <UserProvider supabaseClient={supabaseClient}>
       <ChakraProvider theme={theme}>
         <AppContext.Provider value={{ ordreService }}>
+          <NextNProgress color={theme.colors.brand[500]} />
           <AppLayout>
             <Component {...pageProps} />
             <OrdreInfo />
