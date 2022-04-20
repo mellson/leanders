@@ -26,7 +26,10 @@ export default function App({ Component, pageProps }: AppProps) {
     <UserProvider supabaseClient={supabaseClient}>
       <ChakraProvider theme={theme}>
         <AppContext.Provider value={{ ordreService }}>
-          <NextNProgress color={theme.colors.brand[500]} />
+          <NextNProgress
+            color={theme.colors.brand[500]}
+            options={{ showSpinner: false }}
+          />
           <AppLayout>
             <Component {...pageProps} />
             <OrdreInfo />
