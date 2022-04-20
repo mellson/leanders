@@ -11,12 +11,15 @@ import { inspect } from "@xstate/inspect";
 import { useInterpret } from "@xstate/react";
 import type { AppProps } from "next/app";
 
-if (typeof window !== "undefined" && process.env.NODE_ENV === "development") {
-  inspect({ iframe: false });
-}
+const xstateInspect =
+  process.env.NEXT_PUBLIC_XSTATE_INSPECT === "true" &&
+  typeof window !== "undefined" &&
+  process.env.NODE_ENV === "development";
+
+if (xstateInspect) inspect({ iframe: false });
 
 export default function App({ Component, pageProps }: AppProps) {
-  const ordreService = useInterpret(ordreMaskine, { devTools: true });
+  const ordreService = useInterpret(ordreMaskine, { devTools: xstateInspect });
 
   return (
     <UserProvider supabaseClient={supabaseClient}>
