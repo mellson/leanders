@@ -1,12 +1,14 @@
 import { OrdreMaskineContext } from "@/xstate/ordreMaskine";
+import { addDays } from "date-fns";
 
 export function truncateDate(date: Date) {
   return new Date(date.getFullYear(), date.getMonth(), date.getDate());
 }
-export const imorgen = truncateDate(new Date(Date.now() + 24 * 60 * 60 * 1000));
+export const ordreStart = truncateDate(addDays(new Date(), 1));
+export const ordreCutoff = truncateDate(addDays(new Date(), 60));
 
 export function defaultVarerMap(): OrdreMaskineContext["varer"] {
-  return new Map().set(imorgen.getTime(), new Map());
+  return new Map().set(ordreStart.getTime(), new Map());
 }
 
 export function antalVarerPaaDato(

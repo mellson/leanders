@@ -15,7 +15,17 @@ export function Vare({ vare }: VareComponentProps) {
   return (
     <>
       <VStack spacing={2} maxWidth={200}>
-        <Heading as="h6" size="xs" noOfLines={1}>
+        <Heading
+          as="h6"
+          size="xs"
+          noOfLines={1}
+          position="absolute"
+          color="white"
+          textShadow="md"
+          dropShadow="md"
+          pt={4}
+          zIndex={10}
+        >
           {vare.navn}
         </Heading>
 

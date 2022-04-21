@@ -1,3 +1,4 @@
+import { ordreCutoff, ordreStart } from "@/utils/ordre";
 import {
   Calendar,
   CalendarControls,
@@ -11,9 +12,16 @@ import {
   CalendarValues,
   CalendarWeek,
 } from "@uselessdev/datepicker";
+import {
+  eachWeekendOfInterval,
+  eachWeekOfInterval,
+  format,
+  isSunday,
+} from "date-fns";
 import { da } from "date-fns/locale";
+import Holidays from "date-holidays";
 import * as React from "react";
-
+const hd = new Holidays("DK");
 interface KalenderProps {
   value?: Date;
   disabledDates?: Date[];
@@ -37,13 +45,42 @@ export default function Kalender({
     }
   };
 
+  const fredageIuligeUger = eachWeekOfInterval(
+    {
+      start: ordreStart,
+      end: ordreCutoff,
+    },
+    { weekStartsOn: 5, locale: da }
+  ).filter((fredag) => {
+    const ugeNummerString = format(fredag, "w", { locale: da });
+    const ugeNummer = parseInt(ugeNummerString);
+    return ugeNummer % 2 !== 0;
+  });
+
+  const soendage = eachWeekendOfInterval({
+    start: new Date(),
+    end: ordreCutoff,
+  }).filter(isSunday);
+
+  const helligdage = hd
+    .getHolidays(ordreStart)
+    .map((helligdag) => new Date(helligdag.date));
+
+  const datoerHvorManIkkeKanBestille = [
+    ...soendage,
+    ...fredageIuligeUger,
+    ...helligdage,
+    ...disabledDates,
+  ];
+
   return (
     <Calendar
       weekStartsOn={1}
       value={{ start: value }}
       onSelectDate={handleSelectDate}
       locale={da}
-      disableDates={disabledDates}
+      disableDates={datoerHvorManIkkeKanBestille}
+      disableFutureDates={ordreCutoff}
       disablePastDates
       singleDateSelection
     >

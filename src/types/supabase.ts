@@ -217,6 +217,8 @@ export interface paths {
           pris?: parameters["rowFilter.varer.pris"];
           beskrivelse?: parameters["rowFilter.varer.beskrivelse"];
           billede?: parameters["rowFilter.varer.billede"];
+          kategori?: parameters["rowFilter.varer.kategori"];
+          kan_kun_bestilles?: parameters["rowFilter.varer.kan_kun_bestilles"];
           /** Filtering Columns */
           select?: parameters["select"];
           /** Ordering */
@@ -273,6 +275,8 @@ export interface paths {
           pris?: parameters["rowFilter.varer.pris"];
           beskrivelse?: parameters["rowFilter.varer.beskrivelse"];
           billede?: parameters["rowFilter.varer.billede"];
+          kategori?: parameters["rowFilter.varer.kategori"];
+          kan_kun_bestilles?: parameters["rowFilter.varer.kan_kun_bestilles"];
         };
         header: {
           /** Preference */
@@ -293,6 +297,8 @@ export interface paths {
           pris?: parameters["rowFilter.varer.pris"];
           beskrivelse?: parameters["rowFilter.varer.beskrivelse"];
           billede?: parameters["rowFilter.varer.billede"];
+          kategori?: parameters["rowFilter.varer.kategori"];
+          kan_kun_bestilles?: parameters["rowFilter.varer.kan_kun_bestilles"];
         };
         body: {
           /** varer */
@@ -385,6 +391,10 @@ export interface definitions {
      * @default intet_billede
      */
     billede: string;
+    /** Format: text */
+    kategori: string;
+    /** Format: text */
+    kan_kun_bestilles?: string;
   };
 }
 
@@ -457,6 +467,10 @@ export interface parameters {
   "rowFilter.varer.beskrivelse": string;
   /** Format: character varying */
   "rowFilter.varer.billede": string;
+  /** Format: text */
+  "rowFilter.varer.kategori": string;
+  /** Format: text */
+  "rowFilter.varer.kan_kun_bestilles": string;
 }
 
 export interface operations {}
