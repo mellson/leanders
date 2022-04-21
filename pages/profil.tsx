@@ -19,4 +19,6 @@ export default function Profil({ user }: ProfilProps) {
   );
 }
 
-export const getServerSideProps = withAuthRequired({ redirectTo: "/login" });
+export const getServerSideProps = withAuthRequired({
+  redirectTo: "/login?returnTo=profil",
+});

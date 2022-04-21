@@ -94,4 +94,6 @@ export default function Ordre({ user }: OrdreProps) {
   );
 }
 
-export const getServerSideProps = withAuthRequired({ redirectTo: "/login" });
+export const getServerSideProps = withAuthRequired({
+  redirectTo: "/login?returnTo=ordre",
+});
