@@ -12,7 +12,8 @@ import * as React from "react";
 export const getStaticProps = async () => {
   const { data } = await supabaseClient
     .from<definitions["varer"]>("varer")
-    .select("*");
+    .select("*")
+    .eq("kan_bestilles", true);
 
   // Overvej at bruge ISR i stedet for SSG - https://nextjs.org/docs/basic-features/data-fetching/incremental-static-regeneration
   return {

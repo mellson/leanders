@@ -219,6 +219,7 @@ export interface paths {
           billede?: parameters["rowFilter.varer.billede"];
           kategori?: parameters["rowFilter.varer.kategori"];
           kan_kun_bestilles?: parameters["rowFilter.varer.kan_kun_bestilles"];
+          kan_bestilles?: parameters["rowFilter.varer.kan_bestilles"];
           /** Filtering Columns */
           select?: parameters["select"];
           /** Ordering */
@@ -277,6 +278,7 @@ export interface paths {
           billede?: parameters["rowFilter.varer.billede"];
           kategori?: parameters["rowFilter.varer.kategori"];
           kan_kun_bestilles?: parameters["rowFilter.varer.kan_kun_bestilles"];
+          kan_bestilles?: parameters["rowFilter.varer.kan_bestilles"];
         };
         header: {
           /** Preference */
@@ -299,6 +301,7 @@ export interface paths {
           billede?: parameters["rowFilter.varer.billede"];
           kategori?: parameters["rowFilter.varer.kategori"];
           kan_kun_bestilles?: parameters["rowFilter.varer.kan_kun_bestilles"];
+          kan_bestilles?: parameters["rowFilter.varer.kan_bestilles"];
         };
         body: {
           /** varer */
@@ -395,6 +398,11 @@ export interface definitions {
     kategori: string;
     /** Format: text */
     kan_kun_bestilles?: string;
+    /**
+     * Format: boolean
+     * @default true
+     */
+    kan_bestilles: boolean;
   };
 }
 
@@ -471,6 +479,8 @@ export interface parameters {
   "rowFilter.varer.kategori": string;
   /** Format: text */
   "rowFilter.varer.kan_kun_bestilles": string;
+  /** Format: boolean */
+  "rowFilter.varer.kan_bestilles": string;
 }
 
 export interface operations {}
