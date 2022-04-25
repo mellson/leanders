@@ -40,8 +40,8 @@ export default function Home({
     <>
       {Object.keys(data.varer).map((kategori) => {
         return (
-          <>
-            <Heading key={kategori} size="sm" pb={4}>
+          <div key={kategori}>
+            <Heading size="sm" pb={4}>
               {kategori}
             </Heading>
             <SimpleGrid
@@ -53,7 +53,7 @@ export default function Home({
                 <Vare key={vare.id} vare={vare} />
               ))}
             </SimpleGrid>
-          </>
+          </div>
         );
       })}
 

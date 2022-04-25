@@ -42,7 +42,7 @@ export default function Ordre({ user }: OrdreProps) {
     return () => {
       router.events.off("routeChangeStart", handleRouteChange);
     };
-  }, []);
+  }, [router.events, send, state]);
 
   const arbejder =
     state.matches("Opretter ordre id") ||

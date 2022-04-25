@@ -15,7 +15,7 @@ export default function Login(props: any) {
       const hasReturnTo = returnTo && typeof returnTo === "string";
       router.push(hasReturnTo ? `/${returnTo}` : "/");
     }
-  }, [router, user]);
+  }, [returnTo, router, user]);
 
   return (
     <Container maxW={{ base: "full", md: "640px" }}>
