@@ -25,10 +25,9 @@ function getInitialContext(): OrdreMaskineContext {
 }
 
 export const ordreMaskine =
-  /** @xstate-layout N4IgpgJg5mDOIC5QHsBOFVgAQFsCGsA1gJYB2YAdMRADZgDEAKsTQGYAfAVlgG56aJQAB2SxiAF2LJSgkAA9EAJgAsARgoBOZQFZFGgOwAGVYf2rtANm0AaEAE8l+gMyaNb-bo2GvT7coC+-rZoGNj4RGSUAPLomFjIQgBGdlAwsEwsHNx8AkggImKS0rIKCNrahhSKABzaqsqGhhYainrVtg5l5RSGOmrVTqruyhaBwbFhBCTkFDGh8UkpafRRQpji8ROyBRJSMnmlzhYUOoOGdfr6DU4aHYhWLr3aTvoWFiPKii9jICFx4dNohMFslUnB6AA5ACuNFgkhom1C21Eu2KB0QTlaFHe1TUjRUGm0bgsdwQTgslTcbiGBkUhichmqPz+kwiMzmcQSoOWAGUAGcbPCESQ8LAQPDiZDIwp7EqISzqVQ1aoDfTubQeUkjao9PqKDw3fTVN6jIK-YEAyKzYFcpbgnnifgbKEQCKsQXC4ii8WS6Wo-agUqKCyKhoWL7mCkvEn2e7NVxuG51ar0xTaZkWqZWjnYW1g9IOp1YeFZMUSqV5HZFAPyDFKnp+Cy4vwaN7GUleBMaaqtAyt0wBM0s3BZmYAVVdJHdYFQZcl9Anbo9IrnFeEKOrcoQKnUWk8RhMZksNljCGUyn0XcstSVaqcGfmlvHk+I09nPuQ9B5dGXXtXfs3dFtzUTQdD0A9TEjE9OmeZQuwvCxBhGfRFAff5R0oRcp3EGdV3oABxABT4sWBBFJSDIKAsDwVhEVydcZTRQMlBAvdwOMSDj1JcNdypJxcVUVQrHTIdMzZShmDYLhcI-DIpO4D8ANlICd1A-cOKPKxSVUfiuwGBplCcfjUNEx8MIoSSshk8sCOI+EyKgCjSComi6LAJSmNrYDdzAgwNKg0lWm0LsrlUZtg0ZNDWUBWY1jAcQcNnFkVhtOKEvijya1KEwNWxSxWhDOkmzebjnl1Z5Xned4vn0QIzVIZAIDgWRhyfShqDoTKt0PNSGRbPRPlqUlyUvIS3iE6o1SbJUopHcTrXmPM0i6oDnmC7Rag0MLmnMAYnG4i9yoaLbGiEtNZraigsNfRL-0rDdlOYs9FG4+oeipZRCWNJpnAu8zLOk99yxWp7ctMQw9EaekrFxZRtM+vTXj6C5atM9D5tWdZbpZEGvMmyoai8HRqiVep21Pd5LyeY6TGMcMRPGMyMeBGjYBoKF0vEXHssUEwKExCGvD289zAOqm+m8WmzoZ80mcBbnEDC7TLypAxmgqEYDHPOr-CAA */
+  /** @xstate-layout N4IgpgJg5mDOIC5QHkBOFVgAQFkCGsA1gJYB2YAdAIIBmAbmKQC5ioDEAKsQDY0AfAKyx08mRKAAOAe1jEmxKaXEgAHogCcANgCMFACzbNAdh1G96gKzaLegDQgAnogC0mvXooAOAEw+ADHqenpo6ftoAvuH2aBjY+ERklABqAGfcUFh4hPJ0WBB4TFJsAMopTJnZxLn5hcrSsvKKymoIAMzqRhRG2q2a3gEWRr3qdo4unkZ+Xr7eFp6Det7a85HR6Ji4BCTkFKnpFTl5BUW0AEaoDhB1MnIKSkiqiO2d3b39eoPDo04IzkaerWmPkWmj8ZnUs1WIBiG3i20oMOwUgkpwcUBgsE4PH4QhEYge9VuTQeLR6nnU+la3m8IyW2g6eiM9h+ziWFgoFjmWm8RiGJgsbihiM2CR2wuRqPRcBKZQOVSOtQJN0a91ApL0fimPNBdKpfnUYWZLlafm8HIsBr8nkZnjC+qF6ziW0SFHFKLRGJKTFE5QArhAEjRyllDjUpNcGndmohtH5jBRtHpWu1NBa5smjQh+uzjMtvJp1PMRtprA7YiL4a7HVgJR7pcVvahyvJeIIFeGlZHiWqYyXPBQ-IMLbbBtZApnnLGpj5PNpJoFeZr2mXYc6xdXa1LMQAhMCEVApIM1x0Romqx4IEveQHDA3W7nkzPuDy5nyF9T0kKtCwrp2ihEbu6W5sAAcr63CwC2x6xKeKrRpe2i+BQqaIR+H42IaYy-EMugzrMg53pyP5RNC1Zwi6ACqAYkEGrDtmwVGBsGlTVMcsFRiSTwdF0PR9AMQwFt8LjTr4hhxty-zfuo6i-hWlHUcQtGoPRxTcGAzGhmxnZnvBzw8W8-FfBOmitLoVL+PmokQrJ5E7IxNEsMpYZsGcFxXNpcGcW03GvHxHwCSMmbBAm3Q+JyVIQgC3g2WulBcK2Ah0c58U4u27HdheWi6AYximOYVg2BOKZAksQS8poEytDF-4UClghJccLk0OclzpeeLRZfohgmHO+VjhOib9jOc7JuorRGLMPjVZWu77oejnQZgbDIBImDlFIJ4eRxPa-OSUyGImPLXmEY2eMZGr6CM5IWFSFiDgE00urNB5KYtYBNS17mSMq20Xs4e0JjoiwTSa9KtGdWG3SFebWuDljfo9YqrepC0beWxAQGwECKJQZB0FIhAAeWtkIsjTCo9WGMIHjUgAMYFHcADafgALptfBzj5chBZzoYyYapyQm-AW7LmIEQQQjdFrRSRwok66ZMU+jmOsKgG0UBI3AFDQG0ALZVsTsUK2tSsbFTNP0yqzNs1tGUtJzljcx+3Qma0AuFVhzhUp0iE+D0YKzMswSI6TJt0WjGzcGQiXsNjOw04TBurjVK1h8pEfYFHpAx9TpD45bTOs+zXle7oJm8hM8wVQWwStMZhYlfmY3JjyVWy2RRupyj4fVlnMdsKr6ua9retJ3+lZd+TPfln3rC5-nDOKNbxc7aXyHjf8-wCsEhYmcZd2NxqrcnSHY+ZDQsDcL6U9MKB4GQTwb0rxeem+e8nyCROoUUOZ3iBC3SYJqnySMQLAAALUQWBGBYBoGAAQ3BlpkyfrbdqiAbAUANJg4IE1jBaAsBOdwmhkIzETBYWYN1DCRBIqQKQEA4DKDlkbWgDBmCsGfi0GuyEkwmikrxOMX9rw-xmFSchAoxrALSBkEM8owzsJjACLo7h5hxlMraboQt-rmEBtYAEfh2hBAMKfN0koMRyMvKZXQcxgg8i0LgsaA1BGcnJHOcSZC9GaFPvZRSC1ZEoPgssF4FVDCciGBqCqE4yFlxmPqfUplGRGFPnVGOaU-FeXKhyAwI4fD9DeBOXwFJzLLDjHo0KCN26Gxqs9ea098TfS7Kg34JZugDg-AEv+sxAiaHOmaP+gQOizFsVYIxisanYAxmYv4AohE2HGuNfUiFtD1ymGLckvIxZDE8MMtOb0sCz1QBMmk7IyHKIFOYFxeiBHsmkuLQI9IkzXiMdWPAF8r43zMUHRRgQ7omSKeor+gQhE+HGoMf4JY25rAqZWEB4DIHQNgfA95QRPnKJ+WoxMBCyHEL9r1UEOhNnlOTvCCZJZHbzLaYsGwwQJwjEBDOUyN0tBu18FQ8IQA */
   createMachine(
     {
-      preserveActionOrder: true, // https://xstate.js.org/docs/guides/context.html#action-order
       context: getInitialContext(),
       tsTypes: {} as import("./ordreMaskine.typegen").Typegen0,
       schema: {
@@ -56,21 +55,23 @@ export const ordreMaskine =
           };
         },
       },
-      id: "ordre maskine",
-      initial: "idle",
+      preserveActionOrder: true,
+      id: "Ordre Maskine",
+      initial: "Afventer",
       states: {
-        idle: {
+        Afventer: {
+          description: "Ordremaskinen afventer instrukser",
           on: {
             "Tilføj vare": [
               {
                 actions: "Tilføj vare til ordre",
+                cond: "Dato til vare er ok",
                 target: "Ordre opbygges",
-                cond: "Aktiv dato eksisterer",
               },
               {
                 actions: "Gem midlertidigt vare",
+                cond: "Dato til vare er ikke ok",
                 target: "Vælg aktiv dato",
-                cond: "Aktiv dato eksisterer ikke",
               },
             ],
           },
@@ -81,24 +82,33 @@ export const ordreMaskine =
               actions: "Sæt aktiv dato",
               target: "Ordre opbygges",
             },
-            Afbryd: "idle",
+            Afbryd: {
+              target: "Afventer",
+            },
           },
         },
         "Ordre opbygges": {
+          description: "Brugeren er i gang med at opbygge deres ordre",
           on: {
             "Tilføj vare": {
               actions: "Tilføj vare til ordre",
             },
-            "Nulstil ordre": {
-              actions: "Nulstil ordre",
-              target: "idle",
-            },
             "Sæt aktiv dato": {
               actions: "Sæt aktiv dato",
             },
-            "Bekræft ordre": "Bekræfter ordre",
-            "Start udskift aktiv dato": "Udskifter dato",
-            "Start tilføj dato": "Tilføjer dato",
+            "Start udskift aktiv dato": {
+              target: "Udskifter dato",
+            },
+            "Start tilføj dato": {
+              target: "Tilføjer dato",
+            },
+            "Bekræft ordre": {
+              target: "Bekræfter ordre",
+            },
+            "Nulstil ordre": {
+              actions: "Nulstil ordre",
+              target: "Afventer",
+            },
           },
         },
         "Udskifter dato": {
@@ -110,16 +120,18 @@ export const ordreMaskine =
             "Slet aktiv dato": [
               {
                 actions: "Nulstil ordre",
-                target: "idle",
                 cond: "Kun varer på aktiv dato",
+                target: "Afventer",
               },
               {
                 actions: "Slet aktiv dato",
-                target: "Ordre opbygges",
                 cond: "Varer på flere datoer",
+                target: "Ordre opbygges",
               },
             ],
-            Afbryd: "Ordre opbygges",
+            Afbryd: {
+              target: "Ordre opbygges",
+            },
           },
         },
         "Tilføjer dato": {
@@ -136,36 +148,55 @@ export const ordreMaskine =
                 target: "Ordre opbygges",
               },
             ],
-            Afbryd: "Ordre opbygges",
+            Afbryd: {
+              target: "Ordre opbygges",
+            },
           },
         },
         "Bekræfter ordre": {
+          description: "Afventer at brugeren accepter ordren",
           on: {
-            "Opret ordre": "Opretter ordre id",
-            Afbryd: "Ordre opbygges",
+            "Opret ordre": {
+              target: "Opretter ordre id",
+            },
+            Afbryd: {
+              target: "Ordre opbygges",
+            },
           },
         },
         "Opretter ordre id": {
+          description: "Opretter et ordre id hos Supabase",
           invoke: {
             src: "Opret ordre id",
-            onDone: {
-              target: "Opretter ordre linjer",
-              actions: "setOrdreId",
-            },
-            onError: {
-              target: "Vi har en fejl",
-              actions: "setFejl",
-            },
+            onDone: [
+              {
+                actions: "setOrdreId",
+                target: "Opretter ordre linjer",
+              },
+            ],
+            onError: [
+              {
+                actions: "setFejl",
+                target: "Vi har en fejl",
+              },
+            ],
           },
         },
         "Opretter ordre linjer": {
+          description: "Opretter ordre linjerne hos Supabase",
           invoke: {
             src: "Opret ordre linjer",
-            onDone: "Ordre afsluttet",
-            onError: {
-              target: "Vi har en fejl",
-              actions: "setFejl",
-            },
+            onDone: [
+              {
+                target: "Ordre afsluttet",
+              },
+            ],
+            onError: [
+              {
+                actions: "setFejl",
+                target: "Vi har en fejl",
+              },
+            ],
           },
         },
         "Ordre afsluttet": {
@@ -173,13 +204,15 @@ export const ordreMaskine =
           on: {
             "Nulstil ordre": {
               actions: "Nulstil ordre",
-              target: "idle",
+              target: "Afventer",
             },
           },
         },
         "Vi har en fejl": {
           on: {
-            "Opret ordre": "Opretter ordre id",
+            "Opret ordre": {
+              target: "Opretter ordre id",
+            },
           },
         },
       },
@@ -216,9 +249,18 @@ export const ordreMaskine =
           varer: (context, event) => {
             if (!context.midlertidigVare) return context.varer;
 
-            return new Map([
-              [event.dato.getTime(), new Map([[context.midlertidigVare, 1]])],
-            ]);
+            if (context.varer.has(event.dato.getTime())) {
+              return context.varer.set(
+                event.dato.getTime(),
+                context.varer
+                  .get(event.dato.getTime())!
+                  .set(context.midlertidigVare, 1)
+              );
+            } else {
+              return new Map([
+                [event.dato.getTime(), new Map([[context.midlertidigVare, 1]])],
+              ]);
+            }
           },
           midlertidigVare: (_) => undefined,
         }),
@@ -261,9 +303,18 @@ export const ordreMaskine =
         }),
       },
       guards: {
-        "Aktiv dato eksisterer": (context) => context.aktivDato !== undefined,
-        "Aktiv dato eksisterer ikke": (context) =>
-          context.aktivDato === undefined,
+        "Dato til vare er ok": (context, event) => {
+          const harAktivDato = context.aktivDato !== undefined;
+
+          const pizzaDejVareId = 12; // Pizzadej kan kun bestilles fredag i lige uger
+          if (event.vareId === pizzaDejVareId && harAktivDato) {
+          }
+
+          return harAktivDato;
+        },
+        "Dato til vare er ikke ok": (context, event) => {
+          return context.aktivDato === undefined;
+        },
         "Dato eksisterer": (context, event) => {
           return context.varer.has(event.dato.getTime());
         },
