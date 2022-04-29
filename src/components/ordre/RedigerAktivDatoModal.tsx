@@ -19,11 +19,16 @@ export default function RedigerAktivDatoModal() {
     appServices.ordreService,
     datoerHvorManIkkeKanBestilleSelector
   );
+  const datoVejledning = useSelector(
+    appServices.ordreService,
+    (state) => state.context.datoVejledning ?? ""
+  );
   const { send } = appServices.ordreService;
 
   return (
     <CenterModal
       titel="Rediger dato"
+      undertitel={datoVejledning}
       isOpen={udskifterDato}
       deleteText="Fjern dato"
       onDelete={() => send({ type: "Slet aktiv dato" })}

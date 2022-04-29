@@ -20,6 +20,7 @@ export const convertError = (error: any) =>
 export interface OrdreMaskineContext {
   aktivDato?: Date;
   datoerHvorManIkkeKanBestille: Date[];
+  datoVejledning?: string;
   midlertidigVare?: number;
   varer: Map<number, Map<number, number>>;
   nytOrdreId?: number;
@@ -123,6 +124,7 @@ export const ordreMaskine =
               target: "Udskifter dato",
             },
             "Start tilføj dato": {
+              actions: "Nulstil mulige datoer",
               target: "Tilføjer dato",
             },
             "Bekræft ordre": {
@@ -251,6 +253,13 @@ export const ordreMaskine =
               return standardDatoerHvorManIkkeKanBestiller(context.varer);
             }
           },
+          datoVejledning: (context, event) => {
+            if (erPizzaDej(event.vareId)) {
+              return "Pizza dej kan bestilles fredage i lige uger";
+            } else {
+              return "Du kan bestille mandag til lørdag, minus helligdage";
+            }
+          },
         }),
         "Tilføj vare til ordre": assign({
           varer: (context, event) => {
@@ -292,6 +301,25 @@ export const ordreMaskine =
             }
             return standardDatoerHvorManIkkeKanBestiller(context.varer);
           },
+          datoVejledning: (context, event) => {
+            if (context.aktivDato) {
+              const varerPaaAktivDato = context.varer.get(
+                context.aktivDato.getTime()
+              );
+              const derErPizzaDejPaaAktivDato = Array.from(
+                varerPaaAktivDato?.keys() ?? []
+              ).some(erPizzaDej);
+              if (derErPizzaDejPaaAktivDato)
+                return "Pizza dej kan bestilles fredage i lige uger";
+            }
+            return "Du kan bestille mandag til lørdag, minus helligdage";
+          },
+        }),
+        "Nulstil mulige datoer": assign({
+          datoerHvorManIkkeKanBestille: (context) =>
+            standardDatoerHvorManIkkeKanBestiller(context.varer),
+          datoVejledning: (_) =>
+            "Du kan bestille mandag til lørdag, minus helligdage",
         }),
         "Udskift aktiv dato": assign((context, event) => {
           if (!context.aktivDato) return context;

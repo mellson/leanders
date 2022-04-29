@@ -13,6 +13,7 @@ import React, { PropsWithChildren } from "react";
 
 interface CenterModalProps {
   titel: string;
+  undertitel?: string;
   isOpen: boolean;
   small?: boolean;
   onClose: () => void;
@@ -30,6 +31,7 @@ export function CenterModal({
   deleteText,
   onDelete,
   titel,
+  undertitel,
   small = false,
   children,
 }: PropsWithChildren<CenterModalProps>) {
@@ -44,7 +46,12 @@ export function CenterModal({
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>{titel}</ModalHeader>
+          <ModalHeader pb={0}>{titel}</ModalHeader>
+          {undertitel && (
+            <ModalHeader fontSize="sm" fontWeight="thin" py={0}>
+              {undertitel}
+            </ModalHeader>
+          )}
           <ModalCloseButton />
           <ModalBody>{children}</ModalBody>
           <ModalFooter>

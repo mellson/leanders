@@ -15,11 +15,16 @@ export default function SaetAktivDatoModal() {
     appServices.ordreService,
     datoerHvorManIkkeKanBestilleSelector
   );
+  const datoVejledning = useSelector(
+    appServices.ordreService,
+    (state) => state.context.datoVejledning ?? ""
+  );
   const { send } = appServices.ordreService;
 
   return (
     <CenterModal
       titel="Vælg dato til ordren"
+      undertitel={datoVejledning}
       isOpen={vaelgerDato}
       onClose={() => send({ type: "Afbryd" })}
       small
