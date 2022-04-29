@@ -1,7 +1,7 @@
 import { CenterModal } from "@/components/CenterModal";
 import Kalender from "@/components/Kalender";
 import { AppContext } from "@/utils/context";
-import { sorteredeDatoerSelector } from "@/xstate/selectors";
+import { datoerHvorManIkkeKanBestilleSelector } from "@/xstate/selectors";
 import { Center } from "@chakra-ui/react";
 import { useSelector } from "@xstate/react";
 import * as React from "react";
@@ -10,9 +10,9 @@ export default function TilfoejDatoModal() {
   const tilfoejerDato = useSelector(appServices.ordreService, (state) =>
     state.matches("Tilføjer dato")
   );
-  const sorteredeDatoer = useSelector(
+  const datoerHvorManIkkeKanBestille = useSelector(
     appServices.ordreService,
-    sorteredeDatoerSelector
+    datoerHvorManIkkeKanBestilleSelector
   );
   const { send } = appServices.ordreService;
 
@@ -25,7 +25,7 @@ export default function TilfoejDatoModal() {
     >
       <Center>
         <Kalender
-          disabledDates={sorteredeDatoer}
+          disabledDates={datoerHvorManIkkeKanBestille}
           onChange={(nyDato) =>
             send({
               type: "Tilføj dato",

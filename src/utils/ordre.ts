@@ -25,13 +25,22 @@ export function bygVarer(
   varer: OrdreMaskineContext["varer"],
   dato: Date,
   vareId: number,
-  antal = 1
+  antal: number,
+  increment: boolean = false
 ) {
-  if (varer.has(dato.getTime())) {
-    return varer.set(
-      dato.getTime(),
-      varer.get(dato.getTime())!.set(vareId, antal)
-    );
+  if (varer.size > 0) {
+    const eksisterendeVarer = varer.get(dato.getTime());
+    if (eksisterendeVarer) {
+      return varer.set(
+        dato.getTime(),
+        eksisterendeVarer.set(
+          vareId,
+          increment ? (eksisterendeVarer.get(vareId) ?? 0) + antal : antal
+        )
+      );
+    } else {
+      return varer.set(dato.getTime(), new Map([[vareId, antal]]));
+    }
   } else {
     return new Map([[dato.getTime(), new Map([[vareId, antal]])]]);
   }

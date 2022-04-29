@@ -1,5 +1,9 @@
 import { definitions } from "@/types/supabase";
 import {
+  datoerHvorManIkkeKanBestillePizzaDej,
+  standardDatoerHvorManIkkeKanBestiller,
+} from "@/utils/dato";
+import {
   bygVarer,
   datoErOkTilVare,
   defaultVarerMap,
@@ -14,6 +18,7 @@ export const convertError = (error: any) =>
 
 export interface OrdreMaskineContext {
   aktivDato?: Date;
+  datoerHvorManIkkeKanBestille: Date[];
   midlertidigVare?: number;
   varer: Map<number, Map<number, number>>;
   nytOrdreId?: number;
@@ -23,6 +28,7 @@ export interface OrdreMaskineContext {
 function getInitialContext(): OrdreMaskineContext {
   return {
     aktivDato: undefined,
+    datoerHvorManIkkeKanBestille: standardDatoerHvorManIkkeKanBestiller(),
     varer: defaultVarerMap(),
     fejl: undefined,
     nytOrdreId: undefined,
@@ -234,6 +240,14 @@ export const ordreMaskine =
       actions: {
         "Gem midlertidigt vare": assign({
           midlertidigVare: (_, event) => event.vareId,
+          datoerHvorManIkkeKanBestille: (_, event) => {
+            const pizzaDejVareId = 12; // Pizzadej kan kun bestilles fredag i lige uger
+            if (event.vareId === pizzaDejVareId) {
+              return datoerHvorManIkkeKanBestillePizzaDej();
+            } else {
+              return standardDatoerHvorManIkkeKanBestiller();
+            }
+          },
         }),
         "Tilføj vare til ordre": assign({
           varer: (context, event) => {
@@ -251,7 +265,13 @@ export const ordreMaskine =
           aktivDato: (_, event) => event.dato,
           varer: (context, event) => {
             if (!context.midlertidigVare) return context.varer;
-            return bygVarer(context.varer, event.dato, context.midlertidigVare);
+            return bygVarer(
+              context.varer,
+              event.dato,
+              context.midlertidigVare,
+              1,
+              true
+            );
           },
           midlertidigVare: (_) => undefined,
         }),

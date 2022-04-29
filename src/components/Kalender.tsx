@@ -1,4 +1,4 @@
-import { ordreCutoff, ordreStart } from "@/utils/ordre";
+import { ordreCutoff } from "@/utils/ordre";
 import {
   Calendar,
   CalendarControls,
@@ -12,7 +12,6 @@ import {
   CalendarValues,
   CalendarWeek,
 } from "@uselessdev/datepicker";
-import { eachWeekendOfInterval, isSunday, parseISO } from "date-fns";
 import { da } from "date-fns/locale";
 import Holidays from "date-holidays";
 import * as React from "react";
@@ -40,30 +39,13 @@ export default function Kalender({
     }
   };
 
-  const soendage = eachWeekendOfInterval({
-    start: new Date(),
-    end: ordreCutoff,
-  }).filter(isSunday);
-
-  const helligdage = hd
-    .getHolidays(ordreStart)
-    .map((helligdag) => parseISO(helligdag.date)); // Her bruger vi parseISO fra date-fns, da en alm. new Date() ikke virker på iPhone
-
-  console.log(helligdage);
-
-  const datoerHvorManIkkeKanBestille = [
-    ...soendage,
-    ...helligdage,
-    ...disabledDates,
-  ];
-
   return (
     <Calendar
       weekStartsOn={1}
       value={{ start: value }}
       onSelectDate={handleSelectDate}
       locale={da}
-      disableDates={datoerHvorManIkkeKanBestille}
+      disableDates={disabledDates}
       disableFutureDates={ordreCutoff}
       disablePastDates
       singleDateSelection

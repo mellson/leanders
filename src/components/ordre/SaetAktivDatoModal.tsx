@@ -1,6 +1,7 @@
 import { CenterModal } from "@/components/CenterModal";
 import Kalender from "@/components/Kalender";
 import { AppContext } from "@/utils/context";
+import { datoerHvorManIkkeKanBestilleSelector } from "@/xstate/selectors";
 import { Center } from "@chakra-ui/react";
 import { useSelector } from "@xstate/react";
 import * as React from "react";
@@ -9,6 +10,10 @@ export default function SaetAktivDatoModal() {
   const appServices = React.useContext(AppContext);
   const vaelgerDato = useSelector(appServices.ordreService, (state) =>
     state.matches("Vælg aktiv dato")
+  );
+  const datoerHvorManIkkeKanBestille = useSelector(
+    appServices.ordreService,
+    datoerHvorManIkkeKanBestilleSelector
   );
   const { send } = appServices.ordreService;
 
@@ -21,6 +26,7 @@ export default function SaetAktivDatoModal() {
     >
       <Center>
         <Kalender
+          disabledDates={datoerHvorManIkkeKanBestille}
           onChange={(nyDato) =>
             send({
               type: "Sæt aktiv dato",

@@ -8,6 +8,12 @@ export function sorteredeDatoerSelector(state: StateFrom<typeof ordreMaskine>) {
   );
 }
 
+export function datoerHvorManIkkeKanBestilleSelector(
+  state: StateFrom<typeof ordreMaskine>
+) {
+  return state.context.datoerHvorManIkkeKanBestille;
+}
+
 export function antalVarerForHeleOrdrenSelector(sorteredeDatoer: Date[]) {
   return (state: StateFrom<typeof ordreMaskine>) =>
     sorteredeDatoer.reduce(
