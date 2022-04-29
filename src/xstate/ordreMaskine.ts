@@ -7,6 +7,7 @@ import {
   bygVarer,
   datoErOkTilVare,
   defaultVarerMap,
+  erPizzaDej,
   sorteredeDatoerFraVarer,
 } from "@/utils/ordre";
 import { supabaseClient } from "@supabase/supabase-auth-helpers/nextjs";
@@ -116,6 +117,7 @@ export const ordreMaskine =
               actions: "Sæt aktiv dato",
             },
             "Start udskift aktiv dato": {
+              actions: "Opdater mulige datoer",
               target: "Udskifter dato",
             },
             "Start tilføj dato": {
@@ -241,8 +243,7 @@ export const ordreMaskine =
         "Gem midlertidigt vare": assign({
           midlertidigVare: (_, event) => event.vareId,
           datoerHvorManIkkeKanBestille: (_, event) => {
-            const pizzaDejVareId = 12; // Pizzadej kan kun bestilles fredag i lige uger
-            if (event.vareId === pizzaDejVareId) {
+            if (erPizzaDej(event.vareId)) {
               return datoerHvorManIkkeKanBestillePizzaDej();
             } else {
               return standardDatoerHvorManIkkeKanBestiller();
@@ -275,6 +276,21 @@ export const ordreMaskine =
           },
           midlertidigVare: (_) => undefined,
         }),
+        "Opdater mulige datoer": assign({
+          datoerHvorManIkkeKanBestille: (context, event) => {
+            if (context.aktivDato) {
+              const varerPaaAktivDato = context.varer.get(
+                context.aktivDato.getTime()
+              );
+              const derErPizzaDejPaaAktivDato = Array.from(
+                varerPaaAktivDato?.keys() ?? []
+              ).some(erPizzaDej);
+              if (derErPizzaDejPaaAktivDato)
+                return datoerHvorManIkkeKanBestillePizzaDej();
+            }
+            return standardDatoerHvorManIkkeKanBestiller();
+          },
+        }),
         "Udskift aktiv dato": assign((context, event) => {
           if (!context.aktivDato) return context;
           context.varer.set(
@@ -306,7 +322,7 @@ export const ordreMaskine =
           };
         }),
         setOrdreId: assign({
-          nytOrdreId: (_: any, event) =>
+          nytOrdreId: (_, event) =>
             event.data.data ? event.data.data[0]?.id : undefined,
         }),
         setFejl: assign({
