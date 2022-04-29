@@ -1,3 +1,4 @@
+import { OrdreMaskineContext } from "@/xstate/ordreMaskine";
 import {
   eachDayOfInterval,
   eachWeekendOfInterval,
@@ -8,7 +9,7 @@ import {
 } from "date-fns";
 import { da } from "date-fns/locale";
 import Holidays from "date-holidays";
-import { ordreCutoff, ordreStart } from "./ordre";
+import { ordreCutoff, ordreStart, sorteredeDatoerFraVarer } from "./ordre";
 
 export function erLigeUge(dato: Date) {
   const ugeNummerString = format(dato, "w", { locale: da });
@@ -41,17 +42,26 @@ function lukkedeDage() {
   }).filter(isSunday); // Pt. er alle søndage lukkede
 }
 
-export function standardDatoerHvorManIkkeKanBestiller() {
-  return [...lukkedeDage(), ...helligdage()];
+export function standardDatoerHvorManIkkeKanBestiller(
+  varer: OrdreMaskineContext["varer"]
+) {
+  return [
+    ...sorteredeDatoerFraVarer(varer).map((time) => new Date(time)),
+    ...lukkedeDage(),
+    ...helligdage(),
+  ];
 }
 
-export function datoerHvorManIkkeKanBestillePizzaDej() {
+export function datoerHvorManIkkeKanBestillePizzaDej(
+  varer: OrdreMaskineContext["varer"]
+) {
   const alleDageDerIkkeErFredagIligeUge = eachDayOfInterval({
     start: new Date(),
     end: ordreCutoff,
   }).filter(erIkkeFredagLigeUge);
 
   return [
+    ...sorteredeDatoerFraVarer(varer).map((time) => new Date(time)),
     ...lukkedeDage(),
     ...alleDageDerIkkeErFredagIligeUge,
     ...helligdage(),

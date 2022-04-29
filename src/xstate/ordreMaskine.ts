@@ -29,7 +29,9 @@ export interface OrdreMaskineContext {
 function getInitialContext(): OrdreMaskineContext {
   return {
     aktivDato: undefined,
-    datoerHvorManIkkeKanBestille: standardDatoerHvorManIkkeKanBestiller(),
+    datoerHvorManIkkeKanBestille: standardDatoerHvorManIkkeKanBestiller(
+      defaultVarerMap()
+    ),
     varer: defaultVarerMap(),
     fejl: undefined,
     nytOrdreId: undefined,
@@ -242,11 +244,11 @@ export const ordreMaskine =
       actions: {
         "Gem midlertidigt vare": assign({
           midlertidigVare: (_, event) => event.vareId,
-          datoerHvorManIkkeKanBestille: (_, event) => {
+          datoerHvorManIkkeKanBestille: (context, event) => {
             if (erPizzaDej(event.vareId)) {
-              return datoerHvorManIkkeKanBestillePizzaDej();
+              return datoerHvorManIkkeKanBestillePizzaDej(context.varer);
             } else {
-              return standardDatoerHvorManIkkeKanBestiller();
+              return standardDatoerHvorManIkkeKanBestiller(context.varer);
             }
           },
         }),
@@ -286,9 +288,9 @@ export const ordreMaskine =
                 varerPaaAktivDato?.keys() ?? []
               ).some(erPizzaDej);
               if (derErPizzaDejPaaAktivDato)
-                return datoerHvorManIkkeKanBestillePizzaDej();
+                return datoerHvorManIkkeKanBestillePizzaDej(context.varer);
             }
-            return standardDatoerHvorManIkkeKanBestiller();
+            return standardDatoerHvorManIkkeKanBestiller(context.varer);
           },
         }),
         "Udskift aktiv dato": assign((context, event) => {

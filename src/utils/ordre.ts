@@ -18,7 +18,7 @@ export const fredageUligeUger = eachWeekOfInterval(
 ).filter(erFredagUligeUge);
 
 export function defaultVarerMap(): OrdreMaskineContext["varer"] {
-  return new Map().set(ordreStart.getTime(), new Map());
+  return new Map();
 }
 
 export function bygVarer(
@@ -31,12 +31,14 @@ export function bygVarer(
   if (varer.size > 0) {
     const eksisterendeVarer = varer.get(dato.getTime());
     if (eksisterendeVarer) {
+      const antalEksisterendeVarer = eksisterendeVarer.get(vareId) ?? 0;
+
+      // Hvis vi er ved at forøge skal vi ikke overskrive men blot ligge 1 til
+      const antalVarer = increment ? antalEksisterendeVarer + 1 : antal;
+
       return varer.set(
         dato.getTime(),
-        eksisterendeVarer.set(
-          vareId,
-          increment ? (eksisterendeVarer.get(vareId) ?? 0) + antal : antal
-        )
+        eksisterendeVarer.set(vareId, antalVarer)
       );
     } else {
       return varer.set(dato.getTime(), new Map([[vareId, antal]]));
