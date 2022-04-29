@@ -12,12 +12,7 @@ import {
   CalendarValues,
   CalendarWeek,
 } from "@uselessdev/datepicker";
-import {
-  eachWeekendOfInterval,
-  eachWeekOfInterval,
-  format,
-  isSunday,
-} from "date-fns";
+import { eachWeekendOfInterval, isSunday, parseISO } from "date-fns";
 import { da } from "date-fns/locale";
 import Holidays from "date-holidays";
 import * as React from "react";
@@ -45,18 +40,6 @@ export default function Kalender({
     }
   };
 
-  const fredageIuligeUger = eachWeekOfInterval(
-    {
-      start: ordreStart,
-      end: ordreCutoff,
-    },
-    { weekStartsOn: 5, locale: da }
-  ).filter((fredag) => {
-    const ugeNummerString = format(fredag, "w", { locale: da });
-    const ugeNummer = parseInt(ugeNummerString);
-    return ugeNummer % 2 !== 0;
-  });
-
   const soendage = eachWeekendOfInterval({
     start: new Date(),
     end: ordreCutoff,
@@ -64,11 +47,12 @@ export default function Kalender({
 
   const helligdage = hd
     .getHolidays(ordreStart)
-    .map((helligdag) => new Date(helligdag.date));
+    .map((helligdag) => parseISO(helligdag.date)); // Her bruger vi parseISO fra date-fns, da en alm. new Date() ikke virker på iPhone
+
+  console.log(helligdage);
 
   const datoerHvorManIkkeKanBestille = [
     ...soendage,
-    ...fredageIuligeUger,
     ...helligdage,
     ...disabledDates,
   ];

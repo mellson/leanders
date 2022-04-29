@@ -1,6 +1,7 @@
 import { definitions } from "@/types/supabase";
 import {
   bygVarer,
+  datoErOkTilVare,
   defaultVarerMap,
   sorteredeDatoerFraVarer,
 } from "@/utils/ordre";
@@ -94,9 +95,17 @@ export const ordreMaskine =
         "Ordre opbygges": {
           description: "Brugeren er i gang med at opbygge deres ordre",
           on: {
-            "Tilføj vare": {
-              actions: "Tilføj vare til ordre",
-            },
+            "Tilføj vare": [
+              {
+                actions: "Tilføj vare til ordre",
+                cond: "Dato til vare er ok",
+              },
+              {
+                actions: "Gem midlertidigt vare",
+                cond: "Dato til vare er ikke ok",
+                target: "Vælg aktiv dato",
+              },
+            ],
             "Sæt aktiv dato": {
               actions: "Sæt aktiv dato",
             },
@@ -285,18 +294,10 @@ export const ordreMaskine =
         }),
       },
       guards: {
-        "Dato til vare er ok": (context, event) => {
-          const harAktivDato = context.aktivDato !== undefined;
-
-          const pizzaDejVareId = 12; // Pizzadej kan kun bestilles fredag i lige uger
-          if (event.vareId === pizzaDejVareId && harAktivDato) {
-          }
-
-          return harAktivDato;
-        },
-        "Dato til vare er ikke ok": (context, event) => {
-          return context.aktivDato === undefined;
-        },
+        "Dato til vare er ok": (context, event) =>
+          datoErOkTilVare(event.vareId, context.aktivDato),
+        "Dato til vare er ikke ok": (context, event) =>
+          !datoErOkTilVare(event.vareId, context.aktivDato),
         "Dato eksisterer": (context, event) => {
           return context.varer.has(event.dato.getTime());
         },
