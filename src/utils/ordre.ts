@@ -11,6 +11,22 @@ export function defaultVarerMap(): OrdreMaskineContext["varer"] {
   return new Map().set(ordreStart.getTime(), new Map());
 }
 
+export function bygVarer(
+  varer: OrdreMaskineContext["varer"],
+  dato: Date,
+  vareId: number,
+  antal = 1
+) {
+  if (varer.has(dato.getTime())) {
+    return varer.set(
+      dato.getTime(),
+      varer.get(dato.getTime())!.set(vareId, antal)
+    );
+  } else {
+    return new Map([[dato.getTime(), new Map([[vareId, antal]])]]);
+  }
+}
+
 export function antalVarerPaaDato(
   dato: Date,
   varer: OrdreMaskineContext["varer"]

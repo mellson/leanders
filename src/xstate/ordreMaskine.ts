@@ -1,5 +1,9 @@
 import { definitions } from "@/types/supabase";
-import { defaultVarerMap, sorteredeDatoerFraVarer } from "@/utils/ordre";
+import {
+  bygVarer,
+  defaultVarerMap,
+  sorteredeDatoerFraVarer,
+} from "@/utils/ordre";
 import { supabaseClient } from "@supabase/supabase-auth-helpers/nextjs";
 import { PostgrestResponse } from "@supabase/supabase-js";
 import { assign, createMachine, send } from "xstate";
@@ -225,22 +229,12 @@ export const ordreMaskine =
         "Tilføj vare til ordre": assign({
           varer: (context, event) => {
             if (!context.aktivDato) return context.varer;
-
-            if (context.varer.has(context.aktivDato.getTime())) {
-              return context.varer.set(
-                context.aktivDato.getTime(),
-                context.varer
-                  .get(context.aktivDato.getTime())!
-                  .set(event.vareId, event.antal)
-              );
-            } else {
-              return new Map([
-                [
-                  context.aktivDato.getTime(),
-                  new Map([[event.vareId, event.antal]]),
-                ],
-              ]);
-            }
+            return bygVarer(
+              context.varer,
+              context.aktivDato,
+              event.vareId,
+              event.antal
+            );
           },
         }),
         "Nulstil ordre": assign((_) => getInitialContext()),
@@ -248,19 +242,7 @@ export const ordreMaskine =
           aktivDato: (_, event) => event.dato,
           varer: (context, event) => {
             if (!context.midlertidigVare) return context.varer;
-
-            if (context.varer.has(event.dato.getTime())) {
-              return context.varer.set(
-                event.dato.getTime(),
-                context.varer
-                  .get(event.dato.getTime())!
-                  .set(context.midlertidigVare, 1)
-              );
-            } else {
-              return new Map([
-                [event.dato.getTime(), new Map([[context.midlertidigVare, 1]])],
-              ]);
-            }
+            return bygVarer(context.varer, event.dato, context.midlertidigVare);
           },
           midlertidigVare: (_) => undefined,
         }),
@@ -357,7 +339,7 @@ export const ordreMaskine =
                 return [];
               }
             });
-            return await supabaseClient
+            return supabaseClient
               .from<definitions["ordre_linjer"]>("ordre_linjer")
               .insert(ordreLinjer)
               .throwOnError();
