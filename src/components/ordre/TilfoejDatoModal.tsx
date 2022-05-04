@@ -27,7 +27,6 @@ export default function TilfoejDatoModal() {
       undertitel={datoVejledning}
       isOpen={tilfoejerDato}
       onClose={() => send({ type: "Afbryd" })}
-      small
     >
       <Center>
         <Kalender

@@ -1,6 +1,7 @@
 import { definitions } from "@/types/supabase";
 import {
   datoerHvorManIkkeKanBestillePizzaDej,
+  getDatoVejledning,
   standardDatoerHvorManIkkeKanBestiller,
 } from "@/utils/dato";
 import {
@@ -8,6 +9,7 @@ import {
   datoErOkTilVare,
   defaultVarerMap,
   erPizzaDej,
+  pizzaDejVareId,
   sorteredeDatoerFraVarer,
 } from "@/utils/ordre";
 import { supabaseClient } from "@supabase/supabase-auth-helpers/nextjs";
@@ -253,13 +255,7 @@ export const ordreMaskine =
               return standardDatoerHvorManIkkeKanBestiller(context.varer);
             }
           },
-          datoVejledning: (context, event) => {
-            if (erPizzaDej(event.vareId)) {
-              return "Pizza dej kan bestilles fredage i lige uger";
-            } else {
-              return "Du kan bestille mandag til lørdag, minus helligdage";
-            }
-          },
+          datoVejledning: (_, event) => getDatoVejledning(event.vareId),
         }),
         "Tilføj vare til ordre": assign({
           varer: (context, event) => {
@@ -310,16 +306,15 @@ export const ordreMaskine =
                 varerPaaAktivDato?.keys() ?? []
               ).some(erPizzaDej);
               if (derErPizzaDejPaaAktivDato)
-                return "Pizza dej kan bestilles fredage i lige uger";
+                return getDatoVejledning(pizzaDejVareId);
             }
-            return "Du kan bestille mandag til lørdag, minus helligdage";
+            return getDatoVejledning(-1);
           },
         }),
         "Nulstil mulige datoer": assign({
           datoerHvorManIkkeKanBestille: (context) =>
             standardDatoerHvorManIkkeKanBestiller(context.varer),
-          datoVejledning: (_) =>
-            "Du kan bestille mandag til lørdag, minus helligdage",
+          datoVejledning: (_) => getDatoVejledning(-1),
         }),
         "Udskift aktiv dato": assign((context, event) => {
           if (!context.aktivDato) return context;

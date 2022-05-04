@@ -27,13 +27,12 @@ export default function RedigerAktivDatoModal() {
 
   return (
     <CenterModal
-      titel="Rediger dato"
-      undertitel={datoVejledning}
+      titel={datoVejledning}
+      undertitel="Rediger dato"
       isOpen={udskifterDato}
       deleteText="Fjern dato"
       onDelete={() => send({ type: "Slet aktiv dato" })}
       onClose={() => send({ type: "Afbryd" })}
-      small
     >
       <Center>
         <Kalender

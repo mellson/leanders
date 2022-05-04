@@ -23,11 +23,10 @@ export default function SaetAktivDatoModal() {
 
   return (
     <CenterModal
-      titel="Vælg dato til ordren"
-      undertitel={datoVejledning}
+      titel={datoVejledning}
+      undertitel="Vælg dato til ordren"
       isOpen={vaelgerDato}
       onClose={() => send({ type: "Afbryd" })}
-      small
     >
       <Center>
         <Kalender

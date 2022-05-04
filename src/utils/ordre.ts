@@ -48,8 +48,8 @@ export function bygVarer(
   }
 }
 
+export const pizzaDejVareId = 12; // Pizzadej kan kun bestilles fredag i lige uger
 export function erPizzaDej(vareId: number) {
-  const pizzaDejVareId = 12; // Pizzadej kan kun bestilles fredag i lige uger
   return vareId === pizzaDejVareId;
 }
 

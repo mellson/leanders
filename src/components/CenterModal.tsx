@@ -46,7 +46,9 @@ export function CenterModal({
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader pb={0}>{titel}</ModalHeader>
+          <ModalHeader pb={0} fontSize="md">
+            {titel}
+          </ModalHeader>
           {undertitel && (
             <ModalHeader fontSize="sm" fontWeight="thin" py={0}>
               {undertitel}

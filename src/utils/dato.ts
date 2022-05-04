@@ -9,7 +9,12 @@ import {
 } from "date-fns";
 import { da } from "date-fns/locale";
 import Holidays from "date-holidays";
-import { ordreCutoff, ordreStart, sorteredeDatoerFraVarer } from "./ordre";
+import {
+  erPizzaDej,
+  ordreCutoff,
+  ordreStart,
+  sorteredeDatoerFraVarer,
+} from "./ordre";
 
 export function erLigeUge(dato: Date) {
   const ugeNummerString = format(dato, "w", { locale: da });
@@ -67,3 +72,10 @@ export function datoerHvorManIkkeKanBestillePizzaDej(
     ...helligdage(),
   ];
 }
+
+export const getDatoVejledning = (vareId: number) => {
+  if (erPizzaDej(vareId)) {
+    return "Pizza dej kan bestilles fredage i lige uger";
+  }
+  return "Du kan bestille mandag til lørdag, minus helligdage";
+};
