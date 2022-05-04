@@ -13,7 +13,7 @@ export const getStaticProps = async () => {
     .from<definitions["varer"]>("varer")
     .select("*")
     .eq("kan_bestilles", true)
-    .order("kategori, id");
+    .order("id");
 
   // Overvej at bruge ISR i stedet for SSG - https://nextjs.org/docs/basic-features/data-fetching/incremental-static-regeneration
   return {
