@@ -2,7 +2,7 @@ import { CenterModal } from "@/components/CenterModal";
 import ChakraNextImage from "@/components/ChakraNextImage";
 import { VareInput } from "@/components/VareInput";
 import { definitions } from "@/types/supabase";
-import { Heading, Text, useDisclosure, VStack } from "@chakra-ui/react";
+import { Text, useDisclosure, VStack } from "@chakra-ui/react";
 import * as React from "react";
 
 interface VareComponentProps {
@@ -15,19 +15,9 @@ export function Vare({ vare }: VareComponentProps) {
   return (
     <>
       <VStack spacing={2} maxWidth={200}>
-        <Heading
-          as="h6"
-          size="xs"
-          noOfLines={1}
-          position="absolute"
-          color="white"
-          textShadow="md"
-          dropShadow="md"
-          pt={4}
-          zIndex={10}
-        >
+        <Text noOfLines={1} fontSize="lg" fontWeight="medium">
           {vare.navn}
-        </Heading>
+        </Text>
 
         <ChakraNextImage
           alt={vare.navn}
