@@ -47,7 +47,11 @@ export function OrdreInfo() {
           bg="brand.300"
           align="start"
         >
-          <SimpleGrid spacing={4} columns={{ base: 2, md: 3, lg: 5 }} w="full">
+          <SimpleGrid
+            spacing={{ base: 2, md: 4 }}
+            columns={{ base: 2, md: 3, lg: 5 }}
+            w="full"
+          >
             {sorteredeDatoer.map((dato) => (
               <VStack
                 justify="space-between"
@@ -120,6 +124,7 @@ export function OrdreInfo() {
                 fontSize="lg"
                 gridRow={1}
                 gridColumn={{ base: 2, md: 3, lg: 5 }}
+                height="100%"
                 onClick={() => send({ type: "Bekræft ordre" })}
               >
                 Opret ordre
