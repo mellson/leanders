@@ -35,7 +35,10 @@ export default function ValgteVarer() {
             {Array.from(varer.get(dato.getTime())?.keys() ?? [])
               .sort()
               .map((vareId) => (
-                <Vare vare={databaseVarer.find((v) => v.id === vareId)!} />
+                <Vare
+                  key={vareId}
+                  vare={databaseVarer.find((v) => v.id === vareId)!}
+                />
               ))}
           </SimpleGrid>
         </VStack>
