@@ -1,4 +1,4 @@
-import Confetti from "@/components/ordre/Confetti";
+import { Confetti } from "@/components/ordre/Confetti";
 import ValgteVarer from "@/components/ordre/ValgteVarer";
 import { AppContext } from "@/utils/context";
 import {
@@ -78,9 +78,11 @@ export default function Ordre({ user }: OrdreProps) {
       {state.matches("Ordre afsluttet") ||
         (state.matches("Afventer") && (
           <>
-            <Heading size="md">Tak for din ordre 🎉</Heading>
+            <Heading size="md" pb={4}>
+              Tak for din ordre 🎉
+            </Heading>
             <NextLink href="/" passHref>
-              <Button>Gå til forsiden</Button>
+              <Button size="lg">Tilbage til forsiden</Button>
             </NextLink>
           </>
         ))}

@@ -11,7 +11,7 @@ const canvasStyles: React.CSSProperties = {
   left: 0,
 };
 
-export default function Confetti() {
+function InternalConfetti() {
   const refAnimationInstance = useRef<any>(null);
   const appServices = React.useContext(AppContext);
 
@@ -65,3 +65,5 @@ export default function Confetti() {
 
   return <ReactCanvasConfetti refConfetti={getInstance} style={canvasStyles} />;
 }
+
+export const Confetti = React.memo(InternalConfetti);

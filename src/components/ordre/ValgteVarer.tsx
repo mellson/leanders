@@ -20,6 +20,16 @@ export default function ValgteVarer() {
     (state) => state.context.databaseVarer
   );
 
+  function getVarerPaaDato(dato: Date) {
+    return Array.from(varer.get(dato.getTime())?.keys() ?? [])
+      .sort()
+      .map(
+        (vareId) =>
+          // Det er sikkert for os at antage at varen her er her fordi den kun kan være i varer hvis den allerede er i databaseVarer
+          databaseVarer.find((vare) => vare.id === vareId)!
+      );
+  }
+
   return (
     <>
       {sorteredeDatoer.map((dato) => (
@@ -32,14 +42,9 @@ export default function ValgteVarer() {
             spacing={{ base: 2, md: 5, lg: 10 }}
             justifyItems="left"
           >
-            {Array.from(varer.get(dato.getTime())?.keys() ?? [])
-              .sort()
-              .map((vareId) => (
-                <Vare
-                  key={vareId}
-                  vare={databaseVarer.find((v) => v.id === vareId)!}
-                />
-              ))}
+            {getVarerPaaDato(dato).map((vare) => (
+              <Vare key={vare.id} vare={vare} />
+            ))}
           </SimpleGrid>
         </VStack>
       ))}

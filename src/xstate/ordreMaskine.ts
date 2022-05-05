@@ -30,9 +30,11 @@ export interface OrdreMaskineContext {
   fejl?: string;
 }
 
-function getInitialContext(): OrdreMaskineContext {
+function getInitialContext(
+  databaseVarer: definitions["varer"][]
+): OrdreMaskineContext {
   return {
-    databaseVarer: [],
+    databaseVarer: databaseVarer,
     aktivDato: undefined,
     datoerHvorManIkkeKanBestille: standardDatoerHvorManIkkeKanBestiller(
       defaultVarerMap()
@@ -47,7 +49,7 @@ export const ordreMaskine =
   /** @xstate-layout N4IgpgJg5mDOIC5QHkBOFVgAQFkCGsA1gJYB2YAdAIIBmAbmKQC5ioDEAKsQDY0AfAKyx08mRKAAOAe1jEmxKaXEgAHogCcANgCMFACzbNAdh1G96gKzaLegDQgAnogC0mvXooAOAEw+ADHqenpo6ftoAvuH2aBjY+ERklABqAGfcUFh4hPJ0WBB4TFJsAMopTJnZxLn5hcrSsvKKymoIAMzqRhRG2q2a3gEWRr3qdo4unkZ+Xr7eFp6Det7a85HR6Ji4BCTkFKnpFTl5BUW0AEaoDhB1MnIKSkiqiO2d3b39eoPDo04IzkaerWmPkWmj8ZnUs1WIBiG3i20oMOwUgkpwcUBgsE4PH4QhEYge9VuTQeLR6nnU+la3m8IyW2g6eiM9h+ziWFgoFjmWm8RiGJgsbihiM2CR2wuRqPRcBKZQOVSOtQJN0a91ApL0fimPNBdKpfnUYWZLlafm8HIsBr8nkZnjC+qF6ziW0SFHFKLRGJKTFE5QArhAEjRyllDjUpNcGndmohtH5jBRtHpWu1NBa5smjQh+uzjMtvJp1PMRtprA7YiL4a7HVgJR7pcVvahyvJeIIFeGlZHiWqYyXPBQ-IMLbbBtZApnnLGpj5PNpJoFeZr2mXYc6xdXa1LMQAhMCEVApIM1x0Romqx4IEveQHDA3W7nkzPuDy5nyF9T0kKtCwrp2ihEbu6W5sAAcr63CwC2x6xKeKrRpe2i+BQqaIR+H42IaYy-EMugzrMg53pyP5RNC1Zwi6ACqAYkEGrDtmwVGBsGlTVMcsFRiSTwdF0PR9AMQwFt8LjTr4hhxty-zfuo6i-hWlHUcQtGoPRxTcGAzGhmxnZnvBzw8W8-FfBOmitLoVL+PmokQrJ5E7IxNEsMpYZsGcFxXNpcGcW03GvHxHwCSMmbBAm3Q+JyVIQgC3g2WulBcK2Ah0c58U4u27HdheWi6AYximOYVg2BOKZAksQS8poEytDF-4UClghJccLk0OclzpeeLRZfohgmHO+VjhOib9jOc7JuorRGLMPjVZWu77oejnQZgbDIBImDlFIJ4eRxPa-OSUyGImPLXmEY2eMZGr6CM5IWFSFiDgE00urNB5KYtYBNS17mSMq20Xs4e0JjoiwTSa9KtGdWG3SFebWuDljfo9YqrepC0beWxAQGwECKJQZB0FIhAAeWtkIsjTCo9WGMIHjUgAMYFHcADafgALptfBzj5chBZzoYyYapyQm-AW7LmIEQQQjdFrRSRwok66ZMU+jmOsKgG0UBI3AFDQG0ALZVsTsUK2tSsbFTNP0yqzNs1tGUtJzljcx+3Qma0AuFVhzhUp0iE+D0YKzMswSI6TJt0WjGzcGQiXsNjOw04TBurjVK1h8pEfYFHpAx9TpD45bTOs+zXle7oJm8hM8wVQWwStMZhYlfmY3JjyVWy2RRupyj4fVlnMdsKr6ua9retJ3+lZd+TPfln3rC5-nDOKNbxc7aXyHjf8-wCsEhYmcZd2NxqrcnSHY+ZDQsDcL6U9MKB4GQTwb0rxeem+e8nyCROoUUOZ3iBC3SYJqnySMQLAAALUQWBGBYBoGAAQ3BlpkyfrbdqiAbAUANJg4IE1jBaAsBOdwmhkIzETBYWYN1DCRBIqQKQEA4DKDlkbWgDBmCsGfi0GuyEkwmikrxOMX9rw-xmFSchAoxrALSBkEM8owzsJjACLo7h5hxlMraboQt-rmEBtYAEfh2hBAMKfN0koMRyMvKZXQcxgg8i0LgsaA1BGcnJHOcSZC9GaFPvZRSC1ZEoPgssF4FVDCciGBqCqE4yFlxmPqfUplGRGFPnVGOaU-FeXKhyAwI4fD9DeBOXwFJzLLDjHo0KCN26Gxqs9ea098TfS7Kg34JZugDg-AEv+sxAiaHOmaP+gQOizFsVYIxisanYAxmYv4AohE2HGuNfUiFtD1ymGLckvIxZDE8MMtOb0sCz1QBMmk7IyHKIFOYFxeiBHsmkuLQI9IkzXiMdWPAF8r43zMUHRRgQ7omSKeor+gQhE+HGoMf4JY25rAqZWEB4DIHQNgfA95QRPnKJ+WoxMBCyHEL9r1UEOhNnlOTvCCZJZHbzLaYsGwwQJwjEBDOUyN0tBu18FQ8IQA */
   createMachine(
     {
-      context: getInitialContext(),
+      context: getInitialContext([]),
       tsTypes: {} as import("./ordreMaskine.typegen").Typegen0,
       schema: {
         context: {} as OrdreMaskineContext,
@@ -286,7 +288,9 @@ export const ordreMaskine =
             );
           },
         }),
-        "Nulstil ordre": assign((_) => getInitialContext()),
+        "Nulstil ordre": assign((context) =>
+          getInitialContext(context.databaseVarer)
+        ),
         "Sæt aktiv dato": assign({
           aktivDato: (_, event) => event.dato,
           varer: (context, event) => {
