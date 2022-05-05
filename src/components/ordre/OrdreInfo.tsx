@@ -124,7 +124,7 @@ export function OrdreInfo() {
                 fontSize="lg"
                 gridRow={1}
                 gridColumn={{ base: 2, md: 3, lg: 5 }}
-                height="100%"
+                height="inherit"
                 onClick={() => send({ type: "Bekræft ordre" })}
               >
                 Opret ordre
