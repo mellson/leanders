@@ -20,6 +20,7 @@ export const convertError = (error: any) =>
   error.data ?? error.data?.message ?? String(error);
 
 export interface OrdreMaskineContext {
+  databaseVarer: definitions["varer"][];
   aktivDato?: Date;
   datoerHvorManIkkeKanBestille: Date[];
   datoVejledning?: string;
@@ -31,6 +32,7 @@ export interface OrdreMaskineContext {
 
 function getInitialContext(): OrdreMaskineContext {
   return {
+    databaseVarer: [],
     aktivDato: undefined,
     datoerHvorManIkkeKanBestille: standardDatoerHvorManIkkeKanBestiller(
       defaultVarerMap()
@@ -50,6 +52,7 @@ export const ordreMaskine =
       schema: {
         context: {} as OrdreMaskineContext,
         events: {} as
+          | { type: "Set database varer"; varer: definitions["varer"][] }
           | { type: "Tilføj vare"; vareId: number; antal: number }
           | { type: "Sæt aktiv dato"; dato: Date }
           | { type: "Start udskift aktiv dato" }
@@ -74,8 +77,17 @@ export const ordreMaskine =
       },
       preserveActionOrder: true,
       id: "Ordre Maskine",
-      initial: "Afventer",
+      initial: "IngenVarer",
       states: {
+        IngenVarer: {
+          description: "Vi mangler data på varerne fra Supabase",
+          on: {
+            "Set database varer": {
+              actions: "Tilføj database varer til context",
+              target: "Afventer",
+            },
+          },
+        },
         Afventer: {
           description: "Ordremaskinen afventer instrukser",
           on: {
@@ -246,6 +258,9 @@ export const ordreMaskine =
     },
     {
       actions: {
+        "Tilføj database varer til context": assign({
+          databaseVarer: (_, event) => event.varer,
+        }),
         "Gem midlertidigt vare": assign({
           midlertidigVare: (_, event) => event.vareId,
           datoerHvorManIkkeKanBestille: (context, event) => {

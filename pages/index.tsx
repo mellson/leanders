@@ -2,11 +2,13 @@ import { CenterModal } from "@/components/CenterModal";
 import NulstilKode from "@/components/nulstilKode";
 import { Vare } from "@/components/Vare";
 import { definitions } from "@/types/supabase";
+import { AppContext } from "@/utils/context";
 import { SimpleGrid } from "@chakra-ui/react";
 import { supabaseClient } from "@supabase/supabase-auth-helpers/nextjs";
 import type { InferGetServerSidePropsType } from "next";
 import { useRouter } from "next/router";
 import * as React from "react";
+import { useEffect } from "react";
 
 export const getStaticProps = async () => {
   const { data } = await supabaseClient
@@ -30,6 +32,12 @@ export default function Home({
 }: InferGetServerSidePropsType<typeof getStaticProps>) {
   const router = useRouter();
   const { access_token, type } = router.query;
+  const appServices = React.useContext(AppContext);
+  const { send } = appServices.ordreService;
+
+  useEffect(() => {
+    send({ type: "Set database varer", varer: data.varer ?? [] });
+  }, []);
 
   const visNulstilKode =
     access_token !== undefined &&
