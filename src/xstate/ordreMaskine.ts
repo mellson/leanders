@@ -195,6 +195,9 @@ export const ordreMaskine =
         "Bekræfter ordre": {
           description: "Afventer at brugeren accepter ordren",
           on: {
+            "Tilføj vare": {
+              actions: "Tilføj vare til ordre",
+            },
             "Opret ordre": {
               target: "Opretter ordre id",
             },
