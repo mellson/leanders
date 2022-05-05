@@ -70,7 +70,7 @@ export default function Ordre({ user }: OrdreProps) {
               >
                 {Array.from(varer.get(dato.getTime())?.keys() ?? []).map(
                   (vareId) => (
-                    <Text>
+                    <Text key={vareId}>
                       id:{vareId} - antal:
                       {varer.get(dato.getTime())?.get(vareId)}
                     </Text>

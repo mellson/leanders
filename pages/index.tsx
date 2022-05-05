@@ -37,7 +37,7 @@ export default function Home({
 
   useEffect(() => {
     send({ type: "Set database varer", varer: data.varer ?? [] });
-  }, []);
+  }, [data.varer, send]);
 
   const visNulstilKode =
     access_token !== undefined &&
