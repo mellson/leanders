@@ -36,10 +36,15 @@ export function bygVarer(
       // Hvis vi er ved at forøge skal vi ikke overskrive men blot ligge 1 til
       const antalVarer = increment ? antalEksisterendeVarer + 1 : antal;
 
-      return varer.set(
-        dato.getTime(),
-        eksisterendeVarer.set(vareId, antalVarer)
-      );
+      if (antalVarer > 0) {
+        return varer.set(
+          dato.getTime(),
+          eksisterendeVarer.set(vareId, antalVarer)
+        );
+      } else {
+        eksisterendeVarer.delete(vareId);
+        return varer;
+      }
     } else {
       return varer.set(dato.getTime(), new Map([[vareId, antal]]));
     }

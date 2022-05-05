@@ -1,10 +1,11 @@
 import Confetti from "@/components/ordre/Confetti";
+import ValgteVarer from "@/components/ordre/ValgteVarer";
 import { AppContext } from "@/utils/context";
 import {
   antalVarerForHeleOrdrenSelector,
   sorteredeDatoerSelector,
 } from "@/xstate/selectors";
-import { Button, Heading, SimpleGrid, Text, VStack } from "@chakra-ui/react";
+import { Button, Heading, Text } from "@chakra-ui/react";
 import { User, withAuthRequired } from "@supabase/supabase-auth-helpers/nextjs";
 import { useActor, useSelector } from "@xstate/react";
 import NextLink from "next/link";
@@ -25,10 +26,6 @@ export default function Ordre({ user }: OrdreProps) {
   const antalVarerForHeleOrdren = useSelector(
     appServices.ordreService,
     antalVarerForHeleOrdrenSelector(sorteredeDatoer)
-  );
-  const varer = useSelector(
-    appServices.ordreService,
-    (state) => state.context.varer
   );
   const [state] = useActor(appServices.ordreService);
   const { send } = appServices.ordreService;
@@ -56,35 +53,22 @@ export default function Ordre({ user }: OrdreProps) {
     <>
       {(state.matches("Bekræfter ordre") || arbejder) && (
         <>
-          <Heading size="md">
-            Bekræft din ordre på {antalVarerForHeleOrdren} brød 🥐
-          </Heading>
+          <Heading size="md">Bekræft din ordre</Heading>
+          <Text mt={0} pb={4}>
+            Du har i alt {antalVarerForHeleOrdren} brød på ordren
+          </Text>
 
-          {sorteredeDatoer.map((dato) => (
-            <VStack key={dato.toString()}>
-              <Text fontSize="xs">{dato.toLocaleDateString("da-DK")}</Text>
-              <SimpleGrid
-                columns={{ base: 2, md: 3, lg: 5 }}
-                spacing={{ base: 2, md: 5, lg: 10 }}
-                justifyItems="center"
-              >
-                {Array.from(varer.get(dato.getTime())?.keys() ?? []).map(
-                  (vareId) => (
-                    <Text key={vareId}>
-                      id:{vareId} - antal:
-                      {varer.get(dato.getTime())?.get(vareId)}
-                    </Text>
-                  )
-                )}
-              </SimpleGrid>
-            </VStack>
-          ))}
+          <ValgteVarer />
 
           <Button
             onClick={() => send({ type: "Opret ordre" })}
             isLoading={arbejder}
+            size="lg"
+            fontSize="xl"
+            p={8}
+            colorScheme="green"
           >
-            Afgiv ordre
+            Opret ordre 👍
           </Button>
         </>
       )}
