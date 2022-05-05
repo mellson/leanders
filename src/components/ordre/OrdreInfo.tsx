@@ -127,7 +127,7 @@ export function OrdreInfo() {
                 height="inherit"
                 onClick={() => send({ type: "Bekræft ordre" })}
               >
-                Opret ordre
+                Gennemgå ordre
               </Button>
             </NextLink>
           </SimpleGrid>

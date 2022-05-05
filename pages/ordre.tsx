@@ -11,6 +11,7 @@ import { useActor, useSelector } from "@xstate/react";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
+import { FiShoppingCart } from "react-icons/fi";
 
 interface OrdreProps {
   user: User;
@@ -67,8 +68,9 @@ export default function Ordre({ user }: OrdreProps) {
             fontSize="xl"
             p={8}
             colorScheme="green"
+            rightIcon={<FiShoppingCart />}
           >
-            Opret ordre 👍
+            Opret ordre
           </Button>
         </>
       )}
