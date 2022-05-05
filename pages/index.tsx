@@ -40,7 +40,7 @@ export default function Home({
     <>
       <SimpleGrid
         columns={{ base: 2, md: 3, lg: 5 }}
-        spacing={10}
+        spacing={{ base: 2, md: 5, lg: 10 }}
         justifyItems="center"
       >
         {data.varer?.map((vare) => (

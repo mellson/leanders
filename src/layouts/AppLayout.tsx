@@ -25,8 +25,9 @@ export function AppLayout({ children }: PropsWithChildren<{}>) {
       <Flex justify="space-between" direction="column" height="100%">
         <Container
           as="main"
-          pt={{ base: "8", lg: "12" }}
-          pb={{ base: "12", lg: "24" }}
+          pt={{ base: 8, lg: 12 }}
+          pb={{ base: 12, lg: 24 }}
+          px={2}
         >
           {children}
         </Container>

@@ -15,7 +15,8 @@ import NextNProgress from "nextjs-progressbar";
 const xstateInspect =
   process.env.NEXT_PUBLIC_XSTATE_INSPECT === "true" &&
   typeof window !== "undefined" &&
-  process.env.NODE_ENV === "development";
+  process.env.NODE_ENV === "development" &&
+  false;
 
 if (xstateInspect) inspect({ iframe: false });
 
