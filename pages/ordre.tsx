@@ -4,7 +4,7 @@ import {
   antalVarerForHeleOrdrenSelector,
   sorteredeDatoerSelector,
 } from "@/xstate/selectors";
-import { Button, Heading, Text } from "@chakra-ui/react";
+import { Button, Heading, SimpleGrid, Text, VStack } from "@chakra-ui/react";
 import { User, withAuthRequired } from "@supabase/supabase-auth-helpers/nextjs";
 import { useActor, useSelector } from "@xstate/react";
 import NextLink from "next/link";
@@ -25,6 +25,10 @@ export default function Ordre({ user }: OrdreProps) {
   const antalVarerForHeleOrdren = useSelector(
     appServices.ordreService,
     antalVarerForHeleOrdrenSelector(sorteredeDatoer)
+  );
+  const varer = useSelector(
+    appServices.ordreService,
+    (state) => state.context.varer
   );
   const [state] = useActor(appServices.ordreService);
   const { send } = appServices.ordreService;
@@ -55,6 +59,26 @@ export default function Ordre({ user }: OrdreProps) {
           <Heading size="md">
             Bekræft din ordre på {antalVarerForHeleOrdren} brød 🥐
           </Heading>
+
+          {sorteredeDatoer.map((dato) => (
+            <VStack key={dato.toString()}>
+              <Text fontSize="xs">{dato.toLocaleDateString("da-DK")}</Text>
+              <SimpleGrid
+                columns={{ base: 2, md: 3, lg: 5 }}
+                spacing={{ base: 2, md: 5, lg: 10 }}
+                justifyItems="center"
+              >
+                {Array.from(varer.get(dato.getTime())?.keys() ?? []).map(
+                  (vareId) => (
+                    <Text>
+                      id:{vareId} - antal:
+                      {varer.get(dato.getTime())?.get(vareId)}
+                    </Text>
+                  )
+                )}
+              </SimpleGrid>
+            </VStack>
+          ))}
 
           <Button
             onClick={() => send({ type: "Opret ordre" })}
