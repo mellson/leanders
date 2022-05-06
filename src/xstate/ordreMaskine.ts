@@ -55,7 +55,7 @@ export const ordreMaskine =
         context: {} as OrdreMaskineContext,
         events: {} as
           | { type: "Set database varer"; varer: definitions["varer"][] }
-          | { type: "Tilføj vare"; vareId: number; antal: number }
+          | { type: "Tilføj vare"; vareId: number; antal: number; dato?: Date }
           | { type: "Sæt aktiv dato"; dato: Date }
           | { type: "Start udskift aktiv dato" }
           | { type: "Udskift aktiv dato"; dato: Date }
@@ -279,10 +279,10 @@ export const ordreMaskine =
         }),
         "Tilføj vare til ordre": assign({
           varer: (context, event) => {
-            if (!context.aktivDato) return context.varer;
+            if (!event.dato) return context.varer;
             return bygVarer(
               context.varer,
-              context.aktivDato,
+              event.dato,
               event.vareId,
               event.antal
             );
@@ -377,10 +377,10 @@ export const ordreMaskine =
         }),
       },
       guards: {
-        "Dato til vare er ok": (context, event) =>
-          datoErOkTilVare(event.vareId, context.aktivDato),
-        "Dato til vare er ikke ok": (context, event) =>
-          !datoErOkTilVare(event.vareId, context.aktivDato),
+        "Dato til vare er ok": (_, event) =>
+          datoErOkTilVare(event.vareId, event.dato),
+        "Dato til vare er ikke ok": (_, event) =>
+          !datoErOkTilVare(event.vareId, event.dato),
         "Dato eksisterer": (context, event) => {
           return context.varer.has(event.dato.getTime());
         },

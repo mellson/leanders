@@ -7,9 +7,10 @@ import * as React from "react";
 
 interface VareComponentProps {
   vare: definitions["varer"];
+  dato?: Date;
 }
 
-export function Vare({ vare }: VareComponentProps) {
+export function Vare({ vare, dato }: VareComponentProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -32,7 +33,7 @@ export function Vare({ vare }: VareComponentProps) {
           }}
         />
 
-        <VareInput vareId={vare.id} />
+        <VareInput vareId={vare.id} dato={dato} />
       </VStack>
       <CenterModal titel={vare.navn} isOpen={isOpen} onClose={onClose}>
         <VStack spacing={2}>

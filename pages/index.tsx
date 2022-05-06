@@ -5,6 +5,7 @@ import { definitions } from "@/types/supabase";
 import { AppContext } from "@/utils/context";
 import { SimpleGrid } from "@chakra-ui/react";
 import { supabaseClient } from "@supabase/supabase-auth-helpers/nextjs";
+import { useSelector } from "@xstate/react";
 import type { InferGetServerSidePropsType } from "next";
 import { useRouter } from "next/router";
 import * as React from "react";
@@ -33,6 +34,10 @@ export default function Home({
   const router = useRouter();
   const { access_token, type } = router.query;
   const appServices = React.useContext(AppContext);
+  const aktivDato = useSelector(
+    appServices.ordreService,
+    (state) => state.context.aktivDato
+  );
   const { send } = appServices.ordreService;
 
   useEffect(() => {
@@ -52,7 +57,7 @@ export default function Home({
         justifyItems="center"
       >
         {data.varer?.map((vare) => (
-          <Vare key={vare.id} vare={vare} />
+          <Vare key={vare.id} vare={vare} dato={aktivDato} />
         ))}
       </SimpleGrid>
 

@@ -43,7 +43,7 @@ export default function ValgteVarer() {
             justifyItems="left"
           >
             {getVarerPaaDato(dato).map((vare) => (
-              <Vare key={vare.id} vare={vare} />
+              <Vare key={vare.id} vare={vare} dato={dato} />
             ))}
           </SimpleGrid>
         </VStack>
