@@ -121,13 +121,13 @@ export function OrdreInfo() {
                 size="lg"
                 rightIcon={<FiShoppingCart />}
                 colorScheme="green"
-                fontSize="lg"
+                fontSize={{ base: "sm", sm: "sm", md: "lg" }}
                 gridRow={1}
                 gridColumn={{ base: 2, md: 3, lg: 5 }}
                 height="inherit"
                 onClick={() => send({ type: "Bekræft ordre" })}
               >
-                Gennemgå ordre
+                Godkend ordre
               </Button>
             </NextLink>
           </SimpleGrid>
