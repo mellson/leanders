@@ -9,7 +9,7 @@ import { DesktopNavBar } from "./DesktopNavBar";
 import { MobileNavBar } from "./MobileNavBar";
 
 export function Navbar() {
-  const isDesktop = useBreakpointValue({ base: false, lg: true });
+  const isDesktop = useBreakpointValue({ base: false, lg: true }, "lg");
 
   return (
     <Box

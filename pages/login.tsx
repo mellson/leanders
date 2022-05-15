@@ -1,6 +1,7 @@
 import { Container } from "@chakra-ui/react";
 import { supabaseClient } from "@supabase/supabase-auth-helpers/nextjs";
-import { Auth, useUser } from "@supabase/supabase-auth-helpers/react";
+import { useUser } from "@supabase/supabase-auth-helpers/react";
+import { Auth } from "@supabase/ui";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
@@ -20,9 +21,10 @@ export default function Login(props: any) {
   return (
     <Container maxW={{ base: "full", md: "640px" }}>
       {error && <p>{error.message}</p>}
+
       <Auth
         supabaseClient={supabaseClient}
-        providers={["facebook", "google", "azure"]}
+        providers={["facebook", "google"]}
         socialLayout="horizontal"
         socialButtonSize="large"
       />

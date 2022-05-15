@@ -9,7 +9,7 @@ export function Logo() {
     <NextLink href="/" passHref>
       <Heading
         cursor="pointer"
-        size={useBreakpointValue({ base: "xs", lg: "sm" })}
+        size={useBreakpointValue({ base: "xs", lg: "sm" }, "lg")}
         fontWeight="bold"
       >
         {navn} 🥐

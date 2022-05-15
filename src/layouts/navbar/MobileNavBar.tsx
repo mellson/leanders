@@ -14,7 +14,7 @@ import * as React from "react";
 
 export function MobileNavBar() {
   const { isOpen, onToggle, onClose } = useDisclosure();
-  const isPhone = useBreakpointValue({ base: true, md: false });
+  const isPhone = useBreakpointValue({ base: true, md: false }, "md");
 
   return (
     <>

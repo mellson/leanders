@@ -22,7 +22,7 @@ export function Content() {
       >
         <Stack spacing="1">
           <Heading
-            size={useBreakpointValue({ base: "xs", lg: "sm" })}
+            size={useBreakpointValue({ base: "xs", lg: "sm" }, "lg")}
             fontWeight="medium"
           >
             Dashboard
