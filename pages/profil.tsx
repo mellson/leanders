@@ -1,5 +1,5 @@
 import { Button, Heading, Text } from "@chakra-ui/react";
-import { User, withAuthRequired } from "@supabase/supabase-auth-helpers/nextjs";
+import { User, withPageAuth } from "@supabase/supabase-auth-helpers/nextjs";
 import NextLink from "next/link";
 
 interface ProfilProps {
@@ -19,6 +19,6 @@ export default function Profil({ user }: ProfilProps) {
   );
 }
 
-export const getServerSideProps = withAuthRequired({
+export const getServerSideProps = withPageAuth({
   redirectTo: "/login?returnTo=profil",
 });

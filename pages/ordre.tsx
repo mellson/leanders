@@ -6,7 +6,7 @@ import {
   sorteredeDatoerSelector,
 } from "@/xstate/selectors";
 import { Button, Heading, Text } from "@chakra-ui/react";
-import { User, withAuthRequired } from "@supabase/supabase-auth-helpers/nextjs";
+import { User, withPageAuth } from "@supabase/supabase-auth-helpers/nextjs";
 import { useActor, useSelector } from "@xstate/react";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
@@ -106,6 +106,6 @@ export default function Ordre({ user }: OrdreProps) {
   );
 }
 
-export const getServerSideProps = withAuthRequired({
+export const getServerSideProps = withPageAuth({
   redirectTo: "/login?returnTo=ordre",
 });
