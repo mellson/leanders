@@ -7,19 +7,19 @@ import { useSelector } from "@xstate/react";
 import * as React from "react";
 
 export default function TilfoejDatoModal() {
-  const appServices = React.useContext(AppContext);
-  const tilfoejerDato = useSelector(appServices.ordreService, (state) =>
+  const appContext = React.useContext(AppContext);
+  const tilfoejerDato = useSelector(appContext.ordreActor, (state) =>
     state.matches("Tilføjer dato")
   );
   const datoerHvorManIkkeKanBestille = useSelector(
-    appServices.ordreService,
+    appContext.ordreActor,
     datoerHvorManIkkeKanBestilleSelector
   );
   const datoVejledning = useSelector(
-    appServices.ordreService,
+    appContext.ordreActor,
     (state) => state.context.datoVejledning ?? ""
   );
-  const { send } = appServices.ordreService;
+  const { send } = appContext.ordreActor;
 
   return (
     <CenterModal

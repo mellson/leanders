@@ -3,7 +3,7 @@ import { createContext } from "react";
 import { ActorRefFrom } from "xstate";
 
 interface AppContextType {
-  ordreService: ActorRefFrom<typeof ordreMaskine>;
+  ordreActor: ActorRefFrom<typeof ordreMaskine>;
 }
 
 export const AppContext = createContext<AppContextType>({} as AppContextType);

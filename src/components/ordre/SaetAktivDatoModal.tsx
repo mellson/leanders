@@ -7,19 +7,19 @@ import { useSelector } from "@xstate/react";
 import * as React from "react";
 
 export default function SaetAktivDatoModal() {
-  const appServices = React.useContext(AppContext);
-  const vaelgerDato = useSelector(appServices.ordreService, (state) =>
+  const appContext = React.useContext(AppContext);
+  const vaelgerDato = useSelector(appContext.ordreActor, (state) =>
     state.matches("Vælg aktiv dato")
   );
   const datoerHvorManIkkeKanBestille = useSelector(
-    appServices.ordreService,
+    appContext.ordreActor,
     datoerHvorManIkkeKanBestilleSelector
   );
   const datoVejledning = useSelector(
-    appServices.ordreService,
+    appContext.ordreActor,
     (state) => state.context.datoVejledning ?? ""
   );
-  const { send } = appServices.ordreService;
+  const { send } = appContext.ordreActor;
 
   return (
     <CenterModal

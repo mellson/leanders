@@ -6,17 +6,17 @@ import React from "react";
 import { Vare } from "../Vare";
 
 export default function ValgteVarer() {
-  const appServices = React.useContext(AppContext);
+  const appContext = React.useContext(AppContext);
   const sorteredeDatoer = useSelector(
-    appServices.ordreService,
+    appContext.ordreActor,
     sorteredeDatoerSelector
   );
   const varer = useSelector(
-    appServices.ordreService,
+    appContext.ordreActor,
     (state) => state.context.varer
   );
   const databaseVarer = useSelector(
-    appServices.ordreService,
+    appContext.ordreActor,
     (state) => state.context.databaseVarer
   );
 

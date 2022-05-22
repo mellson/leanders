@@ -13,7 +13,7 @@ const canvasStyles: React.CSSProperties = {
 
 function InternalConfetti() {
   const refAnimationInstance = useRef<any>(null);
-  const appServices = React.useContext(AppContext);
+  const appContext = React.useContext(AppContext);
 
   const getInstance = useCallback((instance: any) => {
     refAnimationInstance.current = instance;
@@ -57,7 +57,7 @@ function InternalConfetti() {
     });
   }, [makeShot]);
 
-  appServices.ordreService.subscribe(({ event }) => {
+  appContext.ordreActor.subscribe(({ event }) => {
     if (event.type === "Affyr Confetti") {
       fire();
     }

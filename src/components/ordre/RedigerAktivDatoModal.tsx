@@ -7,23 +7,23 @@ import { useSelector } from "@xstate/react";
 import * as React from "react";
 
 export default function RedigerAktivDatoModal() {
-  const appServices = React.useContext(AppContext);
-  const udskifterDato = useSelector(appServices.ordreService, (state) =>
+  const appContext = React.useContext(AppContext);
+  const udskifterDato = useSelector(appContext.ordreActor, (state) =>
     state.matches("Udskifter dato")
   );
   const aktivDato = useSelector(
-    appServices.ordreService,
+    appContext.ordreActor,
     (state) => state.context.aktivDato
   );
   const datoerHvorManIkkeKanBestille = useSelector(
-    appServices.ordreService,
+    appContext.ordreActor,
     datoerHvorManIkkeKanBestilleSelector
   );
   const datoVejledning = useSelector(
-    appServices.ordreService,
+    appContext.ordreActor,
     (state) => state.context.datoVejledning ?? ""
   );
-  const { send } = appServices.ordreService;
+  const { send } = appContext.ordreActor;
 
   return (
     <CenterModal

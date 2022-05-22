@@ -17,15 +17,15 @@ import TilfoejDatoModal from "./TilfoejDatoModal";
 export function OrdreInfo() {
   const router = useRouter();
   const erPaaOrdreSiden = router.pathname === "/ordre";
-  const appServices = React.useContext(AppContext);
-  const { send } = appServices.ordreService;
-  const [state] = useActor(appServices.ordreService);
+  const appContext = React.useContext(AppContext);
+  const { send } = appContext.ordreActor;
+  const [state] = useActor(appContext.ordreActor);
   const sorteredeDatoer = useSelector(
-    appServices.ordreService,
+    appContext.ordreActor,
     sorteredeDatoerSelector
   );
   const antalVarerForHeleOrdren = useSelector(
-    appServices.ordreService,
+    appContext.ordreActor,
     antalVarerForHeleOrdrenSelector(sorteredeDatoer)
   );
 

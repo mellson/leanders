@@ -9,9 +9,9 @@ interface VareInputProps {
 }
 
 export function VareInput({ vareId, dato }: VareInputProps) {
-  const appServices = useContext(AppContext);
-  const { send } = appServices.ordreService;
-  const [{ context }] = useActor(appServices.ordreService);
+  const appContext = useContext(AppContext);
+  const { send } = appContext.ordreActor;
+  const [{ context }] = useActor(appContext.ordreActor);
   const aktiveVarer = dato ? context.varer.get(dato.getTime()) : undefined;
   const antal = aktiveVarer ? aktiveVarer.get(vareId) ?? 0 : 0;
 

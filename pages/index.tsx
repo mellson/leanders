@@ -5,6 +5,7 @@ import { definitions } from "@/types/supabase";
 import { AppContext } from "@/utils/context";
 import { SimpleGrid } from "@chakra-ui/react";
 import { supabaseClient } from "@supabase/supabase-auth-helpers/nextjs";
+import { useUser } from "@supabase/supabase-auth-helpers/react";
 import { useSelector } from "@xstate/react";
 import type { InferGetServerSidePropsType } from "next";
 import { useRouter } from "next/router";
@@ -31,14 +32,15 @@ export const getStaticProps = async () => {
 export default function Home({
   data,
 }: InferGetServerSidePropsType<typeof getStaticProps>) {
+  const { user } = useUser();
   const router = useRouter();
   const { access_token, type } = router.query;
-  const appServices = React.useContext(AppContext);
+  const appContext = React.useContext(AppContext);
   const aktivDato = useSelector(
-    appServices.ordreService,
+    appContext.ordreActor,
     (state) => state.context.aktivDato
   );
-  const { send } = appServices.ordreService;
+  const { send } = appContext.ordreActor;
 
   useEffect(() => {
     send({ type: "Set database varer", varer: data.varer ?? [] });

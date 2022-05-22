@@ -20,12 +20,12 @@ import NextNProgress from "nextjs-progressbar";
 // if (xstateInspect) inspect({ iframe: false });
 
 export default function App({ Component, pageProps }: AppProps) {
-  const ordreService = useInterpret(ordreMaskine);
+  const ordreActor = useInterpret(ordreMaskine);
 
   return (
     <UserProvider supabaseClient={supabaseClient}>
       <ChakraProvider theme={theme}>
-        <AppContext.Provider value={{ ordreService }}>
+        <AppContext.Provider value={{ ordreActor }}>
           <NextNProgress
             color={theme.colors.brand[500]}
             options={{ showSpinner: false }}

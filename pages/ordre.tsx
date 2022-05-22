@@ -19,17 +19,17 @@ interface OrdreProps {
 
 export default function Ordre({ user }: OrdreProps) {
   const router = useRouter();
-  const appServices = React.useContext(AppContext);
+  const appContext = React.useContext(AppContext);
   const sorteredeDatoer = useSelector(
-    appServices.ordreService,
+    appContext.ordreActor,
     sorteredeDatoerSelector
   );
   const antalVarerForHeleOrdren = useSelector(
-    appServices.ordreService,
+    appContext.ordreActor,
     antalVarerForHeleOrdrenSelector(sorteredeDatoer)
   );
-  const [state] = useActor(appServices.ordreService);
-  const { send } = appServices.ordreService;
+  const [state] = useActor(appContext.ordreActor);
+  const { send } = appContext.ordreActor;
 
   useEffect(() => {
     const handleRouteChange = () => {
