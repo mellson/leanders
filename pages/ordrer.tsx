@@ -1,6 +1,7 @@
 import ChakraNextImage from "@/components/ChakraNextImage";
+import { truncateDate } from "@/utils/ordre";
 import {
-  Checkbox,
+  Button,
   Heading,
   HStack,
   Table,
@@ -14,12 +15,14 @@ import {
   Tr,
 } from "@chakra-ui/react";
 import {
+  supabaseClient,
   supabaseServerClient,
   User,
   withPageAuth,
 } from "@supabase/supabase-auth-helpers/nextjs";
-import { isToday } from "date-fns";
+import { addDays, isAfter, isBefore, isToday } from "date-fns";
 import { useRouter } from "next/router";
+import { useState } from "react";
 
 interface OrdreLinje {
   id: number;
@@ -39,67 +42,111 @@ interface ProfilProps {
 
 export default function Ordrer({ user, ordrer }: ProfilProps) {
   const router = useRouter();
+  const [ordreData, setOrdreData] = useState(ordrer);
+  const [knapDerAfslutterOrdre, setKnapDerAfslutterOrdre] = useState<number>();
 
   if (!godkendtEmail(user.email)) {
     router.push("/");
   }
 
+  const iDag = truncateDate(new Date());
+
+  const kommendeOrdrer = ordreData.filter((linje) =>
+    isAfter(new Date(linje.dato), iDag)
+  );
+
+  const tidligereOrdrer = ordreData.filter((linje) =>
+    isBefore(new Date(linje.dato), iDag)
+  );
+
+  const afslutOrdreLinje = async (ordreLinjeId: number, afsluttet: boolean) => {
+    setKnapDerAfslutterOrdre(ordreLinjeId);
+    const { data, error } = await supabaseClient
+      .from("ordre_linjer")
+      .update({ afsluttet })
+      .match({ id: ordreLinjeId });
+    setOrdreData(
+      ordreData.map((linje) =>
+        linje.id === ordreLinjeId ? { ...linje, afsluttet } : linje
+      )
+    );
+    setKnapDerAfslutterOrdre(undefined);
+  };
+
+  const bygTable = (
+    titel: string,
+    ordreLinjer: OrdreLinje[],
+    size: "sm" | "md" = "md"
+  ) => (
+    <Table variant="simple" size={size}>
+      <TableCaption placement="top">{titel}</TableCaption>
+      <Thead>
+        <Tr>
+          <Th isNumeric>antal</Th>
+          <Th>vare</Th>
+          <Th>bestilt af</Th>
+          <Th>dato</Th>
+          <Th>afsluttet</Th>
+        </Tr>
+      </Thead>
+      <Tbody>
+        {ordreLinjer.map((linje) => {
+          const idag = isToday(new Date(linje.dato)) ? "brand.100" : "";
+          return (
+            <Tr
+              key={linje.id}
+              background={
+                linje.afsluttet ? "gray.200" : idag ? "brand.100" : ""
+              }
+              opacity={linje.afsluttet ? 0.5 : 1}
+              fontWeight={idag ? "bold" : ""}
+              textDecoration={linje.afsluttet ? "line-through" : ""}
+            >
+              <Td isNumeric>{linje.antal}</Td>
+              <Td>
+                <HStack justify="space-between">
+                  <Text>{linje.vare}</Text>
+                  <ChakraNextImage
+                    alt={linje.vare}
+                    src={`/billeder/${linje.billede}.jpeg`}
+                    width={60}
+                    height={60}
+                    transition="all 0.2s"
+                    _hover={{
+                      transform: "scale(1.05)",
+                      shadow: "md",
+                    }}
+                  />
+                </HStack>
+              </Td>
+              <Td>{linje.firma ?? linje.user_email}</Td>
+              <Td>{linje.dato}</Td>
+              <Td>
+                <Button
+                  variant="outline"
+                  isLoading={knapDerAfslutterOrdre === linje.id}
+                  disabled={
+                    knapDerAfslutterOrdre !== undefined &&
+                    knapDerAfslutterOrdre !== linje.id
+                  }
+                  onClick={() => afslutOrdreLinje(linje.id, !linje.afsluttet)}
+                >
+                  {linje.afsluttet ? "Er afsluttet" : "Tryk for at afslutte"}
+                </Button>
+              </Td>
+            </Tr>
+          );
+        })}
+      </Tbody>
+    </Table>
+  );
+
   return (
     <>
       <Heading size="md">Ordrer</Heading>
       <TableContainer>
-        <Table variant="simple">
-          <TableCaption placement="top">Kommende ordrer</TableCaption>
-          <Thead>
-            <Tr>
-              <Th isNumeric>antal</Th>
-              <Th>vare</Th>
-              <Th>bestilt af</Th>
-              <Th>dato</Th>
-              <Th>håndteret</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {ordrer.map((linje) => {
-              const idag = isToday(new Date(linje.dato)) ? "brand.100" : "";
-              return (
-                <Tr
-                  key={linje.id}
-                  background={
-                    linje.afsluttet ? "gray.200" : idag ? "brand.100" : ""
-                  }
-                  opacity={linje.afsluttet ? 0.5 : 1}
-                  fontWeight={idag ? "bold" : ""}
-                  onClick={() => console.log("ordren er klikket på")}
-                  textDecoration={linje.afsluttet ? "line-through" : ""}
-                >
-                  <Td isNumeric>{linje.antal}</Td>
-                  <Td>
-                    <HStack justify="space-between">
-                      <Text>{linje.vare}</Text>
-                      <ChakraNextImage
-                        alt={linje.vare}
-                        src={`/billeder/${linje.billede}.jpeg`}
-                        width={60}
-                        height={60}
-                        transition="all 0.2s"
-                        _hover={{
-                          transform: "scale(1.05)",
-                          shadow: "md",
-                        }}
-                      />
-                    </HStack>
-                  </Td>
-                  <Td>{linje.firma ?? linje.user_email}</Td>
-                  <Td>{linje.dato}</Td>
-                  <Td>
-                    <Checkbox isChecked={linje.afsluttet} />
-                  </Td>
-                </Tr>
-              );
-            })}
-          </Tbody>
-        </Table>
+        {bygTable("Kommende ordrer", kommendeOrdrer)}
+        {bygTable("Ordrer fra de sidste to uger", tidligereOrdrer, "sm")}
       </TableContainer>
     </>
   );
@@ -111,7 +158,7 @@ export const getServerSideProps = withPageAuth({
     const { data } = await supabaseServerClient(ctx)
       .from<OrdreLinje>("ordrer_view")
       .select("*")
-      .gte("dato", new Date().toDateString());
+      .gte("dato", addDays(new Date(), -14).toDateString());
     return { props: { ordrer: data } };
   },
 });
