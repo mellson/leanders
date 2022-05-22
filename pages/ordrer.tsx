@@ -1,4 +1,5 @@
 import ChakraNextImage from "@/components/ChakraNextImage";
+import { definitions } from "@/types/supabase";
 import { truncateDate } from "@/utils/ordre";
 import {
   Button,
@@ -37,15 +38,16 @@ interface OrdreLinje {
 
 interface ProfilProps {
   user: User;
+  isAdmin: boolean;
   ordrer: OrdreLinje[];
 }
 
-export default function Ordrer({ user, ordrer }: ProfilProps) {
+export default function Ordrer({ user, isAdmin, ordrer }: ProfilProps) {
   const router = useRouter();
   const [ordreData, setOrdreData] = useState(ordrer);
   const [knapDerAfslutterOrdre, setKnapDerAfslutterOrdre] = useState<number>();
 
-  if (!godkendtEmail(user.email)) {
+  if (!isAdmin) {
     router.push("/");
   }
 
@@ -159,11 +161,13 @@ export const getServerSideProps = withPageAuth({
       .from<OrdreLinje>("ordrer_view")
       .select("*")
       .gte("dato", addDays(new Date(), -14).toDateString());
-    return { props: { ordrer: data } };
+
+    const { data: adminData } = await supabaseServerClient(ctx)
+      .from<definitions["admins"]>("admins")
+      .select("*");
+
+    const isAdmin = Array.isArray(adminData) && adminData.length > 0;
+
+    return { props: { ordrer: data, isAdmin } };
   },
 });
-
-const godkendteEmails = ["mellson@icloud.com"];
-function godkendtEmail(email: string | undefined) {
-  return email && godkendteEmails.includes(email);
-}

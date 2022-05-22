@@ -12,6 +12,189 @@ export interface paths {
       };
     };
   };
+  "/admins": {
+    get: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.admins.id"];
+          user_email?: parameters["rowFilter.admins.user_email"];
+          /** Filtering Columns */
+          select?: parameters["select"];
+          /** Ordering */
+          order?: parameters["order"];
+          /** Limiting and Pagination */
+          offset?: parameters["offset"];
+          /** Limiting and Pagination */
+          limit?: parameters["limit"];
+        };
+        header: {
+          /** Limiting and Pagination */
+          Range?: parameters["range"];
+          /** Limiting and Pagination */
+          "Range-Unit"?: parameters["rangeUnit"];
+          /** Preference */
+          Prefer?: parameters["preferCount"];
+        };
+      };
+      responses: {
+        /** OK */
+        200: {
+          schema: definitions["admins"][];
+        };
+        /** Partial Content */
+        206: unknown;
+      };
+    };
+    post: {
+      parameters: {
+        body: {
+          /** admins */
+          admins?: definitions["admins"];
+        };
+        query: {
+          /** Filtering Columns */
+          select?: parameters["select"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** Created */
+        201: unknown;
+      };
+    };
+    delete: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.admins.id"];
+          user_email?: parameters["rowFilter.admins.user_email"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+    patch: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.admins.id"];
+          user_email?: parameters["rowFilter.admins.user_email"];
+        };
+        body: {
+          /** admins */
+          admins?: definitions["admins"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+  };
+  "/firmaer": {
+    get: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.firmaer.id"];
+          navn?: parameters["rowFilter.firmaer.navn"];
+          user_email?: parameters["rowFilter.firmaer.user_email"];
+          /** Filtering Columns */
+          select?: parameters["select"];
+          /** Ordering */
+          order?: parameters["order"];
+          /** Limiting and Pagination */
+          offset?: parameters["offset"];
+          /** Limiting and Pagination */
+          limit?: parameters["limit"];
+        };
+        header: {
+          /** Limiting and Pagination */
+          Range?: parameters["range"];
+          /** Limiting and Pagination */
+          "Range-Unit"?: parameters["rangeUnit"];
+          /** Preference */
+          Prefer?: parameters["preferCount"];
+        };
+      };
+      responses: {
+        /** OK */
+        200: {
+          schema: definitions["firmaer"][];
+        };
+        /** Partial Content */
+        206: unknown;
+      };
+    };
+    post: {
+      parameters: {
+        body: {
+          /** firmaer */
+          firmaer?: definitions["firmaer"];
+        };
+        query: {
+          /** Filtering Columns */
+          select?: parameters["select"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** Created */
+        201: unknown;
+      };
+    };
+    delete: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.firmaer.id"];
+          navn?: parameters["rowFilter.firmaer.navn"];
+          user_email?: parameters["rowFilter.firmaer.user_email"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+    patch: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.firmaer.id"];
+          navn?: parameters["rowFilter.firmaer.navn"];
+          user_email?: parameters["rowFilter.firmaer.user_email"];
+        };
+        body: {
+          /** firmaer */
+          firmaer?: definitions["firmaer"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+  };
   "/ordre_linjer": {
     get: {
       parameters: {
@@ -22,6 +205,7 @@ export interface paths {
           vare_id?: parameters["rowFilter.ordre_linjer.vare_id"];
           dato?: parameters["rowFilter.ordre_linjer.dato"];
           antal?: parameters["rowFilter.ordre_linjer.antal"];
+          afsluttet?: parameters["rowFilter.ordre_linjer.afsluttet"];
           /** Filtering Columns */
           select?: parameters["select"];
           /** Ordering */
@@ -78,6 +262,7 @@ export interface paths {
           vare_id?: parameters["rowFilter.ordre_linjer.vare_id"];
           dato?: parameters["rowFilter.ordre_linjer.dato"];
           antal?: parameters["rowFilter.ordre_linjer.antal"];
+          afsluttet?: parameters["rowFilter.ordre_linjer.afsluttet"];
         };
         header: {
           /** Preference */
@@ -98,6 +283,7 @@ export interface paths {
           vare_id?: parameters["rowFilter.ordre_linjer.vare_id"];
           dato?: parameters["rowFilter.ordre_linjer.dato"];
           antal?: parameters["rowFilter.ordre_linjer.antal"];
+          afsluttet?: parameters["rowFilter.ordre_linjer.afsluttet"];
         };
         body: {
           /** ordre_linjer */
@@ -120,7 +306,7 @@ export interface paths {
         query: {
           id?: parameters["rowFilter.ordrer.id"];
           created_at?: parameters["rowFilter.ordrer.created_at"];
-          user_id?: parameters["rowFilter.ordrer.user_id"];
+          user_email?: parameters["rowFilter.ordrer.user_email"];
           /** Filtering Columns */
           select?: parameters["select"];
           /** Ordering */
@@ -173,7 +359,7 @@ export interface paths {
         query: {
           id?: parameters["rowFilter.ordrer.id"];
           created_at?: parameters["rowFilter.ordrer.created_at"];
-          user_id?: parameters["rowFilter.ordrer.user_id"];
+          user_email?: parameters["rowFilter.ordrer.user_email"];
         };
         header: {
           /** Preference */
@@ -190,7 +376,7 @@ export interface paths {
         query: {
           id?: parameters["rowFilter.ordrer.id"];
           created_at?: parameters["rowFilter.ordrer.created_at"];
-          user_id?: parameters["rowFilter.ordrer.user_id"];
+          user_email?: parameters["rowFilter.ordrer.user_email"];
         };
         body: {
           /** ordrer */
@@ -204,6 +390,46 @@ export interface paths {
       responses: {
         /** No Content */
         204: never;
+      };
+    };
+  };
+  "/ordrer_view": {
+    get: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.ordrer_view.id"];
+          user_email?: parameters["rowFilter.ordrer_view.user_email"];
+          firma?: parameters["rowFilter.ordrer_view.firma"];
+          dato?: parameters["rowFilter.ordrer_view.dato"];
+          antal?: parameters["rowFilter.ordrer_view.antal"];
+          vare?: parameters["rowFilter.ordrer_view.vare"];
+          billede?: parameters["rowFilter.ordrer_view.billede"];
+          afsluttet?: parameters["rowFilter.ordrer_view.afsluttet"];
+          /** Filtering Columns */
+          select?: parameters["select"];
+          /** Ordering */
+          order?: parameters["order"];
+          /** Limiting and Pagination */
+          offset?: parameters["offset"];
+          /** Limiting and Pagination */
+          limit?: parameters["limit"];
+        };
+        header: {
+          /** Limiting and Pagination */
+          Range?: parameters["range"];
+          /** Limiting and Pagination */
+          "Range-Unit"?: parameters["rangeUnit"];
+          /** Preference */
+          Prefer?: parameters["preferCount"];
+        };
+      };
+      responses: {
+        /** OK */
+        200: {
+          schema: definitions["ordrer_view"][];
+        };
+        /** Partial Content */
+        206: unknown;
       };
     };
   };
@@ -321,6 +547,32 @@ export interface paths {
 }
 
 export interface definitions {
+  /** @description godkendte brugere til ordrer osv */
+  admins: {
+    /**
+     * Format: bigint
+     * @description Note:
+     * This is a Primary Key.<pk/>
+     */
+    id: number;
+    /** Format: character varying */
+    user_email: string;
+  };
+  firmaer: {
+    /**
+     * Format: bigint
+     * @description Note:
+     * This is a Primary Key.<pk/>
+     */
+    id: number;
+    /** Format: text */
+    navn: string;
+    /**
+     * Format: character varying
+     * @default auth.email()
+     */
+    user_email: string;
+  };
   ordre_linjer: {
     /**
      * Format: bigint
@@ -332,7 +584,7 @@ export interface definitions {
      * Format: timestamp with time zone
      * @default now()
      */
-    created_at?: string;
+    created_at: string;
     /**
      * Format: bigint
      * @description Note:
@@ -349,6 +601,8 @@ export interface definitions {
     dato: string;
     /** Format: integer */
     antal: number;
+    /** Format: boolean */
+    afsluttet: boolean;
   };
   ordrer: {
     /**
@@ -363,10 +617,32 @@ export interface definitions {
      */
     created_at: string;
     /**
-     * Format: uuid
-     * @default auth.uid()
+     * Format: character varying
+     * @default auth.email()
      */
-    user_id: string;
+    user_email: string;
+  };
+  ordrer_view: {
+    /**
+     * Format: bigint
+     * @description Note:
+     * This is a Primary Key.<pk/>
+     */
+    id?: number;
+    /** Format: character varying */
+    user_email?: string;
+    /** Format: text */
+    firma?: string;
+    /** Format: date */
+    dato?: string;
+    /** Format: integer */
+    antal?: number;
+    /** Format: character varying */
+    vare?: string;
+    /** Format: character varying */
+    billede?: string;
+    /** Format: boolean */
+    afsluttet?: boolean;
   };
   varer: {
     /**
@@ -439,6 +715,20 @@ export interface parameters {
   offset: string;
   /** @description Limiting and Pagination */
   limit: string;
+  /** @description admins */
+  "body.admins": definitions["admins"];
+  /** Format: bigint */
+  "rowFilter.admins.id": string;
+  /** Format: character varying */
+  "rowFilter.admins.user_email": string;
+  /** @description firmaer */
+  "body.firmaer": definitions["firmaer"];
+  /** Format: bigint */
+  "rowFilter.firmaer.id": string;
+  /** Format: text */
+  "rowFilter.firmaer.navn": string;
+  /** Format: character varying */
+  "rowFilter.firmaer.user_email": string;
   /** @description ordre_linjer */
   "body.ordre_linjer": definitions["ordre_linjer"];
   /** Format: bigint */
@@ -453,14 +743,34 @@ export interface parameters {
   "rowFilter.ordre_linjer.dato": string;
   /** Format: integer */
   "rowFilter.ordre_linjer.antal": string;
+  /** Format: boolean */
+  "rowFilter.ordre_linjer.afsluttet": string;
   /** @description ordrer */
   "body.ordrer": definitions["ordrer"];
   /** Format: bigint */
   "rowFilter.ordrer.id": string;
   /** Format: timestamp with time zone */
   "rowFilter.ordrer.created_at": string;
-  /** Format: uuid */
-  "rowFilter.ordrer.user_id": string;
+  /** Format: character varying */
+  "rowFilter.ordrer.user_email": string;
+  /** @description ordrer_view */
+  "body.ordrer_view": definitions["ordrer_view"];
+  /** Format: bigint */
+  "rowFilter.ordrer_view.id": string;
+  /** Format: character varying */
+  "rowFilter.ordrer_view.user_email": string;
+  /** Format: text */
+  "rowFilter.ordrer_view.firma": string;
+  /** Format: date */
+  "rowFilter.ordrer_view.dato": string;
+  /** Format: integer */
+  "rowFilter.ordrer_view.antal": string;
+  /** Format: character varying */
+  "rowFilter.ordrer_view.vare": string;
+  /** Format: character varying */
+  "rowFilter.ordrer_view.billede": string;
+  /** Format: boolean */
+  "rowFilter.ordrer_view.afsluttet": string;
   /** @description varer */
   "body.varer": definitions["varer"];
   /** Format: bigint */
