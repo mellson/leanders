@@ -1,6 +1,5 @@
 import ChakraNextImage from "@/components/ChakraNextImage";
 import { definitions } from "@/types/supabase";
-import { truncateDate } from "@/utils/ordre";
 import {
   Button,
   Heading,
@@ -21,7 +20,14 @@ import {
   User,
   withPageAuth,
 } from "@supabase/supabase-auth-helpers/nextjs";
-import { addDays, isAfter, isBefore, isToday } from "date-fns";
+import {
+  addDays,
+  isAfter,
+  isBefore,
+  isToday,
+  parseISO,
+  startOfDay,
+} from "date-fns";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
@@ -51,14 +57,14 @@ export default function Ordrer({ user, isAdmin, ordrer }: ProfilProps) {
     router.push("/");
   }
 
-  const iDag = truncateDate(new Date());
+  const iDag = addDays(startOfDay(new Date()), -1);
 
   const kommendeOrdrer = ordreData.filter((linje) =>
-    isAfter(new Date(linje.dato), iDag)
+    isAfter(parseISO(linje.dato), iDag)
   );
 
   const tidligereOrdrer = ordreData.filter((linje) =>
-    isBefore(new Date(linje.dato), iDag)
+    isBefore(parseISO(linje.dato), addDays(iDag, 1))
   );
 
   const afslutOrdreLinje = async (ordreLinjeId: number, afsluttet: boolean) => {
@@ -93,7 +99,7 @@ export default function Ordrer({ user, isAdmin, ordrer }: ProfilProps) {
       </Thead>
       <Tbody>
         {ordreLinjer.map((linje) => {
-          const idag = isToday(new Date(linje.dato)) ? "brand.100" : "";
+          const idag = isToday(parseISO(linje.dato)) ? "brand.100" : "";
           return (
             <Tr
               key={linje.id}
@@ -122,7 +128,7 @@ export default function Ordrer({ user, isAdmin, ordrer }: ProfilProps) {
                 </HStack>
               </Td>
               <Td>{linje.firma ?? linje.user_email}</Td>
-              <Td>{linje.dato}</Td>
+              <Td>{parseISO(linje.dato).toLocaleDateString("da-DK")}</Td>
               <Td>
                 <Button
                   variant="outline"

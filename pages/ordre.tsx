@@ -1,6 +1,7 @@
 import { Confetti } from "@/components/ordre/Confetti";
 import ValgteVarer from "@/components/ordre/ValgteVarer";
 import { AppContext } from "@/utils/context";
+import { samletPris } from "@/utils/ordre";
 import {
   antalVarerForHeleOrdrenSelector,
   sorteredeDatoerSelector,
@@ -27,6 +28,10 @@ export default function Ordre({ user }: OrdreProps) {
   const antalVarerForHeleOrdren = useSelector(
     appContext.ordreActor,
     antalVarerForHeleOrdrenSelector(sorteredeDatoer)
+  );
+  const visPriser = useSelector(
+    appContext.ordreActor,
+    (state) => state.context.visPriser
   );
   const [state] = useActor(appContext.ordreActor);
   const { send } = appContext.ordreActor;
@@ -55,8 +60,19 @@ export default function Ordre({ user }: OrdreProps) {
       {(state.matches("Bekræfter ordre") || arbejder) && (
         <>
           <Heading size="md">Bekræft din ordre</Heading>
+
           <Text mt={0} pb={4}>
             Du har i alt {antalVarerForHeleOrdren} brød på ordren
+            {visPriser && (
+              <span>
+                , til en samlet pris på{" "}
+                {Intl.NumberFormat("da-DK").format(
+                  samletPris(state.context.varer, state.context.databaseVarer)
+                )}{" "}
+                kr
+              </span>
+            )}
+            .
           </Text>
 
           <ValgteVarer />

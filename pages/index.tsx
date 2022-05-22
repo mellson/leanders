@@ -40,11 +40,35 @@ export default function Home({
     appContext.ordreActor,
     (state) => state.context.aktivDato
   );
+  const visPriser = useSelector(
+    appContext.ordreActor,
+    (state) => state.context.visPriser
+  );
   const { send } = appContext.ordreActor;
 
   useEffect(() => {
     send({ type: "Set database varer", varer: data.varer ?? [] });
   }, [data.varer, send]);
+
+  useEffect(() => {
+    async function getFirmaNavn(userEmail: string) {
+      const { data } = await supabaseClient
+        .from<{ navn: string }>("firmaer")
+        .select("navn")
+        .match({ user_email: userEmail });
+
+      if (data && data.length > 0) {
+        const firmanavn = data[0]?.navn;
+        if (firmanavn && firmanavn.length > 0) {
+          send({ type: "Vis Priser", visPriser: false });
+        }
+      }
+    }
+
+    if (user && user.email) {
+      getFirmaNavn(user.email);
+    }
+  }, [send, user]);
 
   const visNulstilKode =
     access_token !== undefined &&
@@ -59,7 +83,12 @@ export default function Home({
         justifyItems="center"
       >
         {data.varer?.map((vare) => (
-          <Vare key={vare.id} vare={vare} dato={aktivDato} />
+          <Vare
+            key={vare.id}
+            vare={vare}
+            dato={aktivDato}
+            visPris={visPriser}
+          />
         ))}
       </SimpleGrid>
 

@@ -1,5 +1,5 @@
 import { AppContext } from "@/utils/context";
-import { antalVarerPaaDato, sammeDato } from "@/utils/ordre";
+import { antalVarerPaaDato, samletPrisPaaDato, sammeDato } from "@/utils/ordre";
 import {
   antalVarerForHeleOrdrenSelector,
   sorteredeDatoerSelector,
@@ -10,6 +10,7 @@ import NextLink from "next/link";
 import { useRouter } from "next/router";
 import * as React from "react";
 import { FiCalendar, FiPlus, FiShoppingCart } from "react-icons/fi";
+import { PrisText } from "./Pris";
 import RedigerAktivDatoModal from "./RedigerAktivDatoModal";
 import SaetAktivDatoModal from "./SaetAktivDatoModal";
 import TilfoejDatoModal from "./TilfoejDatoModal";
@@ -27,6 +28,10 @@ export function OrdreInfo() {
   const antalVarerForHeleOrdren = useSelector(
     appContext.ordreActor,
     antalVarerForHeleOrdrenSelector(sorteredeDatoer)
+  );
+  const visPriser = useSelector(
+    appContext.ordreActor,
+    (state) => state.context.visPriser
   );
 
   const ordrenOpbygges = antalVarerForHeleOrdren > 0;
@@ -79,6 +84,15 @@ export function OrdreInfo() {
                 <Text>
                   {antalVarerPaaDato(dato, state.context.varer)} brød i kurven
                 </Text>
+                {visPriser && (
+                  <PrisText
+                    pris={samletPrisPaaDato(
+                      dato,
+                      state.context.varer,
+                      state.context.databaseVarer
+                    )}
+                  />
+                )}
               </VStack>
             ))}
             <VStack

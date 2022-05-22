@@ -1,13 +1,10 @@
 import { OrdreMaskineContext } from "@/xstate/ordreMaskine";
-import { addDays, eachWeekOfInterval } from "date-fns";
+import { addDays, eachWeekOfInterval, startOfDay } from "date-fns";
 import { da } from "date-fns/locale";
 import { erFredagLigeUge, erFredagUligeUge } from "./dato";
 
-export function truncateDate(date: Date) {
-  return new Date(date.getFullYear(), date.getMonth(), date.getDate());
-}
-export const ordreStart = truncateDate(addDays(new Date(), 1));
-export const ordreCutoff = truncateDate(addDays(new Date(), 60));
+export const ordreStart = startOfDay(addDays(new Date(), 1));
+export const ordreCutoff = startOfDay(addDays(new Date(), 60));
 
 export const fredageUligeUger = eachWeekOfInterval(
   {
@@ -72,6 +69,40 @@ export function antalVarerPaaDato(
   const varerPaaDato = varer.get(dato.getTime());
   if (varerPaaDato) {
     return Array.from(varerPaaDato.values()).reduce((acc, cur) => acc + cur, 0);
+  } else {
+    return 0;
+  }
+}
+
+export function samletPris(
+  varer: OrdreMaskineContext["varer"],
+  databaseVarer: OrdreMaskineContext["databaseVarer"]
+) {
+  return Array.from(varer.values()).reduce((acc, vareMap) => {
+    const priser = Array.from(vareMap.keys()).map((vareId) => {
+      const pris = databaseVarer[vareId]?.pris ?? 0;
+      const antal = vareMap.get(vareId) ?? 0;
+      return pris * antal;
+    });
+
+    return acc + priser.reduce((acc2, pris) => acc2 + pris, 0);
+  }, 0);
+}
+
+export function samletPrisPaaDato(
+  dato: Date,
+  varer: OrdreMaskineContext["varer"],
+  databaseVarer: OrdreMaskineContext["databaseVarer"]
+) {
+  const varerPaaDato = varer.get(dato.getTime());
+  if (varerPaaDato) {
+    const priser = Array.from(varerPaaDato.keys()).map((vareId) => {
+      const pris = databaseVarer[vareId]?.pris ?? 0;
+      const antal = varerPaaDato.get(vareId) ?? 0;
+      return pris * antal;
+    });
+
+    return priser.reduce((acc, pris) => acc + pris, 0);
   } else {
     return 0;
   }

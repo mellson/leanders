@@ -1,4 +1,5 @@
 import { definitions } from "@/types/supabase";
+import { AppContext } from "@/utils/context";
 import {
   Button,
   FormControl,
@@ -15,7 +16,7 @@ import {
   withPageAuth,
 } from "@supabase/supabase-auth-helpers/nextjs";
 import NextLink from "next/link";
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 interface ProfilProps {
   user: User;
@@ -28,6 +29,8 @@ export default function Profil({ user, isAdmin, firma }: ProfilProps) {
   const [firmaNavn, setFirmaNavn] = useState(firma?.navn);
   const [firmaIsChanging, setFirmaIsChanging] = useState(false);
   const firmaIsChanged = firmaNavn !== originaltFirmaNavn;
+  const appContext = useContext(AppContext);
+  const { send } = appContext.ordreActor;
 
   const gemFirma = async () => {
     setFirmaIsChanging(true);
@@ -36,6 +39,8 @@ export default function Profil({ user, isAdmin, firma }: ProfilProps) {
       .upsert({ id: firma?.id, navn: firmaNavn });
     setOriginaltFirmaNavn(firmaNavn);
     setFirmaIsChanging(false);
+
+    send({ type: "Vis Priser", visPriser: firmaNavn === "" });
   };
 
   return (

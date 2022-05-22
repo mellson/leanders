@@ -597,7 +597,7 @@ export interface definitions {
      * This is a Foreign Key to `varer.id`.<fk table='varer' column='id'/>
      */
     vare_id: number;
-    /** Format: date */
+    /** Format: timestamp with time zone */
     dato: string;
     /** Format: integer */
     antal: number;
@@ -633,7 +633,7 @@ export interface definitions {
     user_email?: string;
     /** Format: text */
     firma?: string;
-    /** Format: date */
+    /** Format: timestamp with time zone */
     dato?: string;
     /** Format: integer */
     antal?: number;
@@ -739,7 +739,7 @@ export interface parameters {
   "rowFilter.ordre_linjer.ordre_id": string;
   /** Format: bigint */
   "rowFilter.ordre_linjer.vare_id": string;
-  /** Format: date */
+  /** Format: timestamp with time zone */
   "rowFilter.ordre_linjer.dato": string;
   /** Format: integer */
   "rowFilter.ordre_linjer.antal": string;
@@ -761,7 +761,7 @@ export interface parameters {
   "rowFilter.ordrer_view.user_email": string;
   /** Format: text */
   "rowFilter.ordrer_view.firma": string;
-  /** Format: date */
+  /** Format: timestamp with time zone */
   "rowFilter.ordrer_view.dato": string;
   /** Format: integer */
   "rowFilter.ordrer_view.antal": string;

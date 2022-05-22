@@ -4,21 +4,26 @@ import { VareInput } from "@/components/VareInput";
 import { definitions } from "@/types/supabase";
 import { Text, useDisclosure, VStack } from "@chakra-ui/react";
 import * as React from "react";
+import { PrisText } from "./ordre/Pris";
 
 interface VareComponentProps {
   vare: definitions["varer"];
   dato?: Date;
+  visPris: boolean;
 }
 
-export function Vare({ vare, dato }: VareComponentProps) {
+export function Vare({ vare, dato, visPris }: VareComponentProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <>
       <VStack spacing={2} maxWidth={200}>
-        <Text noOfLines={1} fontSize="lg" fontWeight="medium">
-          {vare.navn}
-        </Text>
+        <VStack align="center" spacing={0}>
+          <Text noOfLines={1} fontSize="lg" fontWeight="medium">
+            {vare.navn}
+          </Text>
+          {visPris && <PrisText pris={vare.pris} />}
+        </VStack>
 
         <ChakraNextImage
           alt={vare.navn}

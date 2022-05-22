@@ -1,9 +1,11 @@
 import { AppContext } from "@/utils/context";
+import { samletPrisPaaDato } from "@/utils/ordre";
 import { sorteredeDatoerSelector } from "@/xstate/selectors";
 import { Heading, SimpleGrid, VStack } from "@chakra-ui/react";
-import { useSelector } from "@xstate/react";
+import { useActor, useSelector } from "@xstate/react";
 import React from "react";
 import { Vare } from "../Vare";
+import { PrisText } from "./Pris";
 
 export default function ValgteVarer() {
   const appContext = React.useContext(AppContext);
@@ -19,6 +21,11 @@ export default function ValgteVarer() {
     appContext.ordreActor,
     (state) => state.context.databaseVarer
   );
+  const visPriser = useSelector(
+    appContext.ordreActor,
+    (state) => state.context.visPriser
+  );
+  const [state] = useActor(appContext.ordreActor);
 
   function getVarerPaaDato(dato: Date) {
     return Array.from(varer.get(dato.getTime())?.keys() ?? [])
@@ -34,16 +41,25 @@ export default function ValgteVarer() {
     <>
       {sorteredeDatoer.map((dato) => (
         <VStack key={dato.toString()} align="left" pb={8}>
-          <Heading size="xs" fontWeight="normal">
+          <Heading size="xs" fontWeight="normal" mb={-2}>
             Dine varer til {dato.toLocaleDateString("da-DK")}
           </Heading>
+          {visPriser && (
+            <PrisText
+              pris={samletPrisPaaDato(
+                dato,
+                state.context.varer,
+                state.context.databaseVarer
+              )}
+            />
+          )}
           <SimpleGrid
             columns={{ base: 2, md: 3, lg: 5 }}
             spacing={{ base: 2, md: 5, lg: 10 }}
             justifyItems="left"
           >
             {getVarerPaaDato(dato).map((vare) => (
-              <Vare key={vare.id} vare={vare} dato={dato} />
+              <Vare key={vare.id} vare={vare} dato={dato} visPris={visPriser} />
             ))}
           </SimpleGrid>
         </VStack>
