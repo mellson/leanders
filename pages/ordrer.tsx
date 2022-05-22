@@ -1,6 +1,7 @@
 import ChakraNextImage from "@/components/ChakraNextImage";
 import { definitions } from "@/types/supabase";
 import {
+  Box,
   Button,
   Heading,
   HStack,
@@ -13,6 +14,7 @@ import {
   Th,
   Thead,
   Tr,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import {
   supabaseClient,
@@ -52,6 +54,7 @@ export default function Ordrer({ user, isAdmin, ordrer }: ProfilProps) {
   const router = useRouter();
   const [ordreData, setOrdreData] = useState(ordrer);
   const [knapDerAfslutterOrdre, setKnapDerAfslutterOrdre] = useState<number>();
+  const isDesktop = useBreakpointValue({ base: false, lg: true }, "lg");
 
   if (!isAdmin) {
     router.push("/");
@@ -81,20 +84,18 @@ export default function Ordrer({ user, isAdmin, ordrer }: ProfilProps) {
     setKnapDerAfslutterOrdre(undefined);
   };
 
-  const bygTable = (
-    titel: string,
-    ordreLinjer: OrdreLinje[],
-    size: "sm" | "md" = "md"
-  ) => (
-    <Table variant="simple" size={size}>
+  const bygTable = (titel: string, ordreLinjer: OrdreLinje[]) => (
+    <Table variant="simple">
       <TableCaption placement="top">{titel}</TableCaption>
       <Thead>
         <Tr>
-          <Th isNumeric>antal</Th>
-          <Th>vare</Th>
-          <Th>bestilt af</Th>
-          <Th>dato</Th>
-          <Th>afsluttet</Th>
+          <Th isNumeric w="10%">
+            antal
+          </Th>
+          <Th w="30%">vare</Th>
+          <Th w="20%">bestilt af</Th>
+          <Th w="20%">dato</Th>
+          <Th w="20%">afsluttet</Th>
         </Tr>
       </Thead>
       <Tbody>
@@ -139,7 +140,11 @@ export default function Ordrer({ user, isAdmin, ordrer }: ProfilProps) {
                   }
                   onClick={() => afslutOrdreLinje(linje.id, !linje.afsluttet)}
                 >
-                  {linje.afsluttet ? "Er afsluttet" : "Tryk for at afslutte"}
+                  {linje.afsluttet
+                    ? "Er afsluttet"
+                    : isDesktop
+                    ? "Klik for at afslutte"
+                    : "Tryk for at afslutte"}
                 </Button>
               </Td>
             </Tr>
@@ -154,7 +159,9 @@ export default function Ordrer({ user, isAdmin, ordrer }: ProfilProps) {
       <Heading size="md">Ordrer</Heading>
       <TableContainer>
         {bygTable("Kommende ordrer", kommendeOrdrer)}
-        {bygTable("Ordrer fra de sidste to uger", tidligereOrdrer, "sm")}
+        <Box opacity={0.5}>
+          {bygTable("Ordrer fra de sidste to uger", tidligereOrdrer)}
+        </Box>
       </TableContainer>
     </>
   );
