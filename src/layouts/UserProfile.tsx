@@ -16,9 +16,7 @@ export function UserProfile(props: UserProfileProps) {
         <Text fontWeight="medium" fontSize="sm">
           {name}
         </Text>
-        <Text color="muted" fontSize="sm">
-          {email}
-        </Text>
+        <Text fontSize="sm">{email}</Text>
       </Box>
     </HStack>
   );

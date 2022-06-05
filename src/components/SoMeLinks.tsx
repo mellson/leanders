@@ -9,7 +9,6 @@ export function SoMeLinks() {
         as="a"
         href="https://www.facebook.com/broedkompagniet/"
         aria-label="Facebook"
-        color="muted"
         variant="ghost"
         icon={<FaFacebook fontSize="1.25rem" />}
       />
@@ -17,7 +16,6 @@ export function SoMeLinks() {
         as="a"
         href="https://www.instagram.com/broedkompagniet/"
         aria-label="Instagram"
-        color="muted"
         variant="ghost"
         icon={<FaInstagram fontSize="1.25rem" />}
       />

@@ -49,7 +49,6 @@ export function ToggleButton(props: ToggleButtonProps) {
   const { isOpen, ...iconButtonProps } = props;
   return (
     <IconButton
-      color="muted"
       transform="auto"
       {...iconButtonProps}
       variant="ghost"

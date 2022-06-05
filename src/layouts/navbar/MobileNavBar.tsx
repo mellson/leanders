@@ -1,3 +1,4 @@
+import ColorModeToggle from "@/components/ColorModeToggle";
 import { SoMeLinks } from "@/components/SoMeLinks";
 import { Logo } from "@/layouts/Logo";
 import { Sidebar } from "@/layouts/Sidebar";
@@ -22,6 +23,7 @@ export function MobileNavBar() {
         <Logo />
         <HStack spacing={2}>
           <SoMeLinks />
+          <ColorModeToggle />
           <ToggleButton
             isOpen={isOpen}
             aria-label="Open Menu"

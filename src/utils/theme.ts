@@ -12,6 +12,8 @@ import { variantOutline } from "./theme-button";
 
 const theme = extendTheme(
   {
+    initialColorMode: "light",
+    useSystemColorMode: false,
     colors: {
       ...proTheme.colors,
       brand: proTheme.colors.orange,

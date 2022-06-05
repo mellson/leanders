@@ -1,3 +1,4 @@
+import ColorModeToggle from "@/components/ColorModeToggle";
 import { SoMeLinks } from "@/components/SoMeLinks";
 import { Logo } from "@/layouts/Logo";
 import { UserLink } from "@/layouts/UserLink";
@@ -29,6 +30,7 @@ export function DesktopNavBar() {
 
       <HStack>
         <SoMeLinks />
+        <ColorModeToggle />
         <UserLink />
       </HStack>
     </Flex>

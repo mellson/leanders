@@ -14,7 +14,7 @@ export function Navbar() {
   return (
     <Box
       as="nav"
-      bg="rgba(255, 255, 255, 0.9)"
+      bg={useColorModeValue("whiteAlpha.900", "blackAlpha.800")}
       boxShadow={useColorModeValue("sm", "sm-dark")}
       pos="sticky"
       zIndex={10}

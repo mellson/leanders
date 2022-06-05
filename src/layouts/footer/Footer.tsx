@@ -7,13 +7,14 @@ import {
   Link,
   SimpleGrid,
   Text,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import * as React from "react";
 import { OekoLogo } from "./OekoLogo";
 
 export function Footer() {
   return (
-    <Box as="footer" bg="gray.100">
+    <Box as="footer" bg={useColorModeValue("gray.100", "gray.700")}>
       <Container role="contentinfo" py={{ base: "12", md: "16" }}>
         <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>
           <Box>
