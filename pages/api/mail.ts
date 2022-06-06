@@ -22,6 +22,11 @@ const sendEmail = async (req: NextApiRequest, res: NextApiResponse) => {
     .from<EmailOrdreLinje>("email_ordrer_view")
     .select("*");
 
+  if (data?.length === 0) {
+    res.json({ message: `No emails to send` });
+    return;
+  }
+
   const groupedByEmail = groupBy(data ?? [], (d) => d.user_email);
   const personalizations = Object.keys(groupedByEmail).map((email) => ({
     to: email,
