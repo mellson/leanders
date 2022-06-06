@@ -1,0 +1,15 @@
+name: Send ordre emails med vores email api
+
+on:
+  schedule:
+    - cron: "0 5 * * *"
+
+jobs:
+  deployment:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Send ordre emails
+      uses: fjogeleit/http-request-action@v1
+      with:
+        url: 'https://leanders.dk/api/mail'
+        method: 'GET'
