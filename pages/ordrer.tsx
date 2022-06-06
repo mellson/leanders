@@ -42,7 +42,6 @@ export interface OrdreLinje {
   vare: string;
   billede: string;
   afsluttet: boolean;
-  ordre_email_sendt: boolean;
 }
 
 interface ProfilProps {
@@ -75,7 +74,7 @@ export default function Ordrer({ user, isAdmin, ordrer }: ProfilProps) {
     setKnapDerAfslutterOrdre(ordreLinjeId);
     const { data, error } = await supabaseClient
       .from("ordre_linjer")
-      .update({ afsluttet })
+      .update({ afsluttet, ordre_email_sendt: true })
       .match({ id: ordreLinjeId });
     setOrdreData(
       ordreData.map((linje) =>

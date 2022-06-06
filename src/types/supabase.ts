@@ -195,6 +195,93 @@ export interface paths {
       };
     };
   };
+  "/ordre_emails_der_ikke_er_sendt": {
+    get: {
+      parameters: {
+        query: {
+          ordre_linje_id?: parameters["rowFilter.ordre_emails_der_ikke_er_sendt.ordre_linje_id"];
+          /** Filtering Columns */
+          select?: parameters["select"];
+          /** Ordering */
+          order?: parameters["order"];
+          /** Limiting and Pagination */
+          offset?: parameters["offset"];
+          /** Limiting and Pagination */
+          limit?: parameters["limit"];
+        };
+        header: {
+          /** Limiting and Pagination */
+          Range?: parameters["range"];
+          /** Limiting and Pagination */
+          "Range-Unit"?: parameters["rangeUnit"];
+          /** Preference */
+          Prefer?: parameters["preferCount"];
+        };
+      };
+      responses: {
+        /** OK */
+        200: {
+          schema: definitions["ordre_emails_der_ikke_er_sendt"][];
+        };
+        /** Partial Content */
+        206: unknown;
+      };
+    };
+    post: {
+      parameters: {
+        body: {
+          /** ordre_emails_der_ikke_er_sendt */
+          ordre_emails_der_ikke_er_sendt?: definitions["ordre_emails_der_ikke_er_sendt"];
+        };
+        query: {
+          /** Filtering Columns */
+          select?: parameters["select"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** Created */
+        201: unknown;
+      };
+    };
+    delete: {
+      parameters: {
+        query: {
+          ordre_linje_id?: parameters["rowFilter.ordre_emails_der_ikke_er_sendt.ordre_linje_id"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+    patch: {
+      parameters: {
+        query: {
+          ordre_linje_id?: parameters["rowFilter.ordre_emails_der_ikke_er_sendt.ordre_linje_id"];
+        };
+        body: {
+          /** ordre_emails_der_ikke_er_sendt */
+          ordre_emails_der_ikke_er_sendt?: definitions["ordre_emails_der_ikke_er_sendt"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+  };
   "/ordre_linjer": {
     get: {
       parameters: {
@@ -206,7 +293,6 @@ export interface paths {
           dato?: parameters["rowFilter.ordre_linjer.dato"];
           antal?: parameters["rowFilter.ordre_linjer.antal"];
           afsluttet?: parameters["rowFilter.ordre_linjer.afsluttet"];
-          ordre_email_sendt?: parameters["rowFilter.ordre_linjer.ordre_email_sendt"];
           /** Filtering Columns */
           select?: parameters["select"];
           /** Ordering */
@@ -264,7 +350,6 @@ export interface paths {
           dato?: parameters["rowFilter.ordre_linjer.dato"];
           antal?: parameters["rowFilter.ordre_linjer.antal"];
           afsluttet?: parameters["rowFilter.ordre_linjer.afsluttet"];
-          ordre_email_sendt?: parameters["rowFilter.ordre_linjer.ordre_email_sendt"];
         };
         header: {
           /** Preference */
@@ -286,7 +371,6 @@ export interface paths {
           dato?: parameters["rowFilter.ordre_linjer.dato"];
           antal?: parameters["rowFilter.ordre_linjer.antal"];
           afsluttet?: parameters["rowFilter.ordre_linjer.afsluttet"];
-          ordre_email_sendt?: parameters["rowFilter.ordre_linjer.ordre_email_sendt"];
         };
         body: {
           /** ordre_linjer */
@@ -576,6 +660,15 @@ export interface definitions {
      */
     user_email: string;
   };
+  /** @description Ordrelinjer der mangler at få en email */
+  ordre_emails_der_ikke_er_sendt: {
+    /**
+     * Format: bigint
+     * @description Note:
+     * This is a Foreign Key to `ordre_linjer.id`.<fk table='ordre_linjer' column='id'/>
+     */
+    ordre_linje_id: number;
+  };
   ordre_linjer: {
     /**
      * Format: bigint
@@ -609,11 +702,6 @@ export interface definitions {
      * @default false
      */
     afsluttet: boolean;
-    /**
-     * Format: boolean
-     * @default false
-     */
-    ordre_email_sendt: boolean;
   };
   ordrer: {
     /**
@@ -740,6 +828,10 @@ export interface parameters {
   "rowFilter.firmaer.navn": string;
   /** Format: character varying */
   "rowFilter.firmaer.user_email": string;
+  /** @description ordre_emails_der_ikke_er_sendt */
+  "body.ordre_emails_der_ikke_er_sendt": definitions["ordre_emails_der_ikke_er_sendt"];
+  /** Format: bigint */
+  "rowFilter.ordre_emails_der_ikke_er_sendt.ordre_linje_id": string;
   /** @description ordre_linjer */
   "body.ordre_linjer": definitions["ordre_linjer"];
   /** Format: bigint */
@@ -756,8 +848,6 @@ export interface parameters {
   "rowFilter.ordre_linjer.antal": string;
   /** Format: boolean */
   "rowFilter.ordre_linjer.afsluttet": string;
-  /** Format: boolean */
-  "rowFilter.ordre_linjer.ordre_email_sendt": string;
   /** @description ordrer */
   "body.ordrer": definitions["ordrer"];
   /** Format: bigint */
