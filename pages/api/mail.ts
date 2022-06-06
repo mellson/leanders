@@ -1,10 +1,17 @@
+import { groupBy } from "@/utils/general";
 import sgMail from "@sendgrid/mail";
 import { createClient } from "@supabase/supabase-js";
-import { addDays } from "date-fns";
 import { NextApiRequest, NextApiResponse } from "next";
-import { OrdreLinje } from "../ordrer";
 
 sgMail.setApiKey(process.env.EMAIL_API_KEY ?? "");
+
+interface EmailOrdreLinje {
+  id: number;
+  antal: number;
+  firma?: string;
+  user_email: string;
+  vare: string;
+}
 
 const sendEmail = async (req: NextApiRequest, res: NextApiResponse) => {
   const supabaseClient = createClient(
@@ -12,56 +19,36 @@ const sendEmail = async (req: NextApiRequest, res: NextApiResponse) => {
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? ""
   );
   const { data } = await supabaseClient
-    .from<OrdreLinje>("ordrer_view")
-    .select("*")
-    //.is("ordre_email_sendt", false) // join med ordre_emails_der_ikke_er_sendt
-    .gte("dato", addDays(new Date(), -14).toDateString());
+    .from<EmailOrdreLinje>("email_ordrer_view")
+    .select("*");
 
-  console.log("hej");
-
-  // if (!data) {
-  //   res.json({ message: "Alle emails er sendt for i dag" });
-  //   return;
-  // }
-
-  // console.log(JSON.stringify(data, null, 2));
-
-  // res.json({ message: "Test færdig" });
-  // return;
+  const groupedByEmail = groupBy(data ?? [], (d) => d.user_email);
+  const personalizations = Object.keys(groupedByEmail).map((email) => ({
+    to: email,
+    dynamic_template_data: {
+      varer: (groupedByEmail[email] ?? []).map((ordreLinje) => ({
+        navn: ordreLinje.vare,
+        antal: ordreLinje.antal,
+      })),
+    },
+  }));
 
   const msg = {
     from: "no_reply@leanders.dk",
     text: "Din ordre hos Leanders",
-    personalizations: [
-      {
-        to: [
-          {
-            email: "abm@appbureauet.dk",
-          },
-        ],
-        dynamic_template_data: {
-          varer: [
-            { navn: "Bolle", antal: 3 },
-            { navn: "Rugbrød", antal: 3 },
-          ],
-        },
-      },
-    ],
+    personalizations,
     template_id: "d-aa719948ca2b4f618146e6b03a16a9d8",
   };
 
-  console.log(JSON.stringify(data, null, 2));
-
   try {
-    // await sgMail.send(msg);
+    await sgMail.send(msg);
+
     const ordreLinjeIds = (data ?? []).map((ordreLinje) => ordreLinje.id);
 
-    const { data: nyeData, error } = await supabaseClient
-      .from("ordre_linjer")
-      .update({ ordre_email_sendt: true })
-      .match({ id: 117 });
-    console.log(nyeData);
-    console.log(error);
+    await supabaseClient
+      .from("ordre_emails_der_ikke_er_sendt")
+      .delete()
+      .in("ordre_linje_id", ordreLinjeIds);
 
     res.json({ message: `Email has been sent` });
   } catch (error) {

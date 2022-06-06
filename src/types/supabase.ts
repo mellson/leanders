@@ -102,6 +102,43 @@ export interface paths {
       };
     };
   };
+  "/email_ordrer_view": {
+    get: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.email_ordrer_view.id"];
+          user_email?: parameters["rowFilter.email_ordrer_view.user_email"];
+          firma?: parameters["rowFilter.email_ordrer_view.firma"];
+          antal?: parameters["rowFilter.email_ordrer_view.antal"];
+          vare?: parameters["rowFilter.email_ordrer_view.vare"];
+          /** Filtering Columns */
+          select?: parameters["select"];
+          /** Ordering */
+          order?: parameters["order"];
+          /** Limiting and Pagination */
+          offset?: parameters["offset"];
+          /** Limiting and Pagination */
+          limit?: parameters["limit"];
+        };
+        header: {
+          /** Limiting and Pagination */
+          Range?: parameters["range"];
+          /** Limiting and Pagination */
+          "Range-Unit"?: parameters["rangeUnit"];
+          /** Preference */
+          Prefer?: parameters["preferCount"];
+        };
+      };
+      responses: {
+        /** OK */
+        200: {
+          schema: definitions["email_ordrer_view"][];
+        };
+        /** Partial Content */
+        206: unknown;
+      };
+    };
+  };
   "/firmaer": {
     get: {
       parameters: {
@@ -645,6 +682,22 @@ export interface definitions {
     /** Format: character varying */
     user_email: string;
   };
+  email_ordrer_view: {
+    /**
+     * Format: bigint
+     * @description Note:
+     * This is a Primary Key.<pk/>
+     */
+    id?: number;
+    /** Format: character varying */
+    user_email?: string;
+    /** Format: text */
+    firma?: string;
+    /** Format: integer */
+    antal?: number;
+    /** Format: character varying */
+    vare?: string;
+  };
   firmaer: {
     /**
      * Format: bigint
@@ -820,6 +873,18 @@ export interface parameters {
   "rowFilter.admins.id": string;
   /** Format: character varying */
   "rowFilter.admins.user_email": string;
+  /** @description email_ordrer_view */
+  "body.email_ordrer_view": definitions["email_ordrer_view"];
+  /** Format: bigint */
+  "rowFilter.email_ordrer_view.id": string;
+  /** Format: character varying */
+  "rowFilter.email_ordrer_view.user_email": string;
+  /** Format: text */
+  "rowFilter.email_ordrer_view.firma": string;
+  /** Format: integer */
+  "rowFilter.email_ordrer_view.antal": string;
+  /** Format: character varying */
+  "rowFilter.email_ordrer_view.vare": string;
   /** @description firmaer */
   "body.firmaer": definitions["firmaer"];
   /** Format: bigint */

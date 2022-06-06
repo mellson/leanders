@@ -77,7 +77,9 @@ export const ordreMaskine =
             data: PostgrestResponse<definitions["ordrer"]>;
           };
           "Opret ordre linjer": {
-            data: PostgrestResponse<definitions["ordre_linjer"]>;
+            data: PostgrestResponse<
+              definitions["ordre_emails_der_ikke_er_sendt"]
+            >;
           };
         },
       },
@@ -439,9 +441,20 @@ export const ordreMaskine =
                 return [];
               }
             });
-            return supabaseClient
+            const { data } = await supabaseClient
               .from<definitions["ordre_linjer"]>("ordre_linjer")
               .insert(ordreLinjer)
+              .throwOnError();
+
+            return await supabaseClient
+              .from<definitions["ordre_emails_der_ikke_er_sendt"]>(
+                "ordre_emails_der_ikke_er_sendt"
+              )
+              .insert(
+                (data ?? []).map((ordreLinje) => ({
+                  ordre_linje_id: ordreLinje.id,
+                }))
+              )
               .throwOnError();
           } else {
             throw new Error("Ordre id mangler");
