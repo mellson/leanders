@@ -206,6 +206,7 @@ export interface paths {
           dato?: parameters["rowFilter.ordre_linjer.dato"];
           antal?: parameters["rowFilter.ordre_linjer.antal"];
           afsluttet?: parameters["rowFilter.ordre_linjer.afsluttet"];
+          ordre_email_sendt?: parameters["rowFilter.ordre_linjer.ordre_email_sendt"];
           /** Filtering Columns */
           select?: parameters["select"];
           /** Ordering */
@@ -263,6 +264,7 @@ export interface paths {
           dato?: parameters["rowFilter.ordre_linjer.dato"];
           antal?: parameters["rowFilter.ordre_linjer.antal"];
           afsluttet?: parameters["rowFilter.ordre_linjer.afsluttet"];
+          ordre_email_sendt?: parameters["rowFilter.ordre_linjer.ordre_email_sendt"];
         };
         header: {
           /** Preference */
@@ -284,6 +286,7 @@ export interface paths {
           dato?: parameters["rowFilter.ordre_linjer.dato"];
           antal?: parameters["rowFilter.ordre_linjer.antal"];
           afsluttet?: parameters["rowFilter.ordre_linjer.afsluttet"];
+          ordre_email_sendt?: parameters["rowFilter.ordre_linjer.ordre_email_sendt"];
         };
         body: {
           /** ordre_linjer */
@@ -601,8 +604,16 @@ export interface definitions {
     dato: string;
     /** Format: integer */
     antal: number;
-    /** Format: boolean */
+    /**
+     * Format: boolean
+     * @default false
+     */
     afsluttet: boolean;
+    /**
+     * Format: boolean
+     * @default false
+     */
+    ordre_email_sendt: boolean;
   };
   ordrer: {
     /**
@@ -745,6 +756,8 @@ export interface parameters {
   "rowFilter.ordre_linjer.antal": string;
   /** Format: boolean */
   "rowFilter.ordre_linjer.afsluttet": string;
+  /** Format: boolean */
+  "rowFilter.ordre_linjer.ordre_email_sendt": string;
   /** @description ordrer */
   "body.ordrer": definitions["ordrer"];
   /** Format: bigint */

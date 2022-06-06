@@ -24,6 +24,7 @@
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
     "@fontsource/inter": "^4.5.10",
+    "@sendgrid/mail": "^7.7.0",
     "@supabase/supabase-auth-helpers": "^1.4.2",
     "@supabase/supabase-js": "^1.35.3",
     "@supabase/ui": "^0.36.5",

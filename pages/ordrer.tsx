@@ -33,7 +33,7 @@ import {
 import { useRouter } from "next/router";
 import { useState } from "react";
 
-interface OrdreLinje {
+export interface OrdreLinje {
   id: number;
   antal: number;
   dato: string;
@@ -42,6 +42,7 @@ interface OrdreLinje {
   vare: string;
   billede: string;
   afsluttet: boolean;
+  ordre_email_sendt: boolean;
 }
 
 interface ProfilProps {
