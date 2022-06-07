@@ -15,6 +15,7 @@ import {
   Thead,
   Tr,
   useBreakpointValue,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import {
   supabaseClient,
@@ -55,6 +56,8 @@ export default function Ordrer({ user, isAdmin, ordrer }: ProfilProps) {
   const [ordreData, setOrdreData] = useState(ordrer);
   const [knapDerAfslutterOrdre, setKnapDerAfslutterOrdre] = useState<number>();
   const isDesktop = useBreakpointValue({ base: false, lg: true }, "lg");
+  const linjeIdagBg = useColorModeValue("brand.100", "brand.500");
+  const linjeAfsluttetBg = useColorModeValue("gray.200", "gray.600");
 
   if (!isAdmin) {
     router.push("/");
@@ -105,7 +108,7 @@ export default function Ordrer({ user, isAdmin, ordrer }: ProfilProps) {
             <Tr
               key={linje.id}
               background={
-                linje.afsluttet ? "gray.200" : idag ? "brand.100" : ""
+                linje.afsluttet ? linjeAfsluttetBg : idag ? linjeIdagBg : ""
               }
               opacity={linje.afsluttet ? 0.5 : 1}
               fontWeight={idag ? "bold" : ""}
