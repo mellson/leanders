@@ -1,9 +1,9 @@
-import { definitions } from "@/types/supabase";
+import { definitions } from '@/types/supabase';
 import {
   datoerHvorManIkkeKanBestillePizzaDej,
   getDatoVejledning,
   standardDatoerHvorManIkkeKanBestiller,
-} from "@/utils/dato";
+} from '@/utils/dato';
 import {
   bygVarer,
   datoErOkTilVare,
@@ -11,16 +11,16 @@ import {
   erPizzaDej,
   pizzaDejVareId,
   sorteredeDatoerFraVarer,
-} from "@/utils/ordre";
-import { supabaseClient } from "@supabase/supabase-auth-helpers/nextjs";
-import { PostgrestResponse } from "@supabase/supabase-js";
-import { assign, createMachine, send } from "xstate";
+} from '@/utils/ordre';
+import { supabaseClient } from '@supabase/auth-helpers-nextjs';
+import { PostgrestResponse } from '@supabase/supabase-js';
+import { assign, createMachine, send } from 'xstate';
 
 export const convertError = (error: any) =>
   error.data ?? error.data?.message ?? String(error);
 
 export interface OrdreMaskineContext {
-  databaseVarer: definitions["varer"][];
+  databaseVarer: definitions['varer'][];
   aktivDato?: Date;
   datoerHvorManIkkeKanBestille: Date[];
   datoVejledning?: string;
@@ -32,7 +32,7 @@ export interface OrdreMaskineContext {
 }
 
 function getInitialContext(
-  databaseVarer: definitions["varer"][],
+  databaseVarer: definitions['varer'][],
   visPriser: boolean
 ): OrdreMaskineContext {
   return {
@@ -53,224 +53,224 @@ export const ordreMaskine =
   createMachine(
     {
       context: getInitialContext([], true),
-      tsTypes: {} as import("./ordreMaskine.typegen").Typegen0,
+      tsTypes: {} as import('./ordreMaskine.typegen').Typegen0,
       schema: {
         context: {} as OrdreMaskineContext,
         events: {} as
-          | { type: "Vis Priser"; visPriser: boolean }
-          | { type: "Set database varer"; varer: definitions["varer"][] }
-          | { type: "Tilføj vare"; vareId: number; antal: number; dato?: Date }
-          | { type: "Sæt aktiv dato"; dato: Date }
-          | { type: "Start udskift aktiv dato" }
-          | { type: "Udskift aktiv dato"; dato: Date }
-          | { type: "Slet aktiv dato" }
-          | { type: "Start tilføj dato" }
-          | { type: "Tilføj dato"; dato: Date }
-          | { type: "Afbryd" }
-          | { type: "Bekræft ordre" }
-          | { type: "Opret ordre" }
-          | { type: "Ordre oprettet" }
-          | { type: "Nulstil ordre" }
-          | { type: "Affyr Confetti" },
+          | { type: 'Vis Priser'; visPriser: boolean }
+          | { type: 'Set database varer'; varer: definitions['varer'][] }
+          | { type: 'Tilføj vare'; vareId: number; antal: number; dato?: Date }
+          | { type: 'Sæt aktiv dato'; dato: Date }
+          | { type: 'Start udskift aktiv dato' }
+          | { type: 'Udskift aktiv dato'; dato: Date }
+          | { type: 'Slet aktiv dato' }
+          | { type: 'Start tilføj dato' }
+          | { type: 'Tilføj dato'; dato: Date }
+          | { type: 'Afbryd' }
+          | { type: 'Bekræft ordre' }
+          | { type: 'Opret ordre' }
+          | { type: 'Ordre oprettet' }
+          | { type: 'Nulstil ordre' }
+          | { type: 'Affyr Confetti' },
         services: {} as {
-          "Opret ordre id": {
-            data: PostgrestResponse<definitions["ordrer"]>;
+          'Opret ordre id': {
+            data: PostgrestResponse<definitions['ordrer']>;
           };
-          "Opret ordre linjer": {
+          'Opret ordre linjer': {
             data: PostgrestResponse<
-              definitions["ordre_emails_der_ikke_er_sendt"]
+              definitions['ordre_emails_der_ikke_er_sendt']
             >;
           };
         },
       },
       preserveActionOrder: true,
-      id: "Ordre Maskine",
-      initial: "IngenVarer",
+      id: 'Ordre Maskine',
+      initial: 'IngenVarer',
       states: {
         IngenVarer: {
-          description: "Vi mangler data på varerne fra Supabase",
+          description: 'Vi mangler data på varerne fra Supabase',
           on: {
-            "Set database varer": {
-              actions: "Tilføj database varer til context",
-              target: "Afventer",
+            'Set database varer': {
+              actions: 'Tilføj database varer til context',
+              target: 'Afventer',
             },
-            "Vis Priser": {
-              actions: "Vis Priser",
+            'Vis Priser': {
+              actions: 'Vis Priser',
             },
           },
         },
         Afventer: {
-          description: "Ordremaskinen afventer instrukser",
+          description: 'Ordremaskinen afventer instrukser',
           on: {
-            "Vis Priser": {
-              actions: "Vis Priser",
+            'Vis Priser': {
+              actions: 'Vis Priser',
             },
-            "Tilføj vare": [
+            'Tilføj vare': [
               {
-                actions: "Tilføj vare til ordre",
-                cond: "Dato til vare er ok",
-                target: "Ordre opbygges",
+                actions: 'Tilføj vare til ordre',
+                cond: 'Dato til vare er ok',
+                target: 'Ordre opbygges',
               },
               {
-                actions: "Gem midlertidigt vare",
-                cond: "Dato til vare er ikke ok",
-                target: "Vælg aktiv dato",
+                actions: 'Gem midlertidigt vare',
+                cond: 'Dato til vare er ikke ok',
+                target: 'Vælg aktiv dato',
               },
             ],
           },
         },
-        "Vælg aktiv dato": {
+        'Vælg aktiv dato': {
           on: {
-            "Sæt aktiv dato": {
-              actions: "Sæt aktiv dato",
-              target: "Ordre opbygges",
+            'Sæt aktiv dato': {
+              actions: 'Sæt aktiv dato',
+              target: 'Ordre opbygges',
             },
             Afbryd: {
-              target: "Afventer",
+              target: 'Afventer',
             },
           },
         },
-        "Ordre opbygges": {
-          description: "Brugeren er i gang med at opbygge deres ordre",
+        'Ordre opbygges': {
+          description: 'Brugeren er i gang med at opbygge deres ordre',
           on: {
-            "Tilføj vare": [
+            'Tilføj vare': [
               {
-                actions: "Tilføj vare til ordre",
-                cond: "Dato til vare er ok",
+                actions: 'Tilføj vare til ordre',
+                cond: 'Dato til vare er ok',
               },
               {
-                actions: "Gem midlertidigt vare",
-                cond: "Dato til vare er ikke ok",
-                target: "Vælg aktiv dato",
+                actions: 'Gem midlertidigt vare',
+                cond: 'Dato til vare er ikke ok',
+                target: 'Vælg aktiv dato',
               },
             ],
-            "Vis Priser": {
-              actions: "Vis Priser",
+            'Vis Priser': {
+              actions: 'Vis Priser',
             },
-            "Sæt aktiv dato": {
-              actions: "Sæt aktiv dato",
+            'Sæt aktiv dato': {
+              actions: 'Sæt aktiv dato',
             },
-            "Start udskift aktiv dato": {
-              actions: "Opdater mulige datoer",
-              target: "Udskifter dato",
+            'Start udskift aktiv dato': {
+              actions: 'Opdater mulige datoer',
+              target: 'Udskifter dato',
             },
-            "Start tilføj dato": {
-              actions: "Nulstil mulige datoer",
-              target: "Tilføjer dato",
+            'Start tilføj dato': {
+              actions: 'Nulstil mulige datoer',
+              target: 'Tilføjer dato',
             },
-            "Bekræft ordre": {
-              target: "Bekræfter ordre",
+            'Bekræft ordre': {
+              target: 'Bekræfter ordre',
             },
-            "Nulstil ordre": {
-              actions: "Nulstil ordre",
-              target: "Afventer",
-            },
-          },
-        },
-        "Udskifter dato": {
-          on: {
-            "Udskift aktiv dato": {
-              actions: "Udskift aktiv dato",
-              target: "Ordre opbygges",
-            },
-            "Slet aktiv dato": [
-              {
-                actions: "Nulstil ordre",
-                cond: "Kun varer på aktiv dato",
-                target: "Afventer",
-              },
-              {
-                actions: "Slet aktiv dato",
-                cond: "Varer på flere datoer",
-                target: "Ordre opbygges",
-              },
-            ],
-            Afbryd: {
-              target: "Ordre opbygges",
+            'Nulstil ordre': {
+              actions: 'Nulstil ordre',
+              target: 'Afventer',
             },
           },
         },
-        "Tilføjer dato": {
+        'Udskifter dato': {
           on: {
-            "Tilføj dato": [
+            'Udskift aktiv dato': {
+              actions: 'Udskift aktiv dato',
+              target: 'Ordre opbygges',
+            },
+            'Slet aktiv dato': [
               {
-                actions: "Tilføj dato",
-                cond: "Dato eksisterer ikke",
-                target: "Ordre opbygges",
+                actions: 'Nulstil ordre',
+                cond: 'Kun varer på aktiv dato',
+                target: 'Afventer',
               },
               {
-                actions: "Sæt aktiv dato",
-                cond: "Dato eksisterer",
-                target: "Ordre opbygges",
+                actions: 'Slet aktiv dato',
+                cond: 'Varer på flere datoer',
+                target: 'Ordre opbygges',
               },
             ],
             Afbryd: {
-              target: "Ordre opbygges",
+              target: 'Ordre opbygges',
             },
           },
         },
-        "Bekræfter ordre": {
-          description: "Afventer at brugeren accepter ordren",
+        'Tilføjer dato': {
           on: {
-            "Tilføj vare": {
-              actions: "Tilføj vare til ordre",
+            'Tilføj dato': [
+              {
+                actions: 'Tilføj dato',
+                cond: 'Dato eksisterer ikke',
+                target: 'Ordre opbygges',
+              },
+              {
+                actions: 'Sæt aktiv dato',
+                cond: 'Dato eksisterer',
+                target: 'Ordre opbygges',
+              },
+            ],
+            Afbryd: {
+              target: 'Ordre opbygges',
             },
-            "Opret ordre": {
-              target: "Opretter ordre id",
+          },
+        },
+        'Bekræfter ordre': {
+          description: 'Afventer at brugeren accepter ordren',
+          on: {
+            'Tilføj vare': {
+              actions: 'Tilføj vare til ordre',
+            },
+            'Opret ordre': {
+              target: 'Opretter ordre id',
             },
             Afbryd: {
-              target: "Ordre opbygges",
+              target: 'Ordre opbygges',
             },
           },
         },
-        "Opretter ordre id": {
-          description: "Opretter et ordre id hos Supabase",
+        'Opretter ordre id': {
+          description: 'Opretter et ordre id hos Supabase',
           invoke: {
-            src: "Opret ordre id",
+            src: 'Opret ordre id',
             onDone: [
               {
-                actions: "setOrdreId",
-                target: "Opretter ordre linjer",
+                actions: 'setOrdreId',
+                target: 'Opretter ordre linjer',
               },
             ],
             onError: [
               {
-                actions: "setFejl",
-                target: "Vi har en fejl",
+                actions: 'setFejl',
+                target: 'Vi har en fejl',
               },
             ],
           },
         },
-        "Opretter ordre linjer": {
-          description: "Opretter ordre linjerne hos Supabase",
+        'Opretter ordre linjer': {
+          description: 'Opretter ordre linjerne hos Supabase',
           invoke: {
-            src: "Opret ordre linjer",
+            src: 'Opret ordre linjer',
             onDone: [
               {
-                target: "Ordre afsluttet",
+                target: 'Ordre afsluttet',
               },
             ],
             onError: [
               {
-                actions: "setFejl",
-                target: "Vi har en fejl",
+                actions: 'setFejl',
+                target: 'Vi har en fejl',
               },
             ],
           },
         },
-        "Ordre afsluttet": {
-          entry: [send("Affyr Confetti"), send("Nulstil ordre")],
+        'Ordre afsluttet': {
+          entry: [send('Affyr Confetti'), send('Nulstil ordre')],
           on: {
-            "Nulstil ordre": {
-              actions: "Nulstil ordre",
-              target: "Afventer",
+            'Nulstil ordre': {
+              actions: 'Nulstil ordre',
+              target: 'Afventer',
             },
           },
         },
-        "Vi har en fejl": {
+        'Vi har en fejl': {
           on: {
-            "Opret ordre": {
-              target: "Opretter ordre id",
+            'Opret ordre': {
+              target: 'Opretter ordre id',
             },
           },
         },
@@ -278,13 +278,13 @@ export const ordreMaskine =
     },
     {
       actions: {
-        "Tilføj database varer til context": assign({
+        'Tilføj database varer til context': assign({
           databaseVarer: (_, event) => event.varer,
         }),
-        "Vis Priser": assign({
+        'Vis Priser': assign({
           visPriser: (_, event) => event.visPriser,
         }),
-        "Gem midlertidigt vare": assign({
+        'Gem midlertidigt vare': assign({
           midlertidigVare: (_, event) => event.vareId,
           datoerHvorManIkkeKanBestille: (context, event) => {
             if (erPizzaDej(event.vareId)) {
@@ -295,7 +295,7 @@ export const ordreMaskine =
           },
           datoVejledning: (_, event) => getDatoVejledning(event.vareId),
         }),
-        "Tilføj vare til ordre": assign({
+        'Tilføj vare til ordre': assign({
           varer: (context, event) => {
             if (!event.dato) return context.varer;
             return bygVarer(
@@ -306,10 +306,10 @@ export const ordreMaskine =
             );
           },
         }),
-        "Nulstil ordre": assign((context) =>
+        'Nulstil ordre': assign((context) =>
           getInitialContext(context.databaseVarer, context.visPriser)
         ),
-        "Sæt aktiv dato": assign({
+        'Sæt aktiv dato': assign({
           aktivDato: (_, event) => event.dato,
           varer: (context, event) => {
             if (!context.midlertidigVare) return context.varer;
@@ -323,7 +323,7 @@ export const ordreMaskine =
           },
           midlertidigVare: (_) => undefined,
         }),
-        "Opdater mulige datoer": assign({
+        'Opdater mulige datoer': assign({
           datoerHvorManIkkeKanBestille: (context, event) => {
             if (context.aktivDato) {
               const varerPaaAktivDato = context.varer.get(
@@ -351,12 +351,12 @@ export const ordreMaskine =
             return getDatoVejledning(-1);
           },
         }),
-        "Nulstil mulige datoer": assign({
+        'Nulstil mulige datoer': assign({
           datoerHvorManIkkeKanBestille: (context) =>
             standardDatoerHvorManIkkeKanBestiller(context.varer),
           datoVejledning: (_) => getDatoVejledning(-1),
         }),
-        "Udskift aktiv dato": assign((context, event) => {
+        'Udskift aktiv dato': assign((context, event) => {
           if (!context.aktivDato) return context;
           context.varer.set(
             event.dato.getTime(),
@@ -365,13 +365,13 @@ export const ordreMaskine =
           context.varer.delete(context.aktivDato.getTime());
           return { aktivDato: event.dato, varer: context.varer };
         }),
-        "Tilføj dato": assign((context, event) => {
+        'Tilføj dato': assign((context, event) => {
           return {
             aktivDato: event.dato,
             varer: context.varer.set(event.dato.getTime(), new Map()),
           };
         }),
-        "Slet aktiv dato": assign((context) => {
+        'Slet aktiv dato': assign((context) => {
           if (!context.aktivDato) return context;
 
           context.varer.delete(context.aktivDato.getTime());
@@ -395,32 +395,32 @@ export const ordreMaskine =
         }),
       },
       guards: {
-        "Dato til vare er ok": (_, event) =>
+        'Dato til vare er ok': (_, event) =>
           datoErOkTilVare(event.vareId, event.dato),
-        "Dato til vare er ikke ok": (_, event) =>
+        'Dato til vare er ikke ok': (_, event) =>
           !datoErOkTilVare(event.vareId, event.dato),
-        "Dato eksisterer": (context, event) => {
+        'Dato eksisterer': (context, event) => {
           return context.varer.has(event.dato.getTime());
         },
-        "Dato eksisterer ikke": (context, event) => {
+        'Dato eksisterer ikke': (context, event) => {
           return !context.varer.has(event.dato.getTime());
         },
-        "Kun varer på aktiv dato": (context) => {
+        'Kun varer på aktiv dato': (context) => {
           return (
             context.aktivDato !== undefined &&
             context.varer.size === 1 &&
             context.varer.has(context.aktivDato.getTime())
           );
         },
-        "Varer på flere datoer": (context) => context.varer.size > 1,
+        'Varer på flere datoer': (context) => context.varer.size > 1,
       },
       services: {
-        "Opret ordre id": async () =>
+        'Opret ordre id': async () =>
           await supabaseClient
-            .from<definitions["ordrer"]>("ordrer")
+            .from<definitions['ordrer']>('ordrer')
             .insert([{}]) // User Id bliver sat af serveren
             .throwOnError(),
-        "Opret ordre linjer": async (context) => {
+        'Opret ordre linjer': async (context) => {
           if (context.nytOrdreId) {
             const varer = sorteredeDatoerFraVarer(context.varer).map(
               (time) => new Date(time)
@@ -442,13 +442,13 @@ export const ordreMaskine =
               }
             });
             const { data } = await supabaseClient
-              .from<definitions["ordre_linjer"]>("ordre_linjer")
+              .from<definitions['ordre_linjer']>('ordre_linjer')
               .insert(ordreLinjer)
               .throwOnError();
 
             return await supabaseClient
-              .from<definitions["ordre_emails_der_ikke_er_sendt"]>(
-                "ordre_emails_der_ikke_er_sendt"
+              .from<definitions['ordre_emails_der_ikke_er_sendt']>(
+                'ordre_emails_der_ikke_er_sendt'
               )
               .insert(
                 (data ?? []).map((ordreLinje) => ({
@@ -457,7 +457,7 @@ export const ordreMaskine =
               )
               .throwOnError();
           } else {
-            throw new Error("Ordre id mangler");
+            throw new Error('Ordre id mangler');
           }
         },
       },

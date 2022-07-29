@@ -1,18 +1,18 @@
-import { Confetti } from "@/components/ordre/Confetti";
-import ValgteVarer from "@/components/ordre/ValgteVarer";
-import { AppContext } from "@/utils/context";
-import { samletPris } from "@/utils/ordre";
+import { Confetti } from '@/components/ordre/Confetti';
+import ValgteVarer from '@/components/ordre/ValgteVarer';
+import { AppContext } from '@/utils/context';
+import { samletPris } from '@/utils/ordre';
 import {
   antalVarerForHeleOrdrenSelector,
   sorteredeDatoerSelector,
-} from "@/xstate/selectors";
-import { Button, Heading, Text } from "@chakra-ui/react";
-import { User, withPageAuth } from "@supabase/supabase-auth-helpers/nextjs";
-import { useActor, useSelector } from "@xstate/react";
-import NextLink from "next/link";
-import { useRouter } from "next/router";
-import React, { useEffect } from "react";
-import { FiShoppingCart } from "react-icons/fi";
+} from '@/xstate/selectors';
+import { Button, Heading, Text } from '@chakra-ui/react';
+import { User, withPageAuth } from '@supabase/auth-helpers-nextjs';
+import { useActor, useSelector } from '@xstate/react';
+import NextLink from 'next/link';
+import { useRouter } from 'next/router';
+import React, { useEffect } from 'react';
+import { FiShoppingCart } from 'react-icons/fi';
 
 interface OrdreProps {
   user: User;
@@ -39,25 +39,27 @@ export default function Ordre({ user }: OrdreProps) {
   useEffect(() => {
     const handleRouteChange = () => {
       // Hvis vi er i gang med at bekræftige en ordre og siden skifter skal vi afbryde
-      if (state.matches("Bekræfter ordre")) {
-        send("Afbryd");
+      if (state.matches('Bekræfter ordre')) {
+        send('Afbryd');
       }
     };
 
-    router.events.on("routeChangeStart", handleRouteChange);
+    router.events.on('routeChangeStart', handleRouteChange);
 
     return () => {
-      router.events.off("routeChangeStart", handleRouteChange);
+      router.events.off('routeChangeStart', handleRouteChange);
     };
   }, [router.events, send, state]);
 
   const arbejder =
-    state.matches("Opretter ordre id") ||
-    state.matches("Opretter ordre linjer");
+    state.matches('Opretter ordre id') ||
+    state.matches('Opretter ordre linjer');
+
+  console.log(JSON.stringify(state.context));
 
   return (
     <>
-      {(state.matches("Bekræfter ordre") || arbejder) && (
+      {(state.matches('Bekræfter ordre') || arbejder) && (
         <>
           <Heading size="md">Bekræft din ordre</Heading>
 
@@ -65,10 +67,10 @@ export default function Ordre({ user }: OrdreProps) {
             Du har i alt {antalVarerForHeleOrdren} brød på ordren
             {visPriser && (
               <span>
-                , til en samlet pris på{" "}
-                {Intl.NumberFormat("da-DK").format(
+                , til en samlet pris på{' '}
+                {Intl.NumberFormat('da-DK').format(
                   samletPris(state.context.varer, state.context.databaseVarer)
-                )}{" "}
+                )}{' '}
                 kr
               </span>
             )}
@@ -78,7 +80,7 @@ export default function Ordre({ user }: OrdreProps) {
           <ValgteVarer />
 
           <Button
-            onClick={() => send({ type: "Opret ordre" })}
+            onClick={() => send({ type: 'Opret ordre' })}
             isLoading={arbejder}
             size="lg"
             fontSize="xl"
@@ -91,8 +93,8 @@ export default function Ordre({ user }: OrdreProps) {
         </>
       )}
 
-      {state.matches("Ordre afsluttet") ||
-        (state.matches("Afventer") && (
+      {state.matches('Ordre afsluttet') ||
+        (state.matches('Afventer') && (
           <>
             <Heading size="md" pb={4}>
               Tak for din ordre 🎉
@@ -103,12 +105,12 @@ export default function Ordre({ user }: OrdreProps) {
           </>
         ))}
 
-      {state.matches("Vi har en fejl") && (
+      {state.matches('Vi har en fejl') && (
         <>
           <Text pt={4}>
-            Øv. Der er sket en fejl med beskeden:{" "}
+            Øv. Der er sket en fejl med beskeden:{' '}
             <Text as="i" color="red">
-              {state.context.fejl}.{" "}
+              {state.context.fejl}.{' '}
             </Text>
           </Text>
           <Text>
@@ -123,5 +125,5 @@ export default function Ordre({ user }: OrdreProps) {
 }
 
 export const getServerSideProps = withPageAuth({
-  redirectTo: "/login?returnTo=ordre",
+  redirectTo: '/login?returnTo=ordre',
 });

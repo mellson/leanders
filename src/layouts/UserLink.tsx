@@ -1,7 +1,6 @@
-import { Button } from "@chakra-ui/react";
-import { useUser } from "@supabase/supabase-auth-helpers/react";
-import NextLink from "next/link";
-import * as React from "react";
+import { Button } from '@chakra-ui/react';
+import { useUser } from '@supabase/auth-helpers-react';
+import NextLink from 'next/link';
 
 export function UserLink() {
   const { user, error } = useUser();

@@ -4,10 +4,10 @@ import {
   FormErrorMessage,
   FormLabel,
   Input,
-} from "@chakra-ui/react";
-import { supabaseClient } from "@supabase/supabase-auth-helpers/nextjs";
-import { useRouter } from "next/router";
-import { SubmitHandler, useForm } from "react-hook-form";
+} from '@chakra-ui/react';
+import { supabaseClient } from '@supabase/auth-helpers-nextjs';
+import { useRouter } from 'next/router';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
 type FormValues = {
   kode: string;
@@ -27,8 +27,8 @@ export default function NulstilKode() {
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     if (
       access_token &&
-      typeof access_token === "string" &&
-      type === "recovery"
+      typeof access_token === 'string' &&
+      type === 'recovery'
     ) {
       return await supabaseClient.auth.api.updateUser(access_token, {
         password: data.kode,
@@ -42,8 +42,8 @@ export default function NulstilKode() {
   async function nulstilKode(nyKode: string) {
     if (
       access_token &&
-      typeof access_token === "string" &&
-      type === "recovery"
+      typeof access_token === 'string' &&
+      type === 'recovery'
     ) {
       return await supabaseClient.auth.api.updateUser(access_token, {
         password: nyKode,
@@ -58,11 +58,11 @@ export default function NulstilKode() {
         <Input
           id="kode"
           type="password"
-          {...register("kode", {
-            required: "Koden er påkrævet",
+          {...register('kode', {
+            required: 'Koden er påkrævet',
             minLength: {
               value: 4,
-              message: "Din kode skal bestå af mindst 4 tegn",
+              message: 'Din kode skal bestå af mindst 4 tegn',
             },
           })}
         />
@@ -73,12 +73,12 @@ export default function NulstilKode() {
         <Input
           id="gentaget_kode"
           type="password"
-          {...register("gentaget_kode", {
-            required: "Koden er påkrævet",
+          {...register('gentaget_kode', {
+            required: 'Koden er påkrævet',
             validate: {
               matchesPreviousPassword: (value) => {
                 const { kode } = getValues();
-                return kode === value || "Koderne skal være ens!";
+                return kode === value || 'Koderne skal være ens!';
               },
             },
           })}

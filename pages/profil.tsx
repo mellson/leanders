@@ -1,5 +1,5 @@
-import { definitions } from "@/types/supabase";
-import { AppContext } from "@/utils/context";
+import { definitions } from '@/types/supabase';
+import { AppContext } from '@/utils/context';
 import {
   Button,
   FormControl,
@@ -8,20 +8,20 @@ import {
   Heading,
   HStack,
   Input,
-} from "@chakra-ui/react";
+} from '@chakra-ui/react';
 import {
   supabaseClient,
   supabaseServerClient,
   User,
   withPageAuth,
-} from "@supabase/supabase-auth-helpers/nextjs";
-import NextLink from "next/link";
-import { useContext, useState } from "react";
+} from '@supabase/auth-helpers-nextjs';
+import NextLink from 'next/link';
+import { useContext, useState } from 'react';
 
 interface ProfilProps {
   user: User;
   isAdmin: boolean;
-  firma?: definitions["firmaer"];
+  firma?: definitions['firmaer'];
 }
 
 export default function Profil({ user, isAdmin, firma }: ProfilProps) {
@@ -35,17 +35,17 @@ export default function Profil({ user, isAdmin, firma }: ProfilProps) {
   const gemFirma = async () => {
     setFirmaIsChanging(true);
     const { data, error } = await supabaseClient
-      .from("firmaer")
+      .from('firmaer')
       .upsert({ id: firma?.id, navn: firmaNavn });
     setOriginaltFirmaNavn(firmaNavn);
     setFirmaIsChanging(false);
 
-    send({ type: "Vis Priser", visPriser: firmaNavn === "" });
+    send({ type: 'Vis Priser', visPriser: firmaNavn === '' });
   };
 
   return (
     <>
-      <Heading size="md">Profil</Heading>
+      <Heading size="md">Profils</Heading>
 
       <FormControl>
         <FormLabel htmlFor="email">Email</FormLabel>
@@ -78,8 +78,8 @@ export default function Profil({ user, isAdmin, firma }: ProfilProps) {
             disabled={!firmaIsChanged}
             isLoading={firmaIsChanging}
             onClick={gemFirma}
-            variant={firmaIsChanged ? "solid" : "outline"}
-            colorScheme={firmaIsChanged ? "green" : ""}
+            variant={firmaIsChanged ? 'solid' : 'outline'}
+            colorScheme={firmaIsChanged ? 'green' : ''}
           >
             Gem ændringer
           </Button>
@@ -118,16 +118,16 @@ export default function Profil({ user, isAdmin, firma }: ProfilProps) {
 }
 
 export const getServerSideProps = withPageAuth({
-  redirectTo: "/login?returnTo=profil",
+  redirectTo: '/login?returnTo=profil',
   async getServerSideProps(ctx) {
     const { data } = await supabaseServerClient(ctx)
-      .from<definitions["firmaer"]>("firmaer")
-      .select("*");
+      .from<definitions['firmaer']>('firmaer')
+      .select('*');
     const firma = data && data.length > 0 ? data[0] : null;
 
     const { data: adminData } = await supabaseServerClient(ctx)
-      .from<definitions["admins"]>("admins")
-      .select("*");
+      .from<definitions['admins']>('admins')
+      .select('*');
 
     const isAdmin = Array.isArray(adminData) && adminData.length > 0;
 
