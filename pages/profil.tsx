@@ -45,7 +45,7 @@ export default function Profil({ user, isAdmin, firma }: ProfilProps) {
 
   return (
     <>
-      <Heading size="md">Profils</Heading>
+      <Heading size="md">Profil</Heading>
 
       <FormControl>
         <FormLabel htmlFor="email">Email</FormLabel>
@@ -123,6 +123,7 @@ export const getServerSideProps = withPageAuth({
     const { data } = await supabaseServerClient(ctx)
       .from<definitions['firmaer']>('firmaer')
       .select('*');
+
     const firma = data && data.length > 0 ? data[0] : null;
 
     const { data: adminData } = await supabaseServerClient(ctx)
