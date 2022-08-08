@@ -1,18 +1,13 @@
-import { theme as proTheme } from "@chakra-ui/pro-theme";
-import { extendTheme } from "@chakra-ui/react";
-import {
-  darken,
-  mode,
-  StyleFunctionProps,
-  transparentize,
-} from "@chakra-ui/theme-tools";
-import { CalendarDefaultTheme } from "@uselessdev/datepicker";
-import { mergeDeep } from "./general";
-import { variantOutline } from "./theme-button";
+import { theme as proTheme } from '@/components/chakra-ui-pro-theme';
+import { extendTheme, StyleFunctionProps } from '@chakra-ui/react';
+import { darken, mode, transparentize } from '@chakra-ui/theme-tools';
+import { CalendarDefaultTheme } from '@uselessdev/datepicker';
+import { mergeDeep } from './general';
+import { variantOutline } from './theme-button';
 
 const theme = extendTheme(
   {
-    initialColorMode: "light",
+    initialColorMode: 'light',
     useSystemColorMode: false,
     colors: {
       ...proTheme.colors,
@@ -22,21 +17,21 @@ const theme = extendTheme(
       Button: {
         variants: {
           outline: (props: StyleFunctionProps) => {
-            if (props.colorScheme === "gray") {
+            if (props.colorScheme === 'gray') {
               return {
-                color: "emphasized",
-                bg: mode("white", "gray.800")(props),
+                color: 'emphasized',
+                bg: mode('white', 'gray.800')(props),
                 _hover: {
                   bg: mode(
-                    darken("gray.50", 1)(props.theme),
-                    transparentize("gray.700", 0.4)(props.theme)
+                    darken('gray.50', 1)(props.theme),
+                    transparentize('gray.700', 0.4)(props.theme)
                   )(props),
                 },
                 _checked: {
-                  bg: mode("gray.100", "gray.700")(props),
+                  bg: mode('gray.100', 'gray.700')(props),
                 },
                 _active: {
-                  bg: mode("gray.100", "gray.700")(props),
+                  bg: mode('gray.100', 'gray.700')(props),
                 },
               };
             }
@@ -47,12 +42,12 @@ const theme = extendTheme(
         },
       },
       Calendar: {
-        parts: ["calendar"],
+        parts: ['calendar'],
 
         baseStyle: {
           calendar: {
-            borderWidth: "0",
-            shadow: "none",
+            borderWidth: '0',
+            shadow: 'none',
           },
         },
       },
@@ -61,7 +56,7 @@ const theme = extendTheme(
         variants: {
           selected: {
             bgColor: proTheme.colors.orange[500],
-            color: "white",
+            color: 'white',
 
             _hover: {
               bgColor: proTheme.colors.orange[300],
