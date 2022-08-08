@@ -1,6 +1,7 @@
-import { getColor, mode, StyleFunctionProps, transparentize } from '@chakra-ui/theme-tools'
+import { StyleFunctionProps } from '@chakra-ui/react';
+import { getColor, mode, transparentize } from '@chakra-ui/theme-tools';
 
-const parts = ['field', 'menu', 'option']
+const parts = ['field', 'menu', 'option'];
 
 const baseStyle = {
   field: {
@@ -22,7 +23,7 @@ const baseStyle = {
   menu: {
     minW: '3xs',
   },
-}
+};
 
 const variants = {
   outline: (props: StyleFunctionProps) => ({
@@ -59,25 +60,28 @@ const variants = {
       },
       _invalid: {
         borderColor: getColor(props.theme, mode('red.500', 'red.300')(props)),
-        boxShadow: `0 0 0 1px ${getColor(props.theme, mode('red.500', 'red.300')(props))}`,
+        boxShadow: `0 0 0 1px ${getColor(
+          props.theme,
+          mode('red.500', 'red.300')(props)
+        )}`,
       },
       _focus: {
         borderColor: mode('brand.500', 'brand.200')(props),
         boxShadow: mode(
           `0px 0px 0px 1px ${transparentize(`brand.500`, 1.0)(props.theme)}`,
-          `0px 0px 0px 1px ${transparentize(`brand.200`, 1.0)(props.theme)}`,
+          `0px 0px 0px 1px ${transparentize(`brand.200`, 1.0)(props.theme)}`
         )(props),
       },
       _expanded: {
         borderColor: mode('brand.500', 'brand.200')(props),
         boxShadow: mode(
           `0px 0px 0px 1px ${transparentize(`brand.500`, 1.0)(props.theme)}`,
-          `0px 0px 0px 1px ${transparentize(`brand.200`, 1.0)(props.theme)}`,
+          `0px 0px 0px 1px ${transparentize(`brand.200`, 1.0)(props.theme)}`
         )(props),
       },
     },
   }),
-}
+};
 
 const sizes = {
   sm: {
@@ -131,7 +135,7 @@ const sizes = {
       fontSize: 'lg',
     },
   },
-}
+};
 
 export default {
   parts,
@@ -143,4 +147,4 @@ export default {
     variant: 'outline',
     colorScheme: 'brand',
   },
-}
+};

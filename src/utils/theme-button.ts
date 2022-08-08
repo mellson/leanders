@@ -1,8 +1,5 @@
-import {
-  mode,
-  SystemStyleFunction,
-  transparentize,
-} from "@chakra-ui/theme-tools";
+import { SystemStyleFunction } from '@chakra-ui/react';
+import { mode, transparentize } from '@chakra-ui/theme-tools';
 
 // Denne klasse indeholder funktioner fra det almindelige tema's knap.
 // https://github.com/chakra-ui/chakra-ui/blob/main/packages/theme/src/components/button.ts
@@ -10,7 +7,7 @@ import {
 export const variantGhost: SystemStyleFunction = (props) => {
   const { colorScheme: c, theme } = props;
 
-  if (c === "gray") {
+  if (c === 'gray') {
     return {
       color: mode(`inherit`, `whiteAlpha.900`)(props),
       _hover: {
@@ -25,7 +22,7 @@ export const variantGhost: SystemStyleFunction = (props) => {
 
   return {
     color: mode(`${c}.600`, `${c}.200`)(props),
-    bg: "transparent",
+    bg: 'transparent',
     _hover: {
       bg: mode(`${c}.50`, darkHoverBg)(props),
     },
@@ -39,8 +36,8 @@ export const variantOutline: SystemStyleFunction = (props) => {
   const { colorScheme: c } = props;
   const borderColor = mode(`gray.200`, `whiteAlpha.300`)(props);
   return {
-    border: "1px solid",
-    borderColor: c === "gray" ? borderColor : "currentColor",
+    border: '1px solid',
+    borderColor: c === 'gray' ? borderColor : 'currentColor',
     ...variantGhost(props),
   };
 };
