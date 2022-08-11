@@ -65,11 +65,11 @@ const theme = extendTheme(
         },
       },
     },
-    // fonts: {
-    //   body: "Roboto, sans-serif",
-    //   heading: "Roboto, sans-serif",
-    //   mono: "Menlo, monospace",
-    // },
+    fonts: {
+      body: 'Pragati Narrow, sans-serif',
+      heading: 'Pragati Narrow, sans-serif',
+      mono: 'Menlo, monospace',
+    },
   },
   mergeDeep(CalendarDefaultTheme, proTheme)
 );

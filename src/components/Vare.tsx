@@ -1,13 +1,12 @@
-import { CenterModal } from "@/components/CenterModal";
-import ChakraNextImage from "@/components/ChakraNextImage";
-import { VareInput } from "@/components/VareInput";
-import { definitions } from "@/types/supabase";
-import { Text, useDisclosure, VStack } from "@chakra-ui/react";
-import * as React from "react";
-import { PrisText } from "./ordre/Pris";
+import { CenterModal } from '@/components/CenterModal';
+import ChakraNextImage from '@/components/ChakraNextImage';
+import { VareInput } from '@/components/VareInput';
+import { definitions } from '@/types/supabase';
+import { Text, useDisclosure, VStack } from '@chakra-ui/react';
+import { PrisText } from './ordre/Pris';
 
 interface VareComponentProps {
-  vare: definitions["varer"];
+  vare: definitions['varer'];
   dato?: Date;
   visPris: boolean;
 }
@@ -19,7 +18,7 @@ export function Vare({ vare, dato, visPris }: VareComponentProps) {
     <>
       <VStack spacing={2} maxWidth={200}>
         <VStack align="center" spacing={0}>
-          <Text noOfLines={1} fontSize="lg" fontWeight="medium">
+          <Text noOfLines={1} fontSize="xl" fontWeight="bold">
             {vare.navn}
           </Text>
           {visPris && <PrisText pris={vare.pris} />}
@@ -33,8 +32,8 @@ export function Vare({ vare, dato, visPris }: VareComponentProps) {
           onClick={onOpen}
           transition="all 0.2s"
           _hover={{
-            transform: "scale(1.05)",
-            shadow: "md",
+            transform: 'scale(1.05)',
+            shadow: 'md',
           }}
         />
 
