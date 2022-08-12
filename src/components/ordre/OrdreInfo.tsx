@@ -45,7 +45,6 @@ export function OrdreInfo() {
         in={ordrenOpbygges && !erPaaOrdreSiden}
         style={{ zIndex: 10 }}
       >
-        <Button onClick={() => console.log(process.env.NEXT_PUBLIC_VERCEL_URL)}>Test</Button>
         <VStack
           roundedTop="md"
           padding={4}
