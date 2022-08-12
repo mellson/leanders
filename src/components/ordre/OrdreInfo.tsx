@@ -2,7 +2,7 @@ import { AppContext } from "@/utils/context";
 import { antalVarerPaaDato, samletPrisPaaDato, sammeDato } from "@/utils/ordre";
 import {
   antalVarerForHeleOrdrenSelector,
-  sorteredeDatoerSelector,
+  sorteredeDatoerSelector
 } from "@/xstate/selectors";
 import { Button, SimpleGrid, Slide, Text, VStack } from "@chakra-ui/react";
 import { useActor, useSelector } from "@xstate/react";
@@ -45,6 +45,7 @@ export function OrdreInfo() {
         in={ordrenOpbygges && !erPaaOrdreSiden}
         style={{ zIndex: 10 }}
       >
+        <Button onClick={() => console.log(process.env.NEXT_PUBLIC_VERCEL_URL)}>Test</Button>
         <VStack
           roundedTop="md"
           padding={4}
