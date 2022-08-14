@@ -5,8 +5,9 @@ jobs:
     name: runner / eslint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: reviewdog/action-eslint@v1
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
-          reporter: github-pr-review
-          eslint_flags: 'src/'
+          node-version: '16'
+      - run: yarn install
+      - uses: reviewdog/action-eslint@v1

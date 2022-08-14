@@ -2,7 +2,7 @@
 Hjemmeside til Leanders.
 
 ## Setup
-1. Installer pnpm med `npm install -g pnpm`
+1. Install dependencies `yarn install`
 2. Brug WebStorm eller VSCode til at udvikle.
 
 ### WebStorm setup
