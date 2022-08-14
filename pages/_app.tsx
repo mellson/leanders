@@ -23,6 +23,13 @@ import '../styles/globals.css';
 export default function App({ Component, pageProps }: AppProps) {
   const ordreActor = useInterpret(ordreMaskine);
 
+  let hej: string | undefined;
+  if (new Date().getHours() < 8) hej = 'hej';
+  const h = hej!;
+  if (hej === 'hej') {
+    console.log(h);
+  }
+
   return (
     <UserProvider supabaseClient={supabaseClient}>
       <ChakraProvider theme={theme}>
