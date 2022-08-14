@@ -4,16 +4,17 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "dev-with-typegen": "concurrently \"next dev\" \"yarn xstate-typegen --watch\"",
+    "dev-with-typegen": "concurrently \"next dev\" \"pnpm xstate-typegen --watch\"",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "eslint": "eslint src",
     "generate-supabase-types": "scripts/generate-supabase-types.sh",
     "install-vercel-cli": "npm i -g vercel",
     "pull-env-variables": "vercel pull",
+    "install-pnpm": "npm install -g pnpm",
+    "update-pnpm": "pnpm add -g pnpm",
     "xstate-typegen": "xstate typegen \"./src/**/*.ts?(x)\"",
-    "postinstall": "yarn xstate-typegen"
+    "postinstall": "pnpm xstate-typegen"
   },
   "dependencies": {
     "@chakra-ui/icons": "2.0.6",
