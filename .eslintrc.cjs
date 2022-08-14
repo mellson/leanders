@@ -1,13 +1,13 @@
 module.exports = {
   parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint'],
+  plugins: ['@next/next', '@typescript-eslint'],
 
   overrides: [
     {
       files: ['*.ts', '*.tsx'],
       extends: [
-        'next/core-web-vitals',
         'eslint:recommended',
+        'plugin:@next/next/recommended',
         'plugin:@typescript-eslint/recommended',
         'plugin:@typescript-eslint/strict',
       ],
