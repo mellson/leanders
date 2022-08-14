@@ -8,7 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "eslint": "npx eslint .",
+    "eslint": "eslint .",
     "generate-supabase-types": "scripts/generate-supabase-types.sh",
     "install-vercel-cli": "npm i -g vercel",
     "pull-env-variables": "vercel pull",
