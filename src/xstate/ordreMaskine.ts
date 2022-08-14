@@ -313,7 +313,7 @@ export const ordreMaskine =
         'Sæt aktiv dato': assign({
           aktivDato: (_, event) => event.dato,
           varer: (context, event) => {
-            if (!context.midlertidigVare) return context.varer;
+            if (context.midlertidigVare === undefined) return context.varer;
             return bygVarer(
               context.varer,
               event.dato,
@@ -359,10 +359,13 @@ export const ordreMaskine =
         }),
         'Udskift aktiv dato': assign((context, event) => {
           if (!context.aktivDato) return context;
-          context.varer.set(
-            event.dato.getTime(),
-            context.varer.get(context.aktivDato.getTime())!
+
+          const varerPaaAktivDato = context.varer.get(
+            context.aktivDato.getTime()
           );
+          if (varerPaaAktivDato === undefined) return context;
+
+          context.varer.set(event.dato.getTime(), varerPaaAktivDato);
           context.varer.delete(context.aktivDato.getTime());
           return { aktivDato: event.dato, varer: context.varer };
         }),
@@ -422,7 +425,7 @@ export const ordreMaskine =
             .insert([{}]) // User Id bliver sat af serveren
             .throwOnError(),
         'Opret ordre linjer': async (context) => {
-          if (context.nytOrdreId) {
+          if (context.nytOrdreId !== undefined) {
             const varer = sorteredeDatoerFraVarer(context.varer).map(
               (time) => new Date(time)
             );
