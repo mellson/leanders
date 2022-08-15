@@ -43,7 +43,7 @@ export function VareInput({ vareId, dato }: VareInputProps) {
       >
         -
       </Button>
-      <Input size="sm" rounded="none" {...input} />
+      <Input size="sm" rounded="none" borderColor="leanders.900" {...input} />
       <Button
         size="sm"
         rounded="none"
@@ -51,7 +51,7 @@ export function VareInput({ vareId, dato }: VareInputProps) {
         fontFamily="monospace"
         fontSize="xl"
         fontWeight="bolder"
-        bg="leanders.900"
+        bg={antal > 0 ? 'leanders.900' : 'leanders.600'}
         {...inc}
       >
         +
