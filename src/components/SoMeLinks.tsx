@@ -1,8 +1,5 @@
 import { HStack, IconButton } from '@chakra-ui/react';
 import { FaFacebook, FaInstagram } from 'react-icons/fa';
-
-const hej: string | undefined = 'hej';
-
 export function SoMeLinks() {
   return (
     <HStack spacing={0}>
