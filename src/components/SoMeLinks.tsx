@@ -4,11 +4,6 @@ import { FaFacebook, FaInstagram } from 'react-icons/fa';
 const hej: string | undefined = 'hej';
 
 export function SoMeLinks() {
-  console.log(hej!);
-
-  const hurra = hej || 'hej';
-  console.log(hurra);
-
   return (
     <HStack spacing={0}>
       <IconButton
