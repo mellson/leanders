@@ -1,13 +1,12 @@
-import Favicon from "@/components/Favicon";
-import { Container, Flex } from "@chakra-ui/react";
-import Head from "next/head";
-import * as React from "react";
-import { PropsWithChildren } from "react";
-import { Footer } from "./footer/Footer";
-import { navn } from "./Logo";
-import { Navbar } from "./navbar/Navbar";
+import Favicon from '@/components/Favicon';
+import { Container, Flex } from '@chakra-ui/react';
+import Head from 'next/head';
+import { PropsWithChildren } from 'react';
+import { Footer } from './footer/Footer';
+import { navn } from './Logo';
+import { Navbar } from './navbar/Navbar';
 
-export function AppLayout({ children }: PropsWithChildren<{}>) {
+export function AppLayout({ children }: PropsWithChildren) {
   return (
     <>
       <Head>

@@ -1,7 +1,5 @@
-import { HStack, IconButton } from "@chakra-ui/react";
-import * as React from "react";
-import { FaFacebook, FaInstagram } from "react-icons/fa";
-
+import { HStack, IconButton } from '@chakra-ui/react';
+import { FaFacebook, FaInstagram } from 'react-icons/fa';
 export function SoMeLinks() {
   return (
     <HStack spacing={0}>

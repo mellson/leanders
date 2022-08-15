@@ -48,12 +48,15 @@
     "xstate": "^4.33.1"
   },
   "devDependencies": {
+    "@next/eslint-plugin-next": "^12.2.5",
     "@tsconfig/next": "^1.0.2",
     "@types/mjml": "^4.7.0",
     "@types/mjml-react": "^2.0.5",
     "@types/node": "^18.7.2",
     "@types/nodemailer": "^6.4.5",
     "@types/react": "^18.0.17",
+    "@typescript-eslint/eslint-plugin": "^5.33.0",
+    "@typescript-eslint/parser": "^5.33.0",
     "@xstate/cli": "^0.3.2",
     "concurrently": "^7.3.0",
     "eslint": "^8.21.0",
