@@ -10,7 +10,6 @@ import { UserProvider } from '@supabase/auth-helpers-react';
 import { useInterpret } from '@xstate/react';
 import type { AppProps } from 'next/app';
 import NextNProgress from 'nextjs-progressbar';
-import '../styles/globals.css';
 
 // const xstateInspect =
 //   process.env.NEXT_PUBLIC_XSTATE_INSPECT === "true" &&
@@ -28,7 +27,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <ChakraProvider theme={theme}>
         <AppContext.Provider value={{ ordreActor }}>
           <NextNProgress
-            color={theme.colors.brand[500]}
+            color={theme.colors.leanders[500]}
             options={{ showSpinner: false }}
           />
           <AppLayout>

@@ -52,7 +52,7 @@ import '@fontsource/inter/variable.css'
 export const App = () => {
   const myTheme = extendTheme(
     {
-      colors: { ...theme.colors, brand: theme.colors.purple },
+      colors: { ...theme.colors, leanders: theme.colors.purple },
     },
     theme,
   )

@@ -1,8 +1,7 @@
-import ColorModeToggle from "@/components/ColorModeToggle";
-import { SoMeLinks } from "@/components/SoMeLinks";
-import { Logo } from "@/layouts/Logo";
-import { Sidebar } from "@/layouts/Sidebar";
-import { ToggleButton } from "@/layouts/ToggleButton";
+import { SoMeLinks } from '@/components/SoMeLinks';
+import { Logo } from '@/layouts/Logo';
+import { Sidebar } from '@/layouts/Sidebar';
+import { ToggleButton } from '@/layouts/ToggleButton';
 import {
   Drawer,
   DrawerContent,
@@ -10,12 +9,11 @@ import {
   HStack,
   useBreakpointValue,
   useDisclosure,
-} from "@chakra-ui/react";
-import * as React from "react";
+} from '@chakra-ui/react';
 
 export function MobileNavBar() {
   const { isOpen, onToggle, onClose } = useDisclosure();
-  const isPhone = useBreakpointValue({ base: true, md: false }, "lg");
+  const isPhone = useBreakpointValue({ base: true, md: false }, 'lg');
 
   return (
     <>
@@ -23,7 +21,7 @@ export function MobileNavBar() {
         <Logo />
         <HStack spacing={2}>
           <SoMeLinks />
-          <ColorModeToggle />
+          {/* <ColorModeToggle /> */}
           <ToggleButton
             isOpen={isOpen}
             aria-label="Open Menu"
@@ -37,7 +35,7 @@ export function MobileNavBar() {
         onClose={onClose}
         isFullHeight
         preserveScrollBarGap
-        size={isPhone ? "full" : "xs"}
+        size={isPhone ? 'full' : 'xs'}
       >
         <DrawerOverlay />
         <DrawerContent>

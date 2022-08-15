@@ -99,7 +99,7 @@ export default function Profil({ user, isAdmin, firma }: ProfilProps) {
               Kunders ordrer
             </FormLabel>
             <NextLink href="/ordrer" passHref>
-              <Button variant="outline" colorScheme="brand">
+              <Button variant="outline" colorScheme="leanders" rounded="none">
                 Kunders ordrer
               </Button>
             </NextLink>
@@ -108,7 +108,7 @@ export default function Profil({ user, isAdmin, firma }: ProfilProps) {
         )}
 
         <NextLink href="/api/auth/logout" passHref>
-          <Button variant="outline" mt={8}>
+          <Button variant="outline" mt={8} rounded="none">
             Log ud
           </Button>
         </NextLink>

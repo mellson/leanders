@@ -86,6 +86,7 @@ export default function Ordre({ user }: OrdreProps) {
             fontSize="xl"
             p={8}
             colorScheme="green"
+            rounded="none"
             rightIcon={<FiShoppingCart />}
           >
             Opret ordre

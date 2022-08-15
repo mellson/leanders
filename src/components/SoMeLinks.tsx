@@ -7,14 +7,18 @@ export function SoMeLinks() {
         as="a"
         href="https://www.facebook.com/broedkompagniet/"
         aria-label="Facebook"
-        variant="ghost"
+        variant="link"
+        color="leanders.100"
+        colorScheme="leanders"
         icon={<FaFacebook fontSize="1.25rem" />}
       />
       <IconButton
         as="a"
         href="https://www.instagram.com/broedkompagniet/"
         aria-label="Instagram"
-        variant="ghost"
+        variant="link"
+        color="leanders.100"
+        colorScheme="leanders"
         icon={<FaInstagram fontSize="1.25rem" />}
       />
     </HStack>

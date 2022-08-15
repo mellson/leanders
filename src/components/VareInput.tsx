@@ -1,7 +1,7 @@
-import { AppContext } from "@/utils/context";
-import { Button, HStack, Input, useNumberInput } from "@chakra-ui/react";
-import { useActor } from "@xstate/react";
-import { useContext } from "react";
+import { AppContext } from '@/utils/context';
+import { Button, HStack, Input, useNumberInput } from '@chakra-ui/react';
+import { useActor } from '@xstate/react';
+import { useContext } from 'react';
 
 interface VareInputProps {
   vareId: number;
@@ -20,9 +20,9 @@ export function VareInput({ vareId, dato }: VareInputProps) {
       step: 1,
       value: antal,
       min: 0,
-      inputMode: "numeric",
+      inputMode: 'numeric',
       onChange: (_, valueAsNumber) =>
-        send({ type: "Tilføj vare", vareId, antal: valueAsNumber, dato }),
+        send({ type: 'Tilføj vare', vareId, antal: valueAsNumber, dato }),
     });
 
   const inc = getIncrementButtonProps();
@@ -31,9 +31,31 @@ export function VareInput({ vareId, dato }: VareInputProps) {
 
   return (
     <HStack maxW="320px">
-      <Button {...dec}>-</Button>
-      <Input {...input} />
-      <Button {...inc}>+</Button>
+      <Button
+        size="sm"
+        rounded="none"
+        colorScheme="leanders"
+        fontFamily="monospace"
+        fontSize="xl"
+        fontWeight="bolder"
+        bg={antal > 0 ? 'leanders.900' : undefined}
+        {...dec}
+      >
+        -
+      </Button>
+      <Input size="sm" rounded="none" {...input} />
+      <Button
+        size="sm"
+        rounded="none"
+        colorScheme="leanders"
+        fontFamily="monospace"
+        fontSize="xl"
+        fontWeight="bolder"
+        bg="leanders.900"
+        {...inc}
+      >
+        +
+      </Button>
     </HStack>
   );
 }

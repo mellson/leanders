@@ -1,5 +1,5 @@
-import { SoMeLinks } from "@/components/SoMeLinks";
-import { navn } from "@/layouts/Logo";
+import { SoMeLinks } from '@/components/SoMeLinks';
+import { navn } from '@/layouts/Logo';
 import {
   Box,
   Container,
@@ -7,25 +7,23 @@ import {
   Link,
   SimpleGrid,
   Text,
-  useColorModeValue,
-} from "@chakra-ui/react";
-import * as React from "react";
-import { OekoLogo } from "./OekoLogo";
+} from '@chakra-ui/react';
+import { OekoLogo } from './OekoLogo';
 
 export function Footer() {
   return (
-    <Box as="footer" bg={useColorModeValue("gray.100", "gray.700")}>
-      <Container role="contentinfo" py={{ base: "12", md: "16" }}>
+    <Box as="footer" bg="leanders.600">
+      <Container role="contentinfo" py={{ base: '12', md: '16' }}>
         <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>
           <Box>
             <Heading as="h6" size="xs">
               Kontrolrapport
             </Heading>
             <Text>
-              Se fødevarestyrelsens{" "}
+              Se fødevarestyrelsens{' '}
               <Link href="https://www.findsmiley.dk/719019">
                 kontrolrapport
-              </Link>{" "}
+              </Link>{' '}
               for {navn}
             </Text>
             <br />

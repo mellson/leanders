@@ -56,7 +56,7 @@ export default function Ordrer({ user, isAdmin, ordrer }: ProfilProps) {
   const [ordreData, setOrdreData] = useState(ordrer);
   const [knapDerAfslutterOrdre, setKnapDerAfslutterOrdre] = useState<number>();
   const isDesktop = useBreakpointValue({ base: false, lg: true }, 'lg');
-  const linjeIdagBg = useColorModeValue('brand.100', 'brand.500');
+  const linjeIdagBg = useColorModeValue('leanders.100', 'leanders.500');
   const linjeAfsluttetBg = useColorModeValue('gray.200', 'gray.600');
 
   if (!isAdmin) {
@@ -103,7 +103,7 @@ export default function Ordrer({ user, isAdmin, ordrer }: ProfilProps) {
       </Thead>
       <Tbody>
         {ordreLinjer.map((linje) => {
-          const idag = isToday(parseISO(linje.dato)) ? 'brand.100' : '';
+          const idag = isToday(parseISO(linje.dato)) ? 'leanders.100' : '';
           return (
             <Tr
               key={linje.id}

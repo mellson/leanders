@@ -1,23 +1,23 @@
-import { AppContext } from "@/utils/context";
-import { antalVarerPaaDato, samletPrisPaaDato, sammeDato } from "@/utils/ordre";
+import { AppContext } from '@/utils/context';
+import { antalVarerPaaDato, samletPrisPaaDato, sammeDato } from '@/utils/ordre';
 import {
   antalVarerForHeleOrdrenSelector,
-  sorteredeDatoerSelector
-} from "@/xstate/selectors";
-import { Button, SimpleGrid, Slide, Text, VStack } from "@chakra-ui/react";
-import { useActor, useSelector } from "@xstate/react";
-import NextLink from "next/link";
-import { useRouter } from "next/router";
-import * as React from "react";
-import { FiCalendar, FiPlus, FiShoppingCart } from "react-icons/fi";
-import { PrisText } from "./Pris";
-import RedigerAktivDatoModal from "./RedigerAktivDatoModal";
-import SaetAktivDatoModal from "./SaetAktivDatoModal";
-import TilfoejDatoModal from "./TilfoejDatoModal";
+  sorteredeDatoerSelector,
+} from '@/xstate/selectors';
+import { Button, SimpleGrid, Slide, Text, VStack } from '@chakra-ui/react';
+import { useActor, useSelector } from '@xstate/react';
+import NextLink from 'next/link';
+import { useRouter } from 'next/router';
+import * as React from 'react';
+import { FiCalendar, FiPlus, FiShoppingCart } from 'react-icons/fi';
+import { PrisText } from './Pris';
+import RedigerAktivDatoModal from './RedigerAktivDatoModal';
+import SaetAktivDatoModal from './SaetAktivDatoModal';
+import TilfoejDatoModal from './TilfoejDatoModal';
 
 export function OrdreInfo() {
   const router = useRouter();
-  const erPaaOrdreSiden = router.pathname === "/ordre";
+  const erPaaOrdreSiden = router.pathname === '/ordre';
   const appContext = React.useContext(AppContext);
   const { send } = appContext.ordreActor;
   const [state] = useActor(appContext.ordreActor);
@@ -49,7 +49,7 @@ export function OrdreInfo() {
           roundedTop="md"
           padding={4}
           opacity={ordrenOpbygges ? 0.95 : 0.0}
-          bg="brand.300"
+          bg="leanders.600"
           align="start"
         >
           <SimpleGrid
@@ -64,23 +64,22 @@ export function OrdreInfo() {
                 alignItems="start"
                 bg={
                   sammeDato(dato, state.context.aktivDato)
-                    ? "brand.200"
-                    : "transparent"
+                    ? 'leanders.400'
+                    : 'transparent'
                 }
                 border="2px solid"
-                borderColor="brand.200"
+                borderColor="leanders.800"
                 cursor="pointer"
                 transition="all 0.2s"
                 _hover={{
-                  transform: "scale(1.05)",
-                  backgroundColor: "brand.200",
-                  shadow: "sm",
+                  transform: 'scale(1.05)',
+                  shadow: 'sm',
                 }}
-                onClick={() => send({ type: "Sæt aktiv dato", dato })}
+                onClick={() => send({ type: 'Sæt aktiv dato', dato })}
                 padding={2}
-                rounded="lg"
+                rounded="none"
               >
-                <Text fontSize="xs">{dato.toLocaleDateString("da-DK")}</Text>
+                <Text fontSize="xs">{dato.toLocaleDateString('da-DK')}</Text>
                 <Text>
                   {antalVarerPaaDato(dato, state.context.varer)} brød i kurven
                 </Text>
@@ -109,22 +108,22 @@ export function OrdreInfo() {
             >
               <Button
                 leftIcon={<FiCalendar />}
-                colorScheme="brand"
                 variant="outline"
                 size="sm"
                 width="full"
-                onClick={() => send({ type: "Start udskift aktiv dato" })}
+                rounded="none"
+                onClick={() => send({ type: 'Start udskift aktiv dato' })}
               >
                 Rediger dato
               </Button>
 
               <Button
                 leftIcon={<FiPlus />}
-                colorScheme="brand"
                 variant="outline"
                 size="sm"
                 width="full"
-                onClick={() => send({ type: "Start tilføj dato" })}
+                rounded="none"
+                onClick={() => send({ type: 'Start tilføj dato' })}
               >
                 Tilføj ny dato
               </Button>
@@ -135,11 +134,12 @@ export function OrdreInfo() {
                 size="lg"
                 rightIcon={<FiShoppingCart />}
                 colorScheme="green"
-                fontSize={{ base: "sm", sm: "sm", md: "lg" }}
+                rounded="none"
+                fontSize={{ base: 'sm', sm: 'sm', md: 'lg' }}
                 gridRow={1}
                 gridColumn={{ base: 2, md: 3, lg: 5 }}
                 height="inherit"
-                onClick={() => send({ type: "Bekræft ordre" })}
+                onClick={() => send({ type: 'Bekræft ordre' })}
               >
                 Godkend ordre
               </Button>

@@ -1,29 +1,29 @@
-import theme from "@/utils/theme";
-import { chakra, Flex, FlexProps } from "@chakra-ui/react";
-import type { ImageLoaderProps, ImageProps } from "next/image";
-import NextImage from "next/image";
+import theme from '@/utils/theme';
+import { chakra, Flex, FlexProps } from '@chakra-ui/react';
+import type { ImageLoaderProps, ImageProps } from 'next/image';
+import NextImage from 'next/image';
 
 const ChakraNextUnwrappedImage = chakra(NextImage, {
   shouldForwardProp: (prop) =>
     [
-      "width",
-      "height",
-      "src",
-      "alt",
-      "quality",
-      "placeholder",
-      "blurDataURL",
-      "loader ",
+      'width',
+      'height',
+      'src',
+      'alt',
+      'quality',
+      'placeholder',
+      'blurDataURL',
+      'loader ',
     ].includes(prop),
 });
 
 const toBase64 = (str: string) =>
-  typeof window === "undefined"
-    ? Buffer.from(str).toString("base64")
+  typeof window === 'undefined'
+    ? Buffer.from(str).toString('base64')
     : window.btoa(str);
 
 const shimmer = (w: number, h: number) => {
-  const shimmerColor = theme.colors.red[300];
+  const shimmerColor = theme.colors.leanders[600];
 
   return `
     <svg width="${w}" height="${h}" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -43,7 +43,7 @@ function ChakraNextImage(props: ImageProps & FlexProps) {
   return (
     <Flex
       pos="relative"
-      cursor={props.onClick ? "pointer" : "unset"}
+      cursor={props.onClick ? 'pointer' : 'unset'}
       className="group"
       overflow="hidden"
       rounded="md"
@@ -52,13 +52,13 @@ function ChakraNextImage(props: ImageProps & FlexProps) {
       <ChakraNextUnwrappedImage
         w="auto"
         h="auto"
-        bg="brand.300"
+        bg={props.bg ?? 'leanders.600'}
         loader={myLoader}
         width={width}
         quality={quality}
         height={height}
-        // placeholder="blur"
         objectFit="cover"
+        // placeholder="blur"
         // blurDataURL={`data:image/svg+xml;base64,${toBase64(
         //   shimmer(+width!, +height!)
         // )}`}
