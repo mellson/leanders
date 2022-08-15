@@ -12,7 +12,7 @@ import { OekoLogo } from './OekoLogo';
 
 export function Footer() {
   return (
-    <Box as="footer" bg="leanders.600">
+    <Box as="footer" bg="rgba(190, 171, 139, 0.800)">
       <Container role="contentinfo" py={{ base: '12', md: '16' }}>
         <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>
           <Box>

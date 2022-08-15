@@ -19,7 +19,7 @@ export function Sidebar(props: SidebarProps) {
   return (
     <Flex
       flex="1"
-      bg="bg-surface"
+      bg="leanders.900"
       overflowY="auto"
       boxShadow={useColorModeValue('sm', 'sm-dark')}
       maxW={{ base: 'full', sm: 'xs' }}
@@ -35,15 +35,17 @@ export function Sidebar(props: SidebarProps) {
               key={route.href}
               href={route.href}
               label={route.label}
-              icon={<Icon as={route.icon} boxSize="6" color="subtle" />}
+              color="leanders.600"
+              icon={<Icon as={route.icon} boxSize="6" />}
               aria-current={router.asPath === route.href ? 'page' : undefined}
             />
           ))}
           <NavButton
             onClick={props.onClose}
+            color="leanders.600"
             href="/profil"
             label={minSideLabel}
-            icon={<Icon as={FiUser} boxSize="6" color="subtle" />}
+            icon={<Icon as={FiUser} boxSize="6" />}
             aria-current={router.asPath === '/profil' ? 'page' : undefined}
           />
         </Stack>

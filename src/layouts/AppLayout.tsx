@@ -1,4 +1,6 @@
-import { Container, Flex, useColorMode } from '@chakra-ui/react';
+import ChakraNextImage from '@/components/ChakraNextImage';
+import { Box, Container, Flex, useColorMode } from '@chakra-ui/react';
+import { motion } from 'framer-motion';
 import Head from 'next/head';
 import { PropsWithChildren, useEffect, useState } from 'react';
 import { Footer } from './footer/Footer';
@@ -15,7 +17,6 @@ export function AppLayout({ children }: PropsWithChildren) {
   }, [colorMode]);
 
   const [mode, setMode] = useState('ligth');
-
   useEffect(() => {
     window
       .matchMedia('(prefers-color-scheme: dark)')
@@ -24,6 +25,13 @@ export function AppLayout({ children }: PropsWithChildren) {
         setMode(colorScheme);
       });
   }, []);
+
+  const [bgLogoSize, setBgLogoSize] = useState<number>();
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setBgLogoSize(window.innerWidth / 1.6);
+    }
+  });
 
   const logoHref =
     mode === 'dark'
@@ -53,6 +61,27 @@ export function AppLayout({ children }: PropsWithChildren) {
         >
           {children}
         </Container>
+
+        {bgLogoSize !== undefined && (
+          <Box zIndex={-1}>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 2 }}
+            >
+              <ChakraNextImage
+                position="fixed"
+                bottom={0}
+                right={0}
+                width={bgLogoSize}
+                height={bgLogoSize}
+                src="/logoer/dark_leanders_logo.png"
+                bg="transparent"
+                opacity={0.07}
+              />
+            </motion.div>
+          </Box>
+        )}
         <Footer />
       </Flex>
     </>

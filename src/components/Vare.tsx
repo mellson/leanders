@@ -36,7 +36,7 @@ export function Vare({ vare, dato, visPris }: VareComponentProps) {
           <VareInput vareId={vare.id} dato={dato} />
         </Box>
 
-        <VStack align="center" spacing={-1} p={2}>
+        <VStack align="center" spacing={-1.5} p={2}>
           <Text
             noOfLines={1}
             fontSize="xl"

@@ -43,7 +43,15 @@ export function VareInput({ vareId, dato }: VareInputProps) {
       >
         -
       </Button>
-      <Input size="sm" rounded="none" borderColor="leanders.900" {...input} />
+      <Input
+        size="sm"
+        fontSize="lg"
+        fontWeight="bolder"
+        textAlign="center"
+        rounded="none"
+        borderColor="leanders.900"
+        {...input}
+      />
       <Button
         size="sm"
         rounded="none"

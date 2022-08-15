@@ -3,6 +3,7 @@ import { Logo } from '@/layouts/Logo';
 import { Sidebar } from '@/layouts/Sidebar';
 import { ToggleButton } from '@/layouts/ToggleButton';
 import {
+  Box,
   Drawer,
   DrawerContent,
   DrawerOverlay,
@@ -18,7 +19,9 @@ export function MobileNavBar() {
   return (
     <>
       <HStack width="100%" justify="space-between">
-        <Logo />
+        <Box p={4}>
+          <Logo />
+        </Box>
         <HStack spacing={2}>
           <SoMeLinks />
           {/* <ColorModeToggle /> */}
