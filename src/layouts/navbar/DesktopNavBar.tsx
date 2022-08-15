@@ -8,7 +8,7 @@ import { Box, ButtonGroup, Flex, HStack } from '@chakra-ui/react';
 export function DesktopNavBar() {
   return (
     <Flex justify="space-between" alignItems="end">
-      <Box p={8}>
+      <Box p={6}>
         <Logo />
       </Box>
 

@@ -36,12 +36,14 @@ export function Vare({ vare, dato, visPris }: VareComponentProps) {
           <VareInput vareId={vare.id} dato={dato} />
         </Box>
 
-        <VStack align="center" spacing={-1.5} p={2}>
+        <VStack align="center" p={2}>
           <Text
-            noOfLines={1}
+            noOfLines={2}
             fontSize="xl"
+            textAlign="center"
             fontWeight="bolder"
             textTransform="uppercase"
+            lineHeight={1}
           >
             {vare.navn}
           </Text>
