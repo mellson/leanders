@@ -13,7 +13,8 @@ const ChakraNextUnwrappedImage = chakra(NextImage, {
       'quality',
       'placeholder',
       'blurDataURL',
-      'loader ',
+      'loader',
+      'layout',
     ].includes(prop),
 });
 
@@ -40,27 +41,24 @@ const myLoader = (resolverProps: ImageLoaderProps): string => {
 function ChakraNextImage(props: ImageProps & FlexProps) {
   const { src, width, height, alt, quality = 50, layout, ...rest } = props;
 
-  console.log(layout);
-
   return (
     <Flex
       pos="relative"
       cursor={props.onClick ? 'pointer' : 'unset'}
       className="group"
       overflow="hidden"
-      rounded="md"
       {...rest}
     >
       <ChakraNextUnwrappedImage
-        w="auto"
-        h="auto"
+        w={props.w ?? 'auto'}
+        h={props.h ?? 'auto'}
         bg={props.bg ?? 'leanders.600'}
         layout={layout}
         loader={myLoader}
         width={width}
-        quality={quality}
         height={height}
-        objectFit="cover"
+        quality={quality}
+        objectFit={props.objectFit ?? 'cover'}
         // placeholder="blur"
         // blurDataURL={`data:image/svg+xml;base64,${toBase64(
         //   shimmer(+width!, +height!)
