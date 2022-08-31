@@ -1,6 +1,8 @@
 import { CenterModal } from '@/components/CenterModal';
 import NulstilKode from '@/components/nulstilKode';
+import { Heading } from '@chakra-ui/react';
 import { useUser } from '@supabase/auth-helpers-react';
+import NextImage from 'next/image';
 import { useRouter } from 'next/router';
 
 export default function Home() {
@@ -15,6 +17,10 @@ export default function Home() {
 
   return (
     <>
+      <NextImage src="/billeder/cover.jpeg" layout="fill" objectFit="cover" />
+      <Heading size="lg" textAlign="center">
+        Langsomt & lækkert siden 2017
+      </Heading>
       <CenterModal
         titel={'Nulstil din kode'}
         isOpen={visNulstilKode}

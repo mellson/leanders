@@ -6,7 +6,7 @@ specifiers:
   '@chakra-ui/theme-tools': ^2.0.7
   '@emotion/react': ^11.10.0
   '@emotion/styled': ^11.10.0
-  '@fontsource/pragati-narrow': ^4.5.9
+  '@fontsource/roboto-condensed': ^4.5.9
   '@next/eslint-plugin-next': ^12.2.5
   '@sendgrid/mail': ^7.7.0
   '@supabase/auth-helpers-nextjs': ^0.2.7
@@ -53,7 +53,7 @@ dependencies:
   '@chakra-ui/theme-tools': 2.0.9
   '@emotion/react': 11.10.0_ug65io7jkbhmo4fihdmbrh3ina
   '@emotion/styled': 11.10.0_lzabd6uj4wst47copsenr4b56q
-  '@fontsource/pragati-narrow': 4.5.9
+  '@fontsource/roboto-condensed': 4.5.9
   '@sendgrid/mail': 7.7.0
   '@supabase/auth-helpers-nextjs': 0.2.7
   '@supabase/auth-helpers-react': 0.2.3
@@ -2328,8 +2328,8 @@ packages:
       - supports-color
     dev: true
 
-  /@fontsource/pragati-narrow/4.5.9:
-    resolution: {integrity: sha512-d9gDs+i0gycqbrpBOlm4RfUMUS5JEeJcbkZiScbF4n5/rkd79kUkwD+uW7YSpbc8jB6o4uJNUys1kAugMLBpuQ==}
+  /@fontsource/roboto-condensed/4.5.9:
+    resolution: {integrity: sha512-ql4sQq+h8puBVildZ5ssjYf8DWDONYDe3PD3Bu/p1ZW9GnRETRNPPcCTs/q62HIl3QimwwkiKWynn6wZhQaetg==}
     dev: false
 
   /@humanwhocodes/config-array/0.10.4:

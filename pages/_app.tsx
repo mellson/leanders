@@ -4,7 +4,7 @@ import { AppContext } from '@/utils/context';
 import theme from '@/utils/theme';
 import { ordreMaskine } from '@/xstate/ordreMaskine';
 import { ChakraProvider } from '@chakra-ui/react';
-import '@fontsource/pragati-narrow';
+import '@fontsource/roboto-condensed';
 import { supabaseClient } from '@supabase/auth-helpers-nextjs';
 import { UserProvider } from '@supabase/auth-helpers-react';
 import { useInterpret } from '@xstate/react';

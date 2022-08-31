@@ -1,17 +1,16 @@
-import { Box, chakra, IconButton, IconButtonProps } from "@chakra-ui/react";
-import * as React from "react";
+import { Box, chakra, IconButton, IconButtonProps } from '@chakra-ui/react';
 
-const Bar = chakra("span", {
+const Bar = chakra('span', {
   baseStyle: {
-    display: "block",
-    pos: "absolute",
-    w: "1.25rem",
-    h: "0.125rem",
-    rounded: "full",
-    bg: "currentcolor",
-    mx: "auto",
-    insetStart: "0.125rem",
-    transition: "all 0.12s",
+    display: 'block',
+    pos: 'absolute',
+    w: '1.25rem',
+    h: '0.125rem',
+    rounded: 'full',
+    bg: 'currentcolor',
+    mx: 'auto',
+    insetStart: '0.125rem',
+    transition: 'all 0.12s',
   },
 });
 
@@ -20,7 +19,7 @@ function ToggleIcon(props: { active: boolean }) {
   return (
     <Box
       className="group"
-      data-active={active ? "" : undefined}
+      data-active={active ? '' : undefined}
       as="span"
       display="block"
       w="1.5rem"
@@ -31,11 +30,11 @@ function ToggleIcon(props: { active: boolean }) {
     >
       <Bar
         top="0.4375rem"
-        _groupActive={{ top: "0.6875rem", transform: "rotate(45deg)" }}
+        _groupActive={{ top: '0.6875rem', transform: 'rotate(45deg)' }}
       />
       <Bar
         bottom="0.4375rem"
-        _groupActive={{ bottom: "0.6875rem", transform: "rotate(-45deg)" }}
+        _groupActive={{ bottom: '0.6875rem', transform: 'rotate(-45deg)' }}
       />
     </Box>
   );
@@ -52,7 +51,8 @@ export function ToggleButton(props: ToggleButtonProps) {
       transform="auto"
       {...iconButtonProps}
       variant="ghost"
-      zIndex={isOpen ? "skipLink" : "base"}
+      zIndex={isOpen ? 'skipLink' : 'base'}
+      color="current"
       icon={<ToggleIcon active={isOpen} />}
       {...iconButtonProps}
     />

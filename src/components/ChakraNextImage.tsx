@@ -38,7 +38,9 @@ const myLoader = (resolverProps: ImageLoaderProps): string => {
 };
 
 function ChakraNextImage(props: ImageProps & FlexProps) {
-  const { src, width, height, alt, quality = 50, ...rest } = props;
+  const { src, width, height, alt, quality = 50, layout, ...rest } = props;
+
+  console.log(layout);
 
   return (
     <Flex
@@ -53,6 +55,7 @@ function ChakraNextImage(props: ImageProps & FlexProps) {
         w="auto"
         h="auto"
         bg={props.bg ?? 'leanders.600'}
+        layout={layout}
         loader={myLoader}
         width={width}
         quality={quality}

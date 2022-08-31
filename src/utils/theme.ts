@@ -27,7 +27,6 @@ const theme = extendTheme(
     styles: {
       global: {
         body: {
-          letterSpacing: '1px',
           bg: leanders[500],
         },
       },
@@ -89,8 +88,8 @@ const theme = extendTheme(
       },
     },
     fonts: {
-      body: 'Pragati Narrow, sans-serif',
-      heading: 'Pragati Narrow, sans-serif',
+      body: 'Roboto Condensed, sans-serif',
+      heading: 'Roboto Condensed, sans-serif',
       mono: 'Menlo, monospace',
     },
   },
