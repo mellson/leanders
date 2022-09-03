@@ -1,5 +1,6 @@
 import { Confetti } from '@/components/ordre/Confetti';
 import ValgteVarer from '@/components/ordre/ValgteVarer';
+import { PageBox } from '@/components/PageBox';
 import { AppContext } from '@/utils/context';
 import { samletPris } from '@/utils/ordre';
 import {
@@ -58,7 +59,7 @@ export default function Ordre({ user }: OrdreProps) {
   console.log(JSON.stringify(state.context));
 
   return (
-    <>
+    <PageBox>
       {(state.matches('Bekræfter ordre') || arbejder) && (
         <>
           <Heading size="md">Bekræft din ordre</Heading>
@@ -121,7 +122,7 @@ export default function Ordre({ user }: OrdreProps) {
       )}
 
       <Confetti />
-    </>
+    </PageBox>
   );
 }
 

@@ -1,5 +1,6 @@
 import { CenterModal } from '@/components/CenterModal';
 import NulstilKode from '@/components/nulstilKode';
+import { PageBox } from '@/components/PageBox';
 import { Vare } from '@/components/Vare';
 import { definitions } from '@/types/supabase';
 import { AppContext } from '@/utils/context';
@@ -76,7 +77,7 @@ export default function Bestil({
     type === 'recovery';
 
   return (
-    <>
+    <PageBox>
       <SimpleGrid
         columns={{ base: 2, md: 3, lg: 5 }}
         spacing={{ base: 2, md: 5, lg: 10 }}
@@ -101,6 +102,6 @@ export default function Bestil({
       >
         <NulstilKode />
       </CenterModal>
-    </>
+    </PageBox>
   );
 }

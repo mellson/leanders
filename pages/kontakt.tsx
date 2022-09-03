@@ -1,8 +1,9 @@
-import { AspectRatio, Heading } from "@chakra-ui/react";
+import { PageBox } from '@/components/PageBox';
+import { AspectRatio, Heading } from '@chakra-ui/react';
 
 export default function Kontakt() {
   return (
-    <>
+    <PageBox>
       <Heading size="md">Kontakt</Heading>
       <AspectRatio ratio={16 / 9}>
         <iframe
@@ -11,6 +12,6 @@ export default function Kontakt() {
           referrerPolicy="no-referrer-when-downgrade"
         />
       </AspectRatio>
-    </>
+    </PageBox>
   );
 }

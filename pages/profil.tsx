@@ -1,3 +1,4 @@
+import { PageBox } from '@/components/PageBox';
 import { definitions } from '@/types/supabase';
 import { AppContext } from '@/utils/context';
 import {
@@ -44,7 +45,7 @@ export default function Profil({ user, isAdmin, firma }: ProfilProps) {
   };
 
   return (
-    <>
+    <PageBox>
       <Heading size="md">Profil</Heading>
 
       <FormControl>
@@ -113,7 +114,7 @@ export default function Profil({ user, isAdmin, firma }: ProfilProps) {
           </Button>
         </NextLink>
       </FormControl>
-    </>
+    </PageBox>
   );
 }
 

@@ -1,8 +1,9 @@
-import { Heading, Text } from "@chakra-ui/react";
+import { PageBox } from '@/components/PageBox';
+import { Heading, Text } from '@chakra-ui/react';
 
 export default function Om() {
   return (
-    <>
+    <PageBox>
       <Heading size="md">Manden bag Brødkompagniet</Heading>
       <Text>
         Mit navn er Kasper Leander og jeg bor på Tåsinge med min kone, vores 3
@@ -24,6 +25,6 @@ export default function Om() {
         brødene bliver mere smagfulde. Det skal være ærligt, simpelt og godt!
         Velbekomme.
       </Text>
-    </>
+    </PageBox>
   );
 }

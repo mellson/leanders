@@ -1,3 +1,4 @@
+import { PageBox } from '@/components/PageBox';
 import { Container } from '@chakra-ui/react';
 import { supabaseClient } from '@supabase/auth-helpers-nextjs';
 import { useUser } from '@supabase/auth-helpers-react';
@@ -18,15 +19,17 @@ export default function Login(props: any) {
   }, [returnTo, router, user]);
 
   return (
-    <Container maxW={{ base: 'full', md: '640px' }}>
-      {error && <p>{error.message}</p>}
+    <PageBox>
+      <Container maxW={{ base: 'full', md: '640px' }}>
+        {error && <p>{error.message}</p>}
 
-      <Auth
-        supabaseClient={supabaseClient}
-        providers={['facebook', 'google']}
-        socialLayout="horizontal"
-        socialButtonSize="large"
-      />
-    </Container>
+        <Auth
+          supabaseClient={supabaseClient}
+          providers={['facebook', 'google']}
+          socialLayout="horizontal"
+          socialButtonSize="large"
+        />
+      </Container>
+    </PageBox>
   );
 }

@@ -20,7 +20,7 @@ const TextWithHeading: FC<PropsWithChildren<{ heading: string }>> = ({
 }) => {
   return (
     <Box>
-      <Heading as="h3" size="md" mb={2}>
+      <Heading as="h3" size="sm" textTransform="uppercase">
         {heading}
       </Heading>
       <Text>{children}</Text>
@@ -49,7 +49,11 @@ export default function Home() {
           h={['200px', '300px', '400px', '500px']}
           zIndex={-1}
         />
-        <Heading size="lg" textAlign="center" color="leanders.500">
+        <Heading
+          size={{ base: 'md', md: 'lg', lg: 'xl' }}
+          textAlign="center"
+          color="leanders.500"
+        >
           Langsomt & lækkert siden 2017
         </Heading>
         <NextLink href="/bestil" passHref>
@@ -66,7 +70,7 @@ export default function Home() {
         </NextLink>
       </VStack>
 
-      <SimpleGrid columns={2}>
+      <SimpleGrid columns={{ base: 1, md: 2 }} spacing={16} py={16} px={8}>
         <TextWithHeading heading="Det gode brød">
           Hvad er et godt brød? Det er der jo mange meninger om, men her hos
           Brødkom- pagniet er det de gode økologiske råvarer og god tid, som

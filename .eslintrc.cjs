@@ -9,11 +9,8 @@ module.exports = {
         'eslint:recommended',
         'plugin:@next/next/recommended',
         'plugin:@typescript-eslint/recommended',
-        'plugin:@typescript-eslint/strict',
       ],
-      rules: {
-        '@typescript-eslint/strict-boolean-expressions': 1,
-      },
+      rules: {},
 
       parserOptions: {
         project: ['./tsconfig.json'],
