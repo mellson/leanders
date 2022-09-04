@@ -47,6 +47,7 @@ export function CenterModal({
         <ModalOverlay />
         <ModalContent
           rounded="none"
+          bg="leanders.100"
           border="1px solid"
           borderColor="leanders.800"
         >
