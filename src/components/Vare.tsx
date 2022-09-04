@@ -50,14 +50,25 @@ export function Vare({ vare, dato, visPris }: VareComponentProps) {
           {visPris && <PrisText pris={vare.pris} />}
         </VStack>
       </VStack>
-      <CenterModal titel={vare.navn} isOpen={isOpen} onClose={onClose}>
+      <CenterModal isOpen={isOpen} onClose={onClose}>
         <VStack spacing={2}>
           <ChakraNextImage
             alt={vare.navn}
             src={`/billeder/${vare.billede}.jpeg`}
-            width={600}
-            height={400}
+            width={448}
+            height={300}
+            rounded="none"
           />
+          <Text
+            noOfLines={2}
+            fontSize="xl"
+            textAlign="center"
+            fontWeight="bolder"
+            textTransform="uppercase"
+            lineHeight={1}
+          >
+            {vare.navn}
+          </Text>
           <Text>{vare.beskrivelse}</Text>
         </VStack>
       </CenterModal>

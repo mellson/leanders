@@ -8,11 +8,11 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-} from "@chakra-ui/react";
-import React, { PropsWithChildren } from "react";
+} from '@chakra-ui/react';
+import { PropsWithChildren } from 'react';
 
 interface CenterModalProps {
-  titel: string;
+  titel?: string;
   undertitel?: string;
   isOpen: boolean;
   small?: boolean;
@@ -42,33 +42,39 @@ export function CenterModal({
         isOpen={isOpen}
         isCentered
         preserveScrollBarGap
-        size={small ? "sm" : "md"}
+        size={small ? 'sm' : 'md'}
       >
         <ModalOverlay />
-        <ModalContent>
-          <ModalHeader pb={0} fontSize="md">
-            {titel}
-          </ModalHeader>
+        <ModalContent
+          rounded="none"
+          border="1px solid"
+          borderColor="leanders.800"
+        >
+          {titel && (
+            <ModalHeader pb={0} fontSize="md">
+              {titel}
+            </ModalHeader>
+          )}
           {undertitel && (
             <ModalHeader fontSize="sm" fontWeight="thin" py={0}>
               {undertitel}
             </ModalHeader>
           )}
-          <ModalCloseButton />
-          <ModalBody>{children}</ModalBody>
+          <ModalCloseButton zIndex={1} />
+          <ModalBody p={0}>{children}</ModalBody>
           <ModalFooter>
             <ButtonGroup
               variant="outline"
-              justifyContent={onDelete ? "space-between" : "flex-end"}
+              justifyContent={onDelete ? 'space-between' : 'flex-end'}
               w="full"
             >
               {onDelete && (
                 <Button colorScheme="red" onClick={onDelete}>
-                  {deleteText ?? "Slet"}
+                  {deleteText ?? 'Slet'}
                 </Button>
               )}
               {onAccept && (
-                <Button onClick={onAccept}>{acceptText ?? "Ok"}</Button>
+                <Button onClick={onAccept}>{acceptText ?? 'Ok'}</Button>
               )}
             </ButtonGroup>
           </ModalFooter>
