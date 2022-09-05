@@ -1,5 +1,5 @@
-import { MjmlSection, MjmlColumn, MjmlText } from "mjml-react";
-import { grayDark, textSm } from "./theme";
+import { MjmlColumn, MjmlSection, MjmlText } from 'mjml-react';
+import { grayDark, textSm } from './theme';
 
 export default function Footer() {
   return (
@@ -11,10 +11,43 @@ export default function Footer() {
           fontSize={textSm}
           color={grayDark}
         >
-          © 2022 Mailing&nbsp;&nbsp;·&nbsp;&nbsp;
-          <a href="#" target="_blank">
-            Unsubscribe
+          Leanders ApS
+          <br />
+          Brogade 29
+          <br />
+          5700 Svendborg
+        </MjmlText>
+      </MjmlColumn>
+      <MjmlColumn>
+        <MjmlText
+          cssClass="footer"
+          padding="24px 24px 48px"
+          fontSize={textSm}
+          color={grayDark}
+        >
+          <a href="mailto:kasper@leanders.dk" target="_blank">
+            kasper@leanders.dk
           </a>
+          <br />
+          Tlf: <a href="tel:+4522690045">22690045</a>
+          <br />
+          CVR-NR: 38996371
+        </MjmlText>
+      </MjmlColumn>
+      <MjmlColumn>
+        <MjmlText
+          cssClass="footer"
+          padding="24px 24px 48px"
+          fontSize={textSm}
+          color={grayDark}
+        >
+          <a href="https://leanders.dk" target="_blank">
+            www.leanders.dk
+          </a>
+          <br />
+          Kontrolnr.: DK-ØKO-100
+          <br />
+          Alle varer er økologiske
         </MjmlText>
       </MjmlColumn>
     </MjmlSection>

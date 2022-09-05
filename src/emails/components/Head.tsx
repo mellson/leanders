@@ -1,13 +1,13 @@
-import React, { ReactElement } from "react";
 import {
-  MjmlHead,
-  MjmlFont,
-  MjmlAttributes,
   MjmlAll,
-  MjmlStyle,
+  MjmlAttributes,
+  MjmlFont,
+  MjmlHead,
   MjmlRaw,
-} from "mjml-react";
-import { black, grayDark } from "./theme";
+  MjmlStyle,
+} from 'mjml-react';
+import React, { ReactElement } from 'react';
+import { textColor } from './theme';
 
 type HeadProps = { children?: ReactElement };
 
@@ -19,15 +19,19 @@ const Head: React.FC<HeadProps> = ({ children }) => {
         <meta name="supported-color-schemes" content="light dark" />
       </MjmlRaw>
       <MjmlFont
-        name="Inter"
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900"
+        name="Roboto Condensed"
+        href="https://fonts.googleapis.com/css2?family=Roboto+Condensed"
       />
       <MjmlStyle>{`
         .smooth {
           -webkit-font-smoothing: antialiased;
         }
+        .ordreTable {
+          background-color: #ffffff;
+          text-align: left;
+        }
         .paragraph a {
-          color: ${black} !important;
+          color: ${textColor} !important;
         }
         .li {
           text-indent: -18px;
@@ -36,7 +40,7 @@ const Head: React.FC<HeadProps> = ({ children }) => {
         }
         .footer a {
           text-decoration: none !important;
-          color: ${grayDark} !important;
+          color: ${textColor} !important;
         }
         .dark-mode {
           display: none;
@@ -48,11 +52,8 @@ const Head: React.FC<HeadProps> = ({ children }) => {
           }
         }
         @media (prefers-color-scheme: dark) {
-          .logo > * {
-            filter: invert(1) !important;
-          }
           .paragraph > *, .paragraph a, .li > div {
-            color: #fff !important;
+            color: ${textColor} !important;
           }
           .dark-mode {
             display: inherit;
@@ -64,7 +65,7 @@ const Head: React.FC<HeadProps> = ({ children }) => {
       `}</MjmlStyle>
       <MjmlAttributes>
         <MjmlAll
-          font-family='Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+          font-family='Roboto Condensed, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
           font-weight="400"
         />
       </MjmlAttributes>

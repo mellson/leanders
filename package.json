@@ -14,7 +14,8 @@
     "install-pnpm": "npm install -g pnpm",
     "update-pnpm": "pnpm add -g pnpm",
     "xstate-typegen": "xstate typegen \"./src/**/*.ts?(x)\"",
-    "postinstall": "pnpm xstate-typegen"
+    "postinstall": "pnpm xstate-typegen",
+    "mail": "mailing preview"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.0.9",

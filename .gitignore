@@ -40,3 +40,5 @@ yarn-error.log*
 
 # xstate
 *.typegen.ts
+
+.mailing

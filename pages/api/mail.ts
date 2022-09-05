@@ -5,7 +5,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY ?? '');
 
-interface EmailOrdreLinje {
+export interface EmailOrdreLinje {
   id: number;
   antal: number;
   firma?: string;
