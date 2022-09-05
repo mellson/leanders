@@ -31,10 +31,10 @@ interface OrdreLinje {
   vare: string;
 }
 
-const OrdreInfo: React.FC<{ firma?: Firma; ordreLinjer: OrdreLinje[] }> = ({
-  firma,
-  ordreLinjer,
-}) => {
+const OrdreInfo: React.FC<{
+  firma?: Firma;
+  ordreLinjer: OrdreLinje[];
+}> = ({ firma, ordreLinjer }) => {
   const nu = new Date();
   return (
     <Mjml>

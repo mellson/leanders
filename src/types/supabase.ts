@@ -146,6 +146,9 @@ export interface paths {
           id?: parameters["rowFilter.firmaer.id"];
           navn?: parameters["rowFilter.firmaer.navn"];
           user_email?: parameters["rowFilter.firmaer.user_email"];
+          adresse?: parameters["rowFilter.firmaer.adresse"];
+          postnr?: parameters["rowFilter.firmaer.postnr"];
+          by?: parameters["rowFilter.firmaer.by"];
           /** Filtering Columns */
           select?: parameters["select"];
           /** Ordering */
@@ -199,6 +202,9 @@ export interface paths {
           id?: parameters["rowFilter.firmaer.id"];
           navn?: parameters["rowFilter.firmaer.navn"];
           user_email?: parameters["rowFilter.firmaer.user_email"];
+          adresse?: parameters["rowFilter.firmaer.adresse"];
+          postnr?: parameters["rowFilter.firmaer.postnr"];
+          by?: parameters["rowFilter.firmaer.by"];
         };
         header: {
           /** Preference */
@@ -216,6 +222,9 @@ export interface paths {
           id?: parameters["rowFilter.firmaer.id"];
           navn?: parameters["rowFilter.firmaer.navn"];
           user_email?: parameters["rowFilter.firmaer.user_email"];
+          adresse?: parameters["rowFilter.firmaer.adresse"];
+          postnr?: parameters["rowFilter.firmaer.postnr"];
+          by?: parameters["rowFilter.firmaer.by"];
         };
         body: {
           /** firmaer */
@@ -712,12 +721,19 @@ export interface definitions {
      * @default auth.email()
      */
     user_email: string;
+    /** Format: text */
+    adresse: string;
+    /** Format: numeric */
+    postnr: number;
+    /** Format: text */
+    by: string;
   };
   /** @description Ordrelinjer der mangler at få en email */
   ordre_emails_der_ikke_er_sendt: {
     /**
      * Format: bigint
      * @description Note:
+     * This is a Primary Key.<pk/>
      * This is a Foreign Key to `ordre_linjer.id`.<fk table='ordre_linjer' column='id'/>
      */
     ordre_linje_id: number;
@@ -893,6 +909,12 @@ export interface parameters {
   "rowFilter.firmaer.navn": string;
   /** Format: character varying */
   "rowFilter.firmaer.user_email": string;
+  /** Format: text */
+  "rowFilter.firmaer.adresse": string;
+  /** Format: numeric */
+  "rowFilter.firmaer.postnr": string;
+  /** Format: text */
+  "rowFilter.firmaer.by": string;
   /** @description ordre_emails_der_ikke_er_sendt */
   "body.ordre_emails_der_ikke_er_sendt": definitions["ordre_emails_der_ikke_er_sendt"];
   /** Format: bigint */

@@ -1,14 +1,19 @@
 import { groupBy } from '@/utils/general';
 import sgMail from '@sendgrid/mail';
 import { createClient } from '@supabase/supabase-js';
+import sendMail from 'emails';
+import OrdreInfo from 'emails/OrdreInfo';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY ?? '');
 
-export interface EmailOrdreLinje {
+interface EmailOrdreLinje {
   id: number;
   antal: number;
-  firma?: string;
+  firma_navn?: string;
+  firma_adresse?: string;
+  firma_postnr?: number;
+  firma_by?: string;
   user_email: string;
   vare: string;
 }
@@ -28,25 +33,39 @@ const sendEmail = async (_req: NextApiRequest, res: NextApiResponse) => {
   }
 
   const groupedByEmail = groupBy(data ?? [], (d) => d.user_email);
-  const personalizations = Object.keys(groupedByEmail).map((email) => ({
-    to: email,
-    dynamic_template_data: {
-      varer: (groupedByEmail[email] ?? []).map((ordreLinje) => ({
-        navn: ordreLinje.vare,
-        antal: ordreLinje.antal,
-      })),
-    },
-  }));
-
-  const msg = {
-    from: 'no_reply@leanders.dk',
-    text: 'Din ordre hos Leanders',
-    personalizations,
-    template_id: 'd-aa719948ca2b4f618146e6b03a16a9d8',
-  };
 
   try {
-    await sgMail.send(msg);
+    Object.keys(groupedByEmail).map((email) => {
+      console.log(email);
+
+      const data = groupedByEmail[email];
+      if (!data) return;
+
+      let firma = undefined;
+      if (
+        data[0]?.firma_navn &&
+        data[0].firma_adresse &&
+        data[0].firma_postnr &&
+        data[0].firma_by
+      ) {
+        firma = {
+          navn: data[0].firma_navn,
+          adresse: data[0].firma_adresse,
+          postnr: data[0].firma_postnr,
+          by: data[0].firma_by,
+        };
+      }
+
+      console.log(data[0]);
+
+      console.log(firma);
+
+      sendMail({
+        subject: 'Din ordre fra Leanders',
+        to: email,
+        component: <OrdreInfo firma={firma} ordreLinjer={data} />,
+      });
+    });
 
     const ordreLinjeIds = (data ?? []).map((ordreLinje) => ordreLinje.id);
 

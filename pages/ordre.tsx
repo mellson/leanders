@@ -104,7 +104,9 @@ export default function Ordre({ user }: OrdreProps) {
               Tak for din ordre 🎉
             </Heading>
             <NextLink href="/" passHref>
-              <Button size="lg">Tilbage til forsiden</Button>
+              <Button size="lg" rounded="none">
+                Tilbage til forsiden
+              </Button>
             </NextLink>
           </>
         ))}

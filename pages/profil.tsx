@@ -2,6 +2,7 @@ import { PageBox } from '@/components/PageBox';
 import { definitions } from '@/types/supabase';
 import { AppContext } from '@/utils/context';
 import {
+  Box,
   Button,
   FormControl,
   FormHelperText,
@@ -9,6 +10,7 @@ import {
   Heading,
   HStack,
   Input,
+  SimpleGrid,
 } from '@chakra-ui/react';
 import {
   supabaseClient,
@@ -17,6 +19,7 @@ import {
   withPageAuth,
 } from '@supabase/auth-helpers-nextjs';
 import NextLink from 'next/link';
+import { useRouter } from 'next/router';
 import { useContext, useState } from 'react';
 
 interface ProfilProps {
@@ -25,23 +28,59 @@ interface ProfilProps {
   firma?: definitions['firmaer'];
 }
 
-export default function Profil({ user, isAdmin, firma }: ProfilProps) {
-  const [originaltFirmaNavn, setOriginaltFirmaNavn] = useState(firma?.navn);
-  const [firmaNavn, setFirmaNavn] = useState(firma?.navn);
+export default function Profil({
+  user,
+  isAdmin,
+  firma: firmaInput,
+}: ProfilProps) {
+  const [originaltFirma, setOriginaltFirma] = useState(firmaInput);
+  const [firma, setFirma] = useState<definitions['firmaer'] | undefined>(
+    firmaInput
+  );
   const [firmaIsChanging, setFirmaIsChanging] = useState(false);
-  const firmaIsChanged = firmaNavn !== originaltFirmaNavn;
+  const firmaIsChanged = firma !== originaltFirma;
   const appContext = useContext(AppContext);
   const { send } = appContext.ordreActor;
+  const router = useRouter();
 
-  const gemFirma = async () => {
+  const getFirma = (input?: definitions['firmaer']): definitions['firmaer'] => {
+    if (input) return input;
+    return {
+      id: -1,
+      navn: '',
+      adresse: '',
+      postnr: 0,
+      by: '',
+      user_email: user.email ?? '',
+    };
+  };
+
+  const sletFirma = async () => {
+    setFirma(undefined);
     setFirmaIsChanging(true);
     const { data, error } = await supabaseClient
       .from('firmaer')
-      .upsert({ id: firma?.id, navn: firmaNavn });
-    setOriginaltFirmaNavn(firmaNavn);
+      .delete()
+      .eq('id', firma?.id);
+    setOriginaltFirma(undefined);
+    setFirmaIsChanging(false);
+    send({ type: 'Vis Priser', visPriser: firma === undefined });
+    router.reload();
+  };
+
+  const gemFirma = async () => {
+    setFirmaIsChanging(true);
+    const { data, error } = await supabaseClient.from('firmaer').upsert({
+      id: firma && firma?.id > 0 ? firma.id : undefined,
+      navn: firma?.navn,
+      adresse: firma?.adresse,
+      postnr: firma?.postnr,
+      by: firma?.by,
+    });
+    setOriginaltFirma(firma);
     setFirmaIsChanging(false);
 
-    send({ type: 'Vis Priser', visPriser: firmaNavn === '' });
+    send({ type: 'Vis Priser', visPriser: firma === undefined });
   };
 
   return (
@@ -52,28 +91,100 @@ export default function Profil({ user, isAdmin, firma }: ProfilProps) {
 
       <FormControl>
         <FormLabel htmlFor="email">Email</FormLabel>
-        <Input id="email" type="email" value={user.email} readOnly />
+        <Input
+          rounded="none"
+          id="email"
+          type="email"
+          value={user.email}
+          readOnly
+        />
         <FormHelperText>
           Emailadressen der er tilknyttet din bruger.
         </FormHelperText>
 
-        <FormLabel htmlFor="firmaNavn" mt={8}>
-          Firma
-        </FormLabel>
-        <Input
-          id="firmaNavn"
-          type="text"
-          value={firmaNavn}
-          onChange={(e) => setFirmaNavn(e.target.value)}
-        />
+        <SimpleGrid columns={2} spacing={8} rowGap={0}>
+          <Box>
+            <FormLabel htmlFor="firmaNavn" mt={8}>
+              <strong>Firma</strong> Navn
+            </FormLabel>
+            <Input
+              rounded="none"
+              id="firmaNavn"
+              type="text"
+              value={firma?.navn}
+              onChange={(e) =>
+                setFirma({ ...getFirma(firma), navn: e.target.value })
+              }
+            />
+          </Box>
+          <Box>
+            <FormLabel htmlFor="firmaAdresse" mt={8}>
+              Adresse
+            </FormLabel>
+            <Input
+              rounded="none"
+              id="firmaAdresse"
+              type="text"
+              value={firma?.adresse}
+              onChange={(e) =>
+                setFirma({ ...getFirma(firma), adresse: e.target.value })
+              }
+            />
+          </Box>
+
+          <Box>
+            <FormLabel htmlFor="firmaPostnr" mt={8}>
+              Postnummer
+            </FormLabel>
+            <Input
+              rounded="none"
+              id="firmaPostnr"
+              type="number"
+              value={
+                firma
+                  ? firma.postnr > 0
+                    ? firma.postnr
+                    : undefined
+                  : undefined
+              }
+              onChange={(e) =>
+                setFirma({ ...getFirma(firma), postnr: e.target.valueAsNumber })
+              }
+            />
+          </Box>
+          <Box>
+            <FormLabel htmlFor="firmaBy" mt={8}>
+              By
+            </FormLabel>
+            <Input
+              rounded="none"
+              id="firmaBy"
+              type="text"
+              value={firma?.by}
+              onChange={(e) =>
+                setFirma({ ...getFirma(firma), by: e.target.value })
+              }
+            />
+          </Box>
+        </SimpleGrid>
         <FormHelperText>
-          Skriv dit firmanavn her hvis du bestiller på vegne af et firma.
+          Skriv firmainfo her hvis du bestiller på vegne af et firma.
         </FormHelperText>
+
         <HStack pt="2">
           <Button
-            disabled={!firmaIsChanged || firmaIsChanging}
-            onClick={() => setFirmaNavn(originaltFirmaNavn)}
+            disabled={originaltFirma === null}
+            onClick={() => sletFirma()}
             variant="outline"
+            rounded="none"
+          >
+            Fjern firma
+          </Button>
+          <Button
+            disabled={!firmaIsChanged || firmaIsChanging}
+            onClick={() => setFirma(originaltFirma)}
+            variant="outline"
+            rounded="none"
           >
             Fortryd
           </Button>
@@ -83,6 +194,7 @@ export default function Profil({ user, isAdmin, firma }: ProfilProps) {
             onClick={gemFirma}
             variant={firmaIsChanged ? 'solid' : 'outline'}
             colorScheme={firmaIsChanged ? 'green' : ''}
+            rounded="none"
           >
             Gem ændringer
           </Button>
@@ -92,7 +204,9 @@ export default function Profil({ user, isAdmin, firma }: ProfilProps) {
           Dine ordrer
         </FormLabel>
         <NextLink href="/ordrer" passHref>
-          <Button variant="outline">Dine ordrer</Button>
+          <Button variant="outline" rounded="none">
+            Dine ordrer
+          </Button>
         </NextLink>
         <FormHelperText>Se dine tidligere ordrer.</FormHelperText>
 
