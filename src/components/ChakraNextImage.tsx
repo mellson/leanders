@@ -1,6 +1,6 @@
 import theme from '@/utils/theme';
 import { chakra, Flex, FlexProps } from '@chakra-ui/react';
-import type { ImageLoaderProps, ImageProps } from 'next/image';
+import type { ImageProps } from 'next/image';
 import NextImage from 'next/image';
 
 const ChakraNextUnwrappedImage = chakra(NextImage, {
@@ -34,10 +34,6 @@ const shimmer = (w: number, h: number) => {
     </svg>`;
 };
 
-const myLoader = (resolverProps: ImageLoaderProps): string => {
-  return `${resolverProps.src}?w=${resolverProps.width}&q=${resolverProps.quality}`;
-};
-
 function ChakraNextImage(props: ImageProps & FlexProps) {
   const { src, width, height, alt, quality = 50, layout, ...rest } = props;
 
@@ -54,7 +50,6 @@ function ChakraNextImage(props: ImageProps & FlexProps) {
         h={props.h ?? 'auto'}
         bg={props.bg ?? 'leanders.600'}
         layout={layout}
-        loader={myLoader}
         width={width}
         height={height}
         quality={quality}

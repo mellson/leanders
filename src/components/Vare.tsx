@@ -59,6 +59,7 @@ export function Vare({ vare, dato, visPris }: VareComponentProps) {
             height={300}
             rounded="none"
           />
+
           <Text
             noOfLines={2}
             fontSize="xl"
