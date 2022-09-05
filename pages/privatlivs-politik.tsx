@@ -4,7 +4,9 @@ import { Heading, Text } from '@chakra-ui/react';
 export default function Om() {
   return (
     <PageBox>
-      <Heading size="md">Privatlivspolitik</Heading>
+      <Heading as="h3" size="sm" textTransform="uppercase">
+        Privatlivspolitik
+      </Heading>
       <Text>
         Vi bruger din email for at give dig mulighed for at bestille brød og se
         dine tidligere ordrer.

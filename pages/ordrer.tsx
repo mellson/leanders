@@ -160,7 +160,9 @@ export default function Ordrer({ user, isAdmin, ordrer }: ProfilProps) {
 
   return (
     <PageBox>
-      <Heading size="md">Ordrer</Heading>
+      <Heading as="h3" size="sm" textTransform="uppercase">
+        Ordrer
+      </Heading>
       <TableContainer>
         {bygTable('Kommende ordrer', kommendeOrdrer)}
         <Box opacity={0.5}>

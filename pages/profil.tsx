@@ -46,7 +46,9 @@ export default function Profil({ user, isAdmin, firma }: ProfilProps) {
 
   return (
     <PageBox>
-      <Heading size="md">Profil</Heading>
+      <Heading as="h3" size="sm" textTransform="uppercase">
+        Profil
+      </Heading>
 
       <FormControl>
         <FormLabel htmlFor="email">Email</FormLabel>

@@ -62,7 +62,9 @@ export default function Ordre({ user }: OrdreProps) {
     <PageBox>
       {(state.matches('Bekræfter ordre') || arbejder) && (
         <>
-          <Heading size="md">Bekræft din ordre</Heading>
+          <Heading as="h3" size="sm" textTransform="uppercase">
+            Bekræft din ordre
+          </Heading>
 
           <Text mt={0} pb={4}>
             Du har i alt {antalVarerForHeleOrdren} brød på ordren
@@ -98,7 +100,7 @@ export default function Ordre({ user }: OrdreProps) {
       {state.matches('Ordre afsluttet') ||
         (state.matches('Afventer') && (
           <>
-            <Heading size="md" pb={4}>
+            <Heading as="h3" size="sm" textTransform="uppercase" pb={4}>
               Tak for din ordre 🎉
             </Heading>
             <NextLink href="/" passHref>

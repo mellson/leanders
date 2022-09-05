@@ -33,7 +33,7 @@ export function Footer() {
             <Heading as="h6" size="xs">
               Følg os
             </Heading>
-            <SoMeLinks />
+            <SoMeLinks color="leanders.900" />
           </Box>
           <Box>
             <Heading as="h6" size="xs">
