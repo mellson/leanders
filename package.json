@@ -15,7 +15,8 @@
     "update-pnpm": "pnpm add -g pnpm",
     "xstate-typegen": "xstate typegen \"./src/**/*.ts?(x)\"",
     "postinstall": "pnpm xstate-typegen",
-    "mail": "mailing preview"
+    "mail": "mailing preview",
+    "mail-build": "cd src/emails && mailing server build"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.0.9",

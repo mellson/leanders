@@ -1,9 +1,7 @@
 import { groupBy } from '@/utils/general';
 import { createClient } from '@supabase/supabase-js';
-import sendMail, { sendTestEmail } from 'emails';
-import OrdreInfo from 'emails/OrdreInfo';
+import { sendTestEmail } from 'emails';
 import { NextApiRequest, NextApiResponse } from 'next';
-import React from 'react';
 
 interface EmailOrdreLinje {
   id: number;
@@ -59,16 +57,16 @@ const mailer = async (_req: NextApiRequest, res: NextApiResponse) => {
 
       sendTestEmail(email);
 
-      const result = await sendMail({
-        subject: 'Din ordre fra Leanders',
-        to: email,
-        component: React.createElement(OrdreInfo, {
-          firma,
-          ordreLinjer,
-        }),
-      });
+      // const result = await sendMail({
+      //   subject: 'Din ordre fra Leanders',
+      //   to: email,
+      //   component: React.createElement(OrdreInfo, {
+      //     firma,
+      //     ordreLinjer,
+      //   }),
+      // });
 
-      console.log('Email sent: ' + JSON.stringify(result, null, 2));
+      console.log('Email sent: ' + JSON.stringify('Banan', null, 2));
     });
 
     const ordreLinjeIds = (data ?? []).map((ordreLinje) => ordreLinje.id);
