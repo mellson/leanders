@@ -53,6 +53,7 @@ const sendEmail = async (_req: NextApiRequest, res: NextApiResponse) => {
         };
       }
 
+      console.log('env: ' + process.env.NODE_ENV);
       console.log(firma);
       console.log(JSON.stringify(data, null, 2));
 
