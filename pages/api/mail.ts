@@ -55,7 +55,7 @@ const mailer = async (_req: NextApiRequest, res: NextApiResponse) => {
       console.log(firma);
       console.log(JSON.stringify(ordreLinjer, null, 2));
 
-      sendTestEmail(email);
+      await sendTestEmail(email);
 
       // const result = await sendMail({
       //   subject: 'Din ordre fra Leanders',
@@ -76,9 +76,9 @@ const mailer = async (_req: NextApiRequest, res: NextApiResponse) => {
     //   .delete()
     //   .in('ordre_linje_id', ordreLinjeIds);
 
-    res.json({ message: `Email has been sent` });
+    return res.json({ message: `Email has been sent` });
   } catch (error) {
-    res.status(500).json({ error: 'Error sending email' });
+    return res.status(500).json({ error: 'Error sending email' });
   }
 };
 
