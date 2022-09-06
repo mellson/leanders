@@ -1,6 +1,6 @@
 import { groupBy } from '@/utils/general';
 import { createClient } from '@supabase/supabase-js';
-import sendMail from 'emails';
+import sendMail, { sendTestEmail } from 'emails';
 import OrdreInfo from 'emails/OrdreInfo';
 import { NextApiRequest, NextApiResponse } from 'next';
 import React from 'react';
@@ -16,7 +16,7 @@ interface EmailOrdreLinje {
   vare: string;
 }
 
-const sendEmail = async (_req: NextApiRequest, res: NextApiResponse) => {
+const mailer = async (_req: NextApiRequest, res: NextApiResponse) => {
   const supabaseClient = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL ?? '',
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? ''
@@ -36,36 +36,36 @@ const sendEmail = async (_req: NextApiRequest, res: NextApiResponse) => {
     Object.keys(groupedByEmail).map(async (email) => {
       console.log(email);
 
-      const data = groupedByEmail[email];
-      if (!data) return;
+      const ordreLinjer = groupedByEmail[email];
+      if (!ordreLinjer) return;
 
       let firma = undefined;
       if (
-        data[0]?.firma_navn &&
-        data[0].firma_adresse &&
-        data[0].firma_postnr &&
-        data[0].firma_by
+        ordreLinjer[0]?.firma_navn &&
+        ordreLinjer[0].firma_adresse &&
+        ordreLinjer[0].firma_postnr &&
+        ordreLinjer[0].firma_by
       ) {
         firma = {
-          navn: data[0].firma_navn,
-          adresse: data[0].firma_adresse,
-          postnr: data[0].firma_postnr,
-          by: data[0].firma_by,
+          navn: ordreLinjer[0].firma_navn,
+          adresse: ordreLinjer[0].firma_adresse,
+          postnr: ordreLinjer[0].firma_postnr,
+          by: ordreLinjer[0].firma_by,
         };
       }
 
-      console.log('env: ' + process.env.NODE_ENV);
       console.log(firma);
-      console.log(JSON.stringify(data, null, 2));
+      console.log(JSON.stringify(ordreLinjer, null, 2));
+
+      sendTestEmail(email);
 
       const result = await sendMail({
         subject: 'Din ordre fra Leanders',
         to: email,
         component: React.createElement(OrdreInfo, {
           firma,
-          ordreLinjer: data,
+          ordreLinjer,
         }),
-        forceDeliver: true,
       });
 
       console.log('Email sent: ' + JSON.stringify(result, null, 2));
@@ -73,10 +73,10 @@ const sendEmail = async (_req: NextApiRequest, res: NextApiResponse) => {
 
     const ordreLinjeIds = (data ?? []).map((ordreLinje) => ordreLinje.id);
 
-    await supabaseClient
-      .from('ordre_emails_der_ikke_er_sendt')
-      .delete()
-      .in('ordre_linje_id', ordreLinjeIds);
+    // await supabaseClient
+    //   .from('ordre_emails_der_ikke_er_sendt')
+    //   .delete()
+    //   .in('ordre_linje_id', ordreLinjeIds);
 
     res.json({ message: `Email has been sent` });
   } catch (error) {
@@ -84,4 +84,4 @@ const sendEmail = async (_req: NextApiRequest, res: NextApiResponse) => {
   }
 };
 
-export default sendEmail;
+export default mailer;

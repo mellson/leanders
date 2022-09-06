@@ -10,6 +10,25 @@ const transport = nodemailer.createTransport({
   },
 });
 
+export const sendTestEmail = (email: string) => {
+  transport.sendMail(
+    {
+      from: 'svar_ikke@leanders.dk', // verified sender email
+      to: email, // recipient email
+      subject: 'Test message subject', // Subject line
+      text: 'Hello world!', // plain text body
+      html: '<b>Hello world!</b>', // html body
+    },
+    function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('Email sent: ' + info.response);
+      }
+    }
+  );
+};
+
 const sendMail = buildSendMail({
   transport,
   defaultFrom: 'svar_ikke@leanders.dk',
