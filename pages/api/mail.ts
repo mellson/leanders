@@ -3,6 +3,7 @@ import { createClient } from '@supabase/supabase-js';
 import sendMail from 'emails';
 import OrdreInfo from 'emails/OrdreInfo';
 import { NextApiRequest, NextApiResponse } from 'next';
+import React from 'react';
 
 interface EmailOrdreLinje {
   id: number;
@@ -60,9 +61,13 @@ const sendEmail = async (_req: NextApiRequest, res: NextApiResponse) => {
       const result = await sendMail({
         subject: 'Din ordre fra Leanders',
         to: email,
-        component: <OrdreInfo firma={firma} ordreLinjer={data} />,
+        component: React.createElement(OrdreInfo, {
+          firma,
+          ordreLinjer: data,
+        }),
         forceDeliver: true,
       });
+
       console.log('Email sent: ' + JSON.stringify(result, null, 2));
     });
 
