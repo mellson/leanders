@@ -1,6 +1,8 @@
 import { buildSendMail } from 'mailing-core';
 import nodemailer from 'nodemailer';
 
+console.log('api: ' + process.env.SENDGRID_API_KEY);
+
 const transport = nodemailer.createTransport({
   host: 'smtp.sendgrid.net',
   port: 587,
