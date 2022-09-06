@@ -1,7 +1,9 @@
+import { OrdreInfo } from '@/components/ordre/OrdreInfo';
 import { groupBy } from '@/utils/general';
 import { createClient } from '@supabase/supabase-js';
-import { sendTestEmail } from 'emails';
+import sendMail from 'emails';
 import { NextApiRequest, NextApiResponse } from 'next';
+import React from 'react';
 
 interface EmailOrdreLinje {
   id: number;
@@ -56,27 +58,23 @@ const mailer = async (_req: NextApiRequest, res: NextApiResponse) => {
         console.log(firma);
         console.log(JSON.stringify(ordreLinjer, null, 2));
 
-        return await sendTestEmail(email);
-
-        // const result = await sendMail({
-        //   subject: 'Din ordre fra Leanders',
-        //   to: email,
-        //   component: React.createElement(OrdreInfo, {
-        //     firma,
-        //     ordreLinjer,
-        //   }),
-        // });
-
-        // console.log('Email sent: ' + JSON.stringify('Banan', null, 2));
+        return await sendMail({
+          subject: 'Din ordre fra Leanders',
+          to: email,
+          component: React.createElement(OrdreInfo, {
+            firma,
+            ordreLinjer,
+          }),
+        });
       })
     );
 
     const ordreLinjeIds = (data ?? []).map((ordreLinje) => ordreLinje.id);
 
-    // await supabaseClient
-    //   .from('ordre_emails_der_ikke_er_sendt')
-    //   .delete()
-    //   .in('ordre_linje_id', ordreLinjeIds);
+    await supabaseClient
+      .from('ordre_emails_der_ikke_er_sendt')
+      .delete()
+      .in('ordre_linje_id', ordreLinjeIds);
 
     return res.json({ message: `Email has been sent` });
   } catch (error) {
