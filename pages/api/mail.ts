@@ -31,7 +31,7 @@ const mailer = async (_req: NextApiRequest, res: NextApiResponse) => {
   const groupedByEmail = groupBy(data ?? [], (d) => d.user_email);
 
   try {
-    Object.keys(groupedByEmail).map(async (email) => {
+    Object.keys(groupedByEmail).forEach(async (email) => {
       console.log(email);
 
       const ordreLinjer = groupedByEmail[email];
