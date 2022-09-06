@@ -1,9 +1,8 @@
-import { OrdreInfo } from '@/components/ordre/OrdreInfo';
 import { groupBy } from '@/utils/general';
 import { createClient } from '@supabase/supabase-js';
 import sendMail from 'emails';
+import OrdreInfo from 'emails/OrdreInfo';
 import { NextApiRequest, NextApiResponse } from 'next';
-import React from 'react';
 
 interface EmailOrdreLinje {
   id: number;
@@ -58,14 +57,13 @@ const mailer = async (_req: NextApiRequest, res: NextApiResponse) => {
         console.log(firma);
         console.log(JSON.stringify(ordreLinjer, null, 2));
 
-        return await sendMail({
+        const res = await sendMail({
           subject: 'Din ordre fra Leanders',
           to: email,
-          component: React.createElement(OrdreInfo, {
-            firma,
-            ordreLinjer,
-          }),
+          component: <OrdreInfo firma={firma} ordreLinjer={ordreLinjer} />,
         });
+
+        console.log(res);
       })
     );
 
