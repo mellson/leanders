@@ -1,11 +1,8 @@
 import { groupBy } from '@/utils/general';
-import sgMail from '@sendgrid/mail';
 import { createClient } from '@supabase/supabase-js';
 import sendMail from 'emails';
 import OrdreInfo from 'emails/OrdreInfo';
 import { NextApiRequest, NextApiResponse } from 'next';
-
-sgMail.setApiKey(process.env.SENDGRID_API_KEY ?? '');
 
 interface EmailOrdreLinje {
   id: number;
@@ -56,9 +53,8 @@ const sendEmail = async (_req: NextApiRequest, res: NextApiResponse) => {
         };
       }
 
-      console.log(data[0]);
-
       console.log(firma);
+      console.log(JSON.stringify(data, null, 2));
 
       sendMail({
         subject: 'Din ordre fra Leanders',
