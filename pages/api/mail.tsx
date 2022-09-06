@@ -57,12 +57,13 @@ const sendEmail = async (_req: NextApiRequest, res: NextApiResponse) => {
       console.log(firma);
       console.log(JSON.stringify(data, null, 2));
 
-      await sendMail({
+      const result = await sendMail({
         subject: 'Din ordre fra Leanders',
         to: email,
         component: <OrdreInfo firma={firma} ordreLinjer={data} />,
         forceDeliver: true,
       });
+      console.log('Email sent: ' + JSON.stringify(result, null, 2));
     });
 
     const ordreLinjeIds = (data ?? []).map((ordreLinje) => ordreLinje.id);
