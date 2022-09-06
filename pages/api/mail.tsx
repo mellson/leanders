@@ -60,6 +60,7 @@ const sendEmail = async (_req: NextApiRequest, res: NextApiResponse) => {
         subject: 'Din ordre fra Leanders',
         to: email,
         component: <OrdreInfo firma={firma} ordreLinjer={data} />,
+        forceDeliver: true,
       });
     });
 
