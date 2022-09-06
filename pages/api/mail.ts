@@ -31,43 +31,45 @@ const mailer = async (_req: NextApiRequest, res: NextApiResponse) => {
   const groupedByEmail = groupBy(data ?? [], (d) => d.user_email);
 
   try {
-    Object.keys(groupedByEmail).forEach(async (email) => {
-      console.log(email);
+    await Promise.all(
+      Object.keys(groupedByEmail).map(async (email) => {
+        console.log(email);
 
-      const ordreLinjer = groupedByEmail[email];
-      if (!ordreLinjer) return;
+        const ordreLinjer = groupedByEmail[email];
+        if (!ordreLinjer) return;
 
-      let firma = undefined;
-      if (
-        ordreLinjer[0]?.firma_navn &&
-        ordreLinjer[0].firma_adresse &&
-        ordreLinjer[0].firma_postnr &&
-        ordreLinjer[0].firma_by
-      ) {
-        firma = {
-          navn: ordreLinjer[0].firma_navn,
-          adresse: ordreLinjer[0].firma_adresse,
-          postnr: ordreLinjer[0].firma_postnr,
-          by: ordreLinjer[0].firma_by,
-        };
-      }
+        let firma = undefined;
+        if (
+          ordreLinjer[0]?.firma_navn &&
+          ordreLinjer[0].firma_adresse &&
+          ordreLinjer[0].firma_postnr &&
+          ordreLinjer[0].firma_by
+        ) {
+          firma = {
+            navn: ordreLinjer[0].firma_navn,
+            adresse: ordreLinjer[0].firma_adresse,
+            postnr: ordreLinjer[0].firma_postnr,
+            by: ordreLinjer[0].firma_by,
+          };
+        }
 
-      console.log(firma);
-      console.log(JSON.stringify(ordreLinjer, null, 2));
+        console.log(firma);
+        console.log(JSON.stringify(ordreLinjer, null, 2));
 
-      await sendTestEmail(email);
+        return await sendTestEmail(email);
 
-      // const result = await sendMail({
-      //   subject: 'Din ordre fra Leanders',
-      //   to: email,
-      //   component: React.createElement(OrdreInfo, {
-      //     firma,
-      //     ordreLinjer,
-      //   }),
-      // });
+        // const result = await sendMail({
+        //   subject: 'Din ordre fra Leanders',
+        //   to: email,
+        //   component: React.createElement(OrdreInfo, {
+        //     firma,
+        //     ordreLinjer,
+        //   }),
+        // });
 
-      console.log('Email sent: ' + JSON.stringify('Banan', null, 2));
-    });
+        // console.log('Email sent: ' + JSON.stringify('Banan', null, 2));
+      })
+    );
 
     const ordreLinjeIds = (data ?? []).map((ordreLinje) => ordreLinje.id);
 
