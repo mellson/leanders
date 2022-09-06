@@ -32,7 +32,7 @@ const sendEmail = async (_req: NextApiRequest, res: NextApiResponse) => {
   const groupedByEmail = groupBy(data ?? [], (d) => d.user_email);
 
   try {
-    Object.keys(groupedByEmail).map((email) => {
+    Object.keys(groupedByEmail).map(async (email) => {
       console.log(email);
 
       const data = groupedByEmail[email];
@@ -56,7 +56,7 @@ const sendEmail = async (_req: NextApiRequest, res: NextApiResponse) => {
       console.log(firma);
       console.log(JSON.stringify(data, null, 2));
 
-      sendMail({
+      await sendMail({
         subject: 'Din ordre fra Leanders',
         to: email,
         component: <OrdreInfo firma={firma} ordreLinjer={data} />,
