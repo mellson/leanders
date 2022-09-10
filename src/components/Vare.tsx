@@ -20,6 +20,7 @@ export function Vare({ vare, dato, visPris }: VareComponentProps) {
       border="1px solid"
       borderColor="leanders.800"
       shadow="md"
+      maxW="full"
     >
       <VStack spacing={0} maxWidth={180}>
         <ChakraNextImage
