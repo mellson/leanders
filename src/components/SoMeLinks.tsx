@@ -1,14 +1,17 @@
-import { HStack, IconButton } from '@chakra-ui/react';
-import { FaFacebook, FaInstagram } from 'react-icons/fa';
+import { OekoLogo } from "@/layouts/footer/OekoLogo";
+import { HStack, IconButton } from "@chakra-ui/react";
+import { FaFacebook, FaInstagram } from "react-icons/fa";
+
 export function SoMeLinks({ color }: { color?: string }) {
   return (
-    <HStack spacing={0}>
+    <HStack spacing={0} align="center">
+      <OekoLogo width={40} height={20} />
       <IconButton
         as="a"
         href="https://www.facebook.com/broedkompagniet/"
         aria-label="Facebook"
         variant="link"
-        color={color ?? 'leanders.100'}
+        color={color ?? "leanders.100"}
         colorScheme="leanders"
         icon={<FaFacebook fontSize="1.25rem" />}
       />
@@ -17,7 +20,7 @@ export function SoMeLinks({ color }: { color?: string }) {
         href="https://www.instagram.com/broedkompagniet/"
         aria-label="Instagram"
         variant="link"
-        color={color ?? 'leanders.100'}
+        color={color ?? "leanders.100"}
         colorScheme="leanders"
         icon={<FaInstagram fontSize="1.25rem" />}
       />
