@@ -10,6 +10,7 @@ import {
   SimpleGrid,
   Text,
 } from "@chakra-ui/react";
+import NextLink from "next/link";
 import { OekoLogo } from "./OekoLogo";
 
 export function Footer() {
@@ -23,9 +24,9 @@ export function Footer() {
             </Heading>
             <Text>
               Se fødevarestyrelsens{" "}
-              <Link href="https://www.findsmiley.dk/719019">
-                kontrolrapport
-              </Link>{" "}
+              <NextLink href="https://www.findsmiley.dk/719019" passHref>
+                <Link>kontrolrapport</Link>
+              </NextLink>{" "}
               for {navn}
             </Text>
             <br />
@@ -45,21 +46,30 @@ export function Footer() {
             <Text>{navn} ApS CVR: 38996371</Text>
             <br />
             <Text fontWeight="bold">Adresse</Text>
-            <Link href="https://www.google.com/maps?ll=55.058195,10.611426&z=17&t=m&hl=da&gl=DK&mapclient=embed&cid=11340513616249243461">
-              <Text>Brogade 29 5700 Svendborg</Text>
-            </Link>
+            <NextLink
+              href="https://www.google.com/maps?ll=55.058195,10.611426&z=17&t=m&hl=da&gl=DK&mapclient=embed&cid=11340513616249243461"
+              passHref
+            >
+              <Link>
+                <Text>Brogade 29 5700 Svendborg</Text>
+              </Link>
+            </NextLink>
             <Text>indgang fra Jernbanegade.</Text>
             <Text>Man - fre kl. 7-13 og lørdag kl 7-11</Text>
             <br />
             <Text fontWeight="bold">E-mail</Text>
-            <Link href="mailto:kasper@broedkompagniet.dk">
-              <Text>kasper@broedkompagniet.dk</Text>
-            </Link>
+            <NextLink href="mailto:kasper@leanders.dk" passHref>
+              <Link>
+                <Text>kasper@leanders.dk</Text>
+              </Link>
+            </NextLink>
             <br />
             <Text fontWeight="bold">Telefon</Text>
-            <Link href="tel:+4525330045">
-              <Text>+45 25 33 00 45</Text>
-            </Link>
+            <NextLink href="tel:+4525330045" passHref>
+              <Link>
+                <Text>+45 25 33 00 45</Text>
+              </Link>
+            </NextLink>
             <br />
           </Box>
         </SimpleGrid>
