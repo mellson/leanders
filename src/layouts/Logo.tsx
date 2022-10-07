@@ -1,13 +1,13 @@
-import ChakraNextImage from '@/components/ChakraNextImage';
-import { Box } from '@chakra-ui/react';
-import NextLink from 'next/link';
+import ChakraNextImage from "@/components/ChakraNextImage";
+import { Box } from "@chakra-ui/react";
+import NextLink from "next/link";
 
-export const navn = 'Leanders';
+export const navn = "Leanders";
 
 export function Logo() {
   return (
     <NextLink href="/" passHref>
-      <Box>
+      <Box cursor="pointer">
         <ChakraNextImage
           width={200}
           height={60}
