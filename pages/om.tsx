@@ -1,21 +1,22 @@
-import ChakraNextImage from '@/components/ChakraNextImage';
-import { PageBox } from '@/components/PageBox';
-import { Box, Heading, SimpleGrid, Text, VStack } from '@chakra-ui/react';
+import ChakraNextImage from "@/components/ChakraNextImage";
+import { PageBox } from "@/components/PageBox";
+import { Box, Heading, SimpleGrid, Text, VStack } from "@chakra-ui/react";
 
 export default function Om() {
   return (
     <>
-      <VStack h={['200px', '300px', '400px', '500px']} justify="space-around">
+      <VStack h={["200px", "300px", "400px", "500px"]} justify="space-around">
         <ChakraNextImage
+          alt="Kasper"
           src="/billeder/kasper_intro.jpeg"
           position="absolute"
           layout="fill"
           w="full"
-          h={['200px', '300px', '400px', '500px']}
+          h={["200px", "300px", "400px", "500px"]}
           zIndex={-1}
         />
         <Heading
-          size={{ base: 'md', md: 'lg', lg: 'xl' }}
+          size={{ base: "md", md: "lg", lg: "xl" }}
           textAlign="center"
           color="leanders.500"
         >
@@ -57,6 +58,7 @@ export default function Om() {
             </Text>
           </Box>
           <ChakraNextImage
+            alt="Kasper"
             src="/billeder/kasper.jpeg"
             width={400}
             height={600}

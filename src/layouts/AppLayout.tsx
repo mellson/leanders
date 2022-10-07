@@ -1,42 +1,42 @@
-import ChakraNextImage from '@/components/ChakraNextImage';
-import { Box, Container, Flex, useColorMode } from '@chakra-ui/react';
-import { motion } from 'framer-motion';
-import Head from 'next/head';
-import { PropsWithChildren, useEffect, useState } from 'react';
-import { Footer } from './footer/Footer';
-import { navn } from './Logo';
-import { Navbar } from './navbar/Navbar';
+import ChakraNextImage from "@/components/ChakraNextImage";
+import { Box, Container, Flex, useColorMode } from "@chakra-ui/react";
+import { motion } from "framer-motion";
+import Head from "next/head";
+import { PropsWithChildren, useEffect, useState } from "react";
+import { Footer } from "./footer/Footer";
+import { navn } from "./Logo";
+import { Navbar } from "./navbar/Navbar";
 
 export function AppLayout({ children }: PropsWithChildren) {
   const { colorMode, toggleColorMode } = useColorMode();
 
   useEffect(() => {
-    if (colorMode === 'dark') {
+    if (colorMode === "dark") {
       toggleColorMode();
     }
   }, [colorMode]);
 
-  const [mode, setMode] = useState('ligth');
+  const [mode, setMode] = useState("ligth");
   useEffect(() => {
     window
-      .matchMedia('(prefers-color-scheme: dark)')
-      .addEventListener('change', (event) => {
-        const colorScheme = event.matches ? 'dark' : 'light';
+      .matchMedia("(prefers-color-scheme: dark)")
+      .addEventListener("change", (event) => {
+        const colorScheme = event.matches ? "dark" : "light";
         setMode(colorScheme);
       });
   }, []);
 
   const [bgLogoSize, setBgLogoSize] = useState<number>();
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       setBgLogoSize(window.innerWidth / 1.6);
     }
   });
 
   const logoHref =
-    mode === 'dark'
-      ? '/logoer/light_leanders_logo.png'
-      : '/logoer/dark_leanders_logo.png';
+    mode === "dark"
+      ? "/logoer/light_leanders_logo.png"
+      : "/logoer/dark_leanders_logo.png";
 
   return (
     <>
@@ -63,6 +63,7 @@ export function AppLayout({ children }: PropsWithChildren) {
               transition={{ duration: 2 }}
             >
               <ChakraNextImage
+                alt="Logo"
                 position="fixed"
                 bottom={0}
                 right={0}

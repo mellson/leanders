@@ -40,6 +40,7 @@ export default function Home() {
     <>
       <VStack h={["200px", "300px", "400px", "500px"]} justify="space-around">
         <ChakraNextImage
+          alt="Cover foto"
           src="/billeder/cover.jpeg"
           position="absolute"
           layout="fill"
