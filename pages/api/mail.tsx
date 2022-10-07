@@ -28,7 +28,7 @@ const mailer = async (_req: NextApiRequest, res: NextApiResponse) => {
     return;
   }
 
-  const groupedByEmail = groupBy(data ?? [], (d) => d.user_email);
+  const groupedByEmail = groupBy(data ?? [], (d) => d.user_email!);
 
   try {
     await Promise.all(
@@ -59,7 +59,9 @@ const mailer = async (_req: NextApiRequest, res: NextApiResponse) => {
         const res = await sendMail({
           subject: "Din ordre fra Leanders",
           to: email,
-          component: <OrdreInfo firma={firma} ordreLinjer={ordreLinjer} />,
+          component: (
+            <OrdreInfo firma={firma} ordreLinjer={ordreLinjer as any} />
+          ),
         });
 
         console.log(res);
