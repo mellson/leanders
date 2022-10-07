@@ -1,15 +1,16 @@
-import { OrdreInfo } from '@/components/ordre/OrdreInfo';
-import { AppLayout } from '@/layouts/AppLayout';
-import { AppContext } from '@/utils/context';
-import theme from '@/utils/theme';
-import { ordreMaskine } from '@/xstate/ordreMaskine';
-import { ChakraProvider } from '@chakra-ui/react';
-import '@fontsource/roboto-condensed';
-import { supabaseClient } from '@supabase/auth-helpers-nextjs';
-import { UserProvider } from '@supabase/auth-helpers-react';
-import { useInterpret } from '@xstate/react';
-import type { AppProps } from 'next/app';
-import NextNProgress from 'nextjs-progressbar';
+import { OrdreInfo } from "@/components/ordre/OrdreInfo";
+import { AppLayout } from "@/layouts/AppLayout";
+import { AppContext } from "@/utils/context";
+import theme from "@/utils/theme";
+import { ordreMaskine } from "@/xstate/ordreMaskine";
+import { ChakraProvider } from "@chakra-ui/react";
+import "@fontsource/roboto-condensed";
+import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
+import { SessionContextProvider } from "@supabase/auth-helpers-react";
+import { useInterpret } from "@xstate/react";
+import type { AppProps } from "next/app";
+import NextNProgress from "nextjs-progressbar";
+import { useState } from "react";
 
 // const xstateInspect =
 //   process.env.NEXT_PUBLIC_XSTATE_INSPECT === "true" &&
@@ -21,9 +22,13 @@ import NextNProgress from 'nextjs-progressbar';
 
 export default function App({ Component, pageProps }: AppProps) {
   const ordreActor = useInterpret(ordreMaskine);
+  const [supabaseClient] = useState(() => createBrowserSupabaseClient());
 
   return (
-    <UserProvider supabaseClient={supabaseClient}>
+    <SessionContextProvider
+      supabaseClient={supabaseClient}
+      initialSession={pageProps.initialSession}
+    >
       <ChakraProvider theme={theme}>
         <AppContext.Provider value={{ ordreActor }}>
           <NextNProgress
@@ -36,6 +41,6 @@ export default function App({ Component, pageProps }: AppProps) {
           </AppLayout>
         </AppContext.Provider>
       </ChakraProvider>
-    </UserProvider>
+    </SessionContextProvider>
   );
 }

@@ -1,6 +1,6 @@
-import { CenterModal } from '@/components/CenterModal';
-import ChakraNextImage from '@/components/ChakraNextImage';
-import NulstilKode from '@/components/nulstilKode';
+import { CenterModal } from "@/components/CenterModal";
+import ChakraNextImage from "@/components/ChakraNextImage";
+import NulstilKode from "@/components/nulstilKode";
 import {
   Box,
   Button,
@@ -8,11 +8,10 @@ import {
   SimpleGrid,
   Text,
   VStack,
-} from '@chakra-ui/react';
-import { useUser } from '@supabase/auth-helpers-react';
-import NextLink from 'next/link';
-import { useRouter } from 'next/router';
-import { FC, PropsWithChildren } from 'react';
+} from "@chakra-ui/react";
+import NextLink from "next/link";
+import { useRouter } from "next/router";
+import { FC, PropsWithChildren } from "react";
 
 const TextWithHeading: FC<PropsWithChildren<{ heading: string }>> = ({
   heading,
@@ -29,28 +28,27 @@ const TextWithHeading: FC<PropsWithChildren<{ heading: string }>> = ({
 };
 
 export default function Home() {
-  const { user } = useUser();
   const router = useRouter();
   const { access_token, type } = router.query;
 
   const visNulstilKode =
     access_token !== undefined &&
-    typeof access_token === 'string' &&
-    type === 'recovery';
+    typeof access_token === "string" &&
+    type === "recovery";
 
   return (
     <>
-      <VStack h={['200px', '300px', '400px', '500px']} justify="space-around">
+      <VStack h={["200px", "300px", "400px", "500px"]} justify="space-around">
         <ChakraNextImage
           src="/billeder/cover.jpeg"
           position="absolute"
           layout="fill"
           w="full"
-          h={['200px', '300px', '400px', '500px']}
+          h={["200px", "300px", "400px", "500px"]}
           zIndex={-1}
         />
         <Heading
-          size={{ base: 'md', md: 'lg', lg: 'xl' }}
+          size={{ base: "md", md: "lg", lg: "xl" }}
           textAlign="center"
           color="leanders.500"
         >
@@ -89,10 +87,10 @@ export default function Home() {
         </TextWithHeading>
       </SimpleGrid>
       <CenterModal
-        titel={'Nulstil din kode'}
+        titel={"Nulstil din kode"}
         isOpen={visNulstilKode}
         onClose={function (): void {
-          throw new Error('Function not implemented.');
+          throw new Error("Function not implemented.");
         }}
       >
         <NulstilKode />

@@ -1,33 +1,47 @@
-import { PageBox } from '@/components/PageBox';
-import { Container } from '@chakra-ui/react';
-import { supabaseClient } from '@supabase/auth-helpers-nextjs';
-import { useUser } from '@supabase/auth-helpers-react';
-import { Auth } from '@supabase/ui';
-import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { PageBox } from "@/components/PageBox";
+import { Container } from "@chakra-ui/react";
+import { useSessionContext } from "@supabase/auth-helpers-react";
+import { Auth, ThemeSupa } from "@supabase/auth-ui-react";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
-export default function Login(props: any) {
-  const { user, error } = useUser();
+export default function Login() {
+  const { session, error, supabaseClient } = useSessionContext();
   const router = useRouter();
   const { returnTo } = router.query;
 
   useEffect(() => {
-    if (user) {
-      const hasReturnTo = returnTo && typeof returnTo === 'string';
-      router.push(hasReturnTo ? `/${returnTo}` : '/');
+    if (session?.user) {
+      const hasReturnTo = returnTo && typeof returnTo === "string";
+      router.push(hasReturnTo ? `/${returnTo}` : "/");
     }
-  }, [returnTo, router, user]);
+  }, [returnTo, router]);
 
   return (
     <PageBox>
-      <Container maxW={{ base: 'full', md: '640px' }}>
+      <Container maxW={{ base: "full", md: "640px" }}>
         {error && <p>{error.message}</p>}
 
         <Auth
           supabaseClient={supabaseClient}
-          providers={['facebook', 'google']}
+          providers={["facebook", "google"]}
           socialLayout="horizontal"
-          socialButtonSize="large"
+          appearance={{ theme: ThemeSupa }}
+          localization={{
+            variables: {
+              sign_in: {
+                email_label: "Email adresse",
+                password_label: "Kode",
+                button_label: "Log ind",
+              },
+              forgotten_password: {
+                link_text: "Glemt kode?",
+              },
+              sign_up: {
+                link_text: "Har du ikke en bruger? Opret en her",
+              },
+            },
+          }}
         />
       </Container>
     </PageBox>

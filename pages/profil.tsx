@@ -1,6 +1,7 @@
-import { PageBox } from '@/components/PageBox';
-import { definitions } from '@/types/supabase';
-import { AppContext } from '@/utils/context';
+import { PageBox } from "@/components/PageBox";
+import type { Database } from "@/types/DatabaseDefinitions";
+import { AppContext } from "@/utils/context";
+import { supabaseClient } from "@/utils/supabase-util";
 import {
   Box,
   Button,
@@ -11,47 +12,41 @@ import {
   HStack,
   Input,
   SimpleGrid,
-} from '@chakra-ui/react';
+} from "@chakra-ui/react";
 import {
-  supabaseClient,
-  supabaseServerClient,
-  User,
+  createServerSupabaseClient,
   withPageAuth,
-} from '@supabase/auth-helpers-nextjs';
-import NextLink from 'next/link';
-import { useRouter } from 'next/router';
-import { useContext, useState } from 'react';
+} from "@supabase/auth-helpers-nextjs";
+import { useSessionContext } from "@supabase/auth-helpers-react";
+import NextLink from "next/link";
+import { useRouter } from "next/router";
+import { useContext, useState } from "react";
 
+type Firma = Database["public"]["Tables"]["firmaer"]["Row"];
 interface ProfilProps {
-  user: User;
   isAdmin: boolean;
-  firma?: definitions['firmaer'];
+  firma?: Firma;
 }
 
-export default function Profil({
-  user,
-  isAdmin,
-  firma: firmaInput,
-}: ProfilProps) {
+export default function Profil({ isAdmin, firma: firmaInput }: ProfilProps) {
+  const { error, session } = useSessionContext();
   const [originaltFirma, setOriginaltFirma] = useState(firmaInput);
-  const [firma, setFirma] = useState<definitions['firmaer'] | undefined>(
-    firmaInput
-  );
+  const [firma, setFirma] = useState<Firma | undefined>(firmaInput);
   const [firmaIsChanging, setFirmaIsChanging] = useState(false);
   const firmaIsChanged = firma !== originaltFirma;
   const appContext = useContext(AppContext);
   const { send } = appContext.ordreActor;
   const router = useRouter();
 
-  const getFirma = (input?: definitions['firmaer']): definitions['firmaer'] => {
+  const getFirma = (input?: Firma): Firma => {
     if (input) return input;
     return {
       id: -1,
-      navn: '',
-      adresse: '',
+      navn: "",
+      adresse: "",
       postnr: 0,
-      by: '',
-      user_email: user.email ?? '',
+      by: "",
+      user_email: session?.user.email ?? "",
     };
   };
 
@@ -59,28 +54,29 @@ export default function Profil({
     setFirma(undefined);
     setFirmaIsChanging(true);
     const { data, error } = await supabaseClient
-      .from('firmaer')
+      .from("firmaer")
       .delete()
-      .eq('id', firma?.id);
+      .eq("id", firma?.id);
     setOriginaltFirma(undefined);
     setFirmaIsChanging(false);
-    send({ type: 'Vis Priser', visPriser: firma === undefined });
+    send({ type: "Vis Priser", visPriser: firma === undefined });
     router.reload();
   };
 
   const gemFirma = async () => {
+    if (!firma) return;
     setFirmaIsChanging(true);
-    const { data, error } = await supabaseClient.from('firmaer').upsert({
-      id: firma && firma?.id > 0 ? firma.id : undefined,
-      navn: firma?.navn,
-      adresse: firma?.adresse,
-      postnr: firma?.postnr,
-      by: firma?.by,
+    const { data, error } = await supabaseClient.from("firmaer").upsert({
+      id: firma && firma.id > 0 ? firma.id : undefined,
+      navn: firma.navn,
+      adresse: firma.adresse,
+      postnr: firma.postnr,
+      by: firma.by,
     });
     setOriginaltFirma(firma);
     setFirmaIsChanging(false);
 
-    send({ type: 'Vis Priser', visPriser: firma === undefined });
+    send({ type: "Vis Priser", visPriser: true });
   };
 
   return (
@@ -95,7 +91,7 @@ export default function Profil({
           rounded="none"
           id="email"
           type="email"
-          value={user.email}
+          value={session?.user.email}
           readOnly
         />
         <FormHelperText>
@@ -192,8 +188,8 @@ export default function Profil({
             disabled={!firmaIsChanged}
             isLoading={firmaIsChanging}
             onClick={gemFirma}
-            variant={firmaIsChanged ? 'solid' : 'outline'}
-            colorScheme={firmaIsChanged ? 'green' : ''}
+            variant={firmaIsChanged ? "solid" : "outline"}
+            colorScheme={firmaIsChanged ? "green" : ""}
             rounded="none"
           >
             Gem ændringer
@@ -235,17 +231,17 @@ export default function Profil({
 }
 
 export const getServerSideProps = withPageAuth({
-  redirectTo: '/login?returnTo=profil',
+  redirectTo: "/login?returnTo=profil",
   async getServerSideProps(ctx) {
-    const { data } = await supabaseServerClient(ctx)
-      .from<definitions['firmaer']>('firmaer')
-      .select('*');
+    const { data } = await createServerSupabaseClient<Database>(ctx)
+      .from("firmaer")
+      .select("*");
 
     const firma = data && data.length > 0 ? data[0] : null;
 
-    const { data: adminData } = await supabaseServerClient(ctx)
-      .from<definitions['admins']>('admins')
-      .select('*');
+    const { data: adminData } = await createServerSupabaseClient(ctx)
+      .from("admins")
+      .select("*");
 
     const isAdmin = Array.isArray(adminData) && adminData.length > 0;
 

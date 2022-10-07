@@ -1,8 +1,9 @@
-import { groupBy } from '@/utils/general';
-import { createClient } from '@supabase/supabase-js';
-import sendMail from 'emails';
-import OrdreInfo from 'emails/OrdreInfo';
-import { NextApiRequest, NextApiResponse } from 'next';
+import type { Database } from "@/types/DatabaseDefinitions";
+import { groupBy } from "@/utils/general";
+import { createClient } from "@supabase/supabase-js";
+import sendMail from "emails";
+import OrdreInfo from "emails/OrdreInfo";
+import { NextApiRequest, NextApiResponse } from "next";
 
 interface EmailOrdreLinje {
   id: number;
@@ -16,13 +17,11 @@ interface EmailOrdreLinje {
 }
 
 const mailer = async (_req: NextApiRequest, res: NextApiResponse) => {
-  const supabaseClient = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL ?? '',
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? ''
+  const supabaseClient = createClient<Database>(
+    process.env.NEXT_PUBLIC_SUPABASE_URL ?? "",
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? ""
   );
-  const { data } = await supabaseClient
-    .from<EmailOrdreLinje>('email_ordrer_view')
-    .select('*');
+  const { data } = await supabaseClient.from("email_ordrer_view").select("*");
 
   if (data?.length === 0) {
     res.json({ message: `No emails to send` });
@@ -58,7 +57,7 @@ const mailer = async (_req: NextApiRequest, res: NextApiResponse) => {
         console.log(JSON.stringify(ordreLinjer, null, 2));
 
         const res = await sendMail({
-          subject: 'Din ordre fra Leanders',
+          subject: "Din ordre fra Leanders",
           to: email,
           component: <OrdreInfo firma={firma} ordreLinjer={ordreLinjer} />,
         });
@@ -70,13 +69,13 @@ const mailer = async (_req: NextApiRequest, res: NextApiResponse) => {
     const ordreLinjeIds = (data ?? []).map((ordreLinje) => ordreLinje.id);
 
     await supabaseClient
-      .from('ordre_emails_der_ikke_er_sendt')
+      .from("ordre_emails_der_ikke_er_sendt")
       .delete()
-      .in('ordre_linje_id', ordreLinjeIds);
+      .in("ordre_linje_id", ordreLinjeIds);
 
     return res.json({ message: `Email has been sent` });
   } catch (error) {
-    return res.status(500).json({ error: 'Error sending email' });
+    return res.status(500).json({ error: "Error sending email" });
   }
 };
 
