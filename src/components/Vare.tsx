@@ -1,12 +1,14 @@
-import { CenterModal } from '@/components/CenterModal';
-import ChakraNextImage from '@/components/ChakraNextImage';
-import { VareInput } from '@/components/VareInput';
-import { definitions } from '@/types/supabase';
-import { Box, Text, useDisclosure, VStack } from '@chakra-ui/react';
-import { PrisText } from './ordre/Pris';
+import { CenterModal } from "@/components/CenterModal";
+import ChakraNextImage from "@/components/ChakraNextImage";
+import { VareInput } from "@/components/VareInput";
+import type { Database } from "@/types/DatabaseDefinitions";
+import { Box, Text, useDisclosure, VStack } from "@chakra-ui/react";
+import { PrisText } from "./ordre/Pris";
+
+type Vare = Database["public"]["Tables"]["varer"]["Row"];
 
 interface VareComponentProps {
-  vare: definitions['varer'];
+  vare: Vare;
   dato?: Date;
   visPris: boolean;
 }
