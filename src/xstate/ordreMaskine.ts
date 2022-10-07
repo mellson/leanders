@@ -12,7 +12,7 @@ import {
   pizzaDejVareId,
   sorteredeDatoerFraVarer,
 } from "@/utils/ordre";
-import { supabaseClient } from "@/utils/supabase-util";
+import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { PostgrestResponse } from "@supabase/supabase-js";
 import { assign, createMachine, send } from "xstate";
 
@@ -20,9 +20,7 @@ export const convertError = (error: any) =>
   error.data ?? error.data?.message ?? String(error);
 
 type Vare = Database["public"]["Tables"]["varer"]["Row"];
-type Ordrer = Database["public"]["Tables"]["ordrer"];
-type OrdreEmails =
-  Database["public"]["Tables"]["ordre_emails_der_ikke_er_sendt"];
+
 export interface OrdreMaskineContext {
   databaseVarer: Vare[];
   aktivDato?: Date;
@@ -51,6 +49,8 @@ function getInitialContext(
     visPriser: visPriser,
   };
 }
+
+const supabaseClient = createBrowserSupabaseClient<Database>();
 
 export const ordreMaskine =
   /** @xstate-layout N4IgpgJg5mDOIC5QHkBOFVgAQFkCGsA1gJYB2YAdAJKkykBqemqAxAMpgAuWEeneAIwLYAbkzCpEoAA4B7WMU7FZpKSAAeiALQAOAAwAmCgEYALMeMA2PZYCsAdguOANCACe26zpMHjBnfYAzPYAnAYhVgC+ka5oGNj4RGSUNHSMzCz0xLBYAAqo2RJqcgpKKmqaCLqGJuZWNg5Oxq4eVbZmFLa+gU4hgYG25tGx6Ji4BCTkFACCAGYiYKScEpnZeQWwRUggJYrKqtuVxnr9FKYhlpbGISGOjqYt2jqm9hSXBpamel-B9jo6wxAcTGiUmlDmCyWKwAKsQADazAAfACssGJMMV5HtyodECFbN57N97ET2h8dMZAo8qo4jO9bCFTJYbrZ+qZAcCEhNkhR6AAzuFQLB4QhKEQ8Piydh87gisUSziyTGlfYVRCBfEUPR6KzhAwGPSsrrUrR9bzvT46QIBMzGAExIGjLlJKb8wXC0XEcW8RUsOYCVBuCDK7EHUCVDW2LU6yx6g1GgwmnTtN6xyyBAymA3mAkcp3jF2UTlYWTSARuKAwWAsWEIlFo8QhsphjSISk6SwUewGwKGW7tL6WE3+QIUDX9LoEy7-Pp5+IFsEUYul8uVuCrHL5QqSba7ZtqhDGbvGLX4swGAl9L6J9zaa4n8e9yz-TOmQJ2Ocg7lTZdlitV6VZU9b1JSbVVcUPDVXlsT4+x0fELyHW8qmCPQxz6DUdHCPQrwMT9nUXX9VwAth+FQbgAFcICSWYgPlH0lV3LF9wg45PjOHoviNeCbmpSlXitew3zuXsjw7fCFx5Ij-3XUimG4JQ61RBiwJxcM2wsKNAlMGCbCwk4DXsE0rHNWNdN7GwDHfe0RnnUEpPzFcZOrAAhMBCFQPlaJLJ1VJbI4-DQuxQiPC9GVsWxqWCTtBNML49FCb4nwk+yf0cv812rAA5Ci4VgRSfPiPyDwsC8KD6PptUsP4YKM5CtFCEJUw+L4fhJf4Uu-SgAFVqJIWiJAVKVepouivSG4qIMjaNdTCeMBhvVotGfZqIsNHCDSsWxOsLCgRv65ZUCG9g4S4D16NApiVTU1sEGm7VZv1Q0FpNZkmt1BlXwsYxWR2xd9uIAajoYv1ZgDINJvUu7NQe2M5ue41kLtMdgjfBwDW1WwTkCP6eVrJFkUGkH8frFSrtDA98UJYlST8Z9KRNJlTGarxmRsY4HFxqYScJ4HJVB8Hg3JlioaprsacNOmKSperfE7el0wNS5zmMLnKDcjyvMOwrMBreECYbDFhfAqHdGuCh-BjLCLxeOwkxsMc9QCGCrNuVWHWLVL1fczygZ1sAWGQaRMG4WRfONm7Kl0MIKACbS7SZIkDFCE0iW8DMwmTfjbmCNWKA133tbD+IBcDIWZGYk3bujow4-MZ5qsMFPkIvV5+iE600xOQwcY9-MvaXYOuCL-NiAgFgIBUSgyBEWRCCLfuusHkOR-nMeEBn2QAGM+H2ABtPQAF1Ier8504pXUAh7nPU-TR2wj+IIsKw7a+7speg5Xwbi7GMeWAkVAYcKDSDhHwWYYcAC2S5F67U-sPb+o8IAb1ILPHezYD7Hwjv5bQZ8xwX1jFfV2QQTQamZhcD4hh-iDCzD9POcDOCrzGHCMgvMJ5TwoJvee0D36wKHgwhB85mGkF5sg1Bu8VAYJPlHbSY5zgkhCDhVCg5b7yzTFYISZkbB0L4Yw7AQjWEAKASAsBkDuFfl4V-I6P89EsIkKI7e4jSCSKwQeLQMjtK3ESn0Ikyj6qOFMh8ds14Lx4TfuYwi+Y8CzFgHCCi-DOAsBynlAq1ipHqhhjGOMCNFraD+J2XU6YKQ6XfIaPOWQsAAAsmBYEWFgWYYBkRwkDnw-2aSEBdBMG7BKaNniDEivVAcZwu5vmtDpc40QHSkFkBAOAahPZL1SIsdIWwK7XWwVUJwo59A9D+C8M0ydqTxVjqjeKiU3xaLCQRHkEJFiHTacyKMfRKR+AGDpFqqcIgmDTE9Z85wPhlIFEKOU40yarIpqxCkWoMzJgqnI8I-SloRE7CyW4-guj6CEnQ9KxFZkuNYr2bwARLjvm7DcOwOSNmfMfHpLCcV3yv1suEnkAM-agp2JXSObZkxahgkeEZwUPgmkvEMsK8EbAJXdoyq53N9YoiJpdMFItboki2eEIpBIuiGBIQ4L5rdvhWE+FYdklzJJTALlrARRtFVVyjps2OJwxJ7OtAcvxxwtShH8ESbsBJnjaMsf7LAY82kNQZFCoS-hrAkiZDLJa9gCT309S7KCkrHQ8MIjoy1NjhErPZWs1xaqLatQuP8aw3wKUNT6LHPUGiMwDBgli+cUSYlxOWJwNpdpOwGRhaQ1F+IkxWF1bGIICigg6TKcQSp1Tan1Mae2jsUK0Wwt7Qi7QmqRXWB+peZMoSpWmrAMGiwtx7U7OeKEZ1dUlrHDdRaAkfgzAVQmZEIAA */
@@ -327,7 +327,7 @@ export const ordreMaskine =
           midlertidigVare: (_) => undefined,
         }),
         "Opdater mulige datoer": assign({
-          datoerHvorManIkkeKanBestille: (context, event) => {
+          datoerHvorManIkkeKanBestille: (context) => {
             if (context.aktivDato) {
               const varerPaaAktivDato = context.varer.get(
                 context.aktivDato.getTime()
@@ -340,7 +340,7 @@ export const ordreMaskine =
             }
             return standardDatoerHvorManIkkeKanBestiller(context.varer);
           },
-          datoVejledning: (context, event) => {
+          datoVejledning: (context) => {
             if (context.aktivDato) {
               const varerPaaAktivDato = context.varer.get(
                 context.aktivDato.getTime()

@@ -1,7 +1,6 @@
 import { PageBox } from "@/components/PageBox";
 import type { Database } from "@/types/DatabaseDefinitions";
 import { AppContext } from "@/utils/context";
-import { supabaseClient } from "@/utils/supabase-util";
 import {
   Box,
   Button,
@@ -14,6 +13,7 @@ import {
   SimpleGrid,
 } from "@chakra-ui/react";
 import {
+  createBrowserSupabaseClient,
   createServerSupabaseClient,
   withPageAuth,
 } from "@supabase/auth-helpers-nextjs";
@@ -53,7 +53,7 @@ export default function Profil({ isAdmin, firma: firmaInput }: ProfilProps) {
   const sletFirma = async () => {
     setFirma(undefined);
     setFirmaIsChanging(true);
-    const { data, error } = await supabaseClient
+    const { data, error } = await createBrowserSupabaseClient<Database>()
       .from("firmaer")
       .delete()
       .eq("id", firma?.id);
@@ -66,13 +66,15 @@ export default function Profil({ isAdmin, firma: firmaInput }: ProfilProps) {
   const gemFirma = async () => {
     if (!firma) return;
     setFirmaIsChanging(true);
-    const { data, error } = await supabaseClient.from("firmaer").upsert({
-      id: firma && firma.id > 0 ? firma.id : undefined,
-      navn: firma.navn,
-      adresse: firma.adresse,
-      postnr: firma.postnr,
-      by: firma.by,
-    });
+    const { data, error } = await createBrowserSupabaseClient<Database>()
+      .from("firmaer")
+      .upsert({
+        id: firma && firma.id > 0 ? firma.id : undefined,
+        navn: firma.navn,
+        adresse: firma.adresse,
+        postnr: firma.postnr,
+        by: firma.by,
+      });
     setOriginaltFirma(firma);
     setFirmaIsChanging(false);
 

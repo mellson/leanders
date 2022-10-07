@@ -5,7 +5,10 @@ import theme from "@/utils/theme";
 import { ordreMaskine } from "@/xstate/ordreMaskine";
 import { ChakraProvider } from "@chakra-ui/react";
 import "@fontsource/roboto-condensed";
-import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
+import {
+  createBrowserSupabaseClient,
+  Session,
+} from "@supabase/auth-helpers-nextjs";
 import { SessionContextProvider } from "@supabase/auth-helpers-react";
 import { useInterpret } from "@xstate/react";
 import type { AppProps } from "next/app";
@@ -20,7 +23,10 @@ import { useState } from "react";
 
 // if (xstateInspect) inspect({ iframe: false });
 
-export default function App({ Component, pageProps }: AppProps) {
+export default function App({
+  Component,
+  pageProps,
+}: AppProps<{ initialSession?: Session }>) {
   const ordreActor = useInterpret(ordreMaskine);
   const [supabaseClient] = useState(() => createBrowserSupabaseClient());
 

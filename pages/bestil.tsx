@@ -2,17 +2,19 @@ import { CenterModal } from "@/components/CenterModal";
 import NulstilKode from "@/components/nulstilKode";
 import { PageBox } from "@/components/PageBox";
 import { Vare } from "@/components/Vare";
+import { Database } from "@/types/DatabaseDefinitions";
 import { AppContext } from "@/utils/context";
 import { supabaseClient } from "@/utils/supabase-util";
 import { SimpleGrid } from "@chakra-ui/react";
+import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { useSessionContext } from "@supabase/auth-helpers-react";
 import { useSelector } from "@xstate/react";
-import type { GetStaticProps, InferGetServerSidePropsType } from "next";
+import type { InferGetServerSidePropsType } from "next";
 import { useRouter } from "next/router";
 import * as React from "react";
 import { useEffect } from "react";
 
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getStaticProps = async () => {
   const { data } = await supabaseClient
     .from("varer")
     .select("*")
@@ -23,7 +25,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   return {
     props: {
       data: {
-        varer: data,
+        varer: data ?? [],
       },
     },
   };
@@ -52,7 +54,7 @@ export default function Bestil({
 
   useEffect(() => {
     async function getFirmaNavn(userEmail: string) {
-      const { data } = await supabaseClient
+      const { data } = await createBrowserSupabaseClient<Database>()
         .from("firmaer")
         .select("navn")
         .match({ user_email: userEmail });
