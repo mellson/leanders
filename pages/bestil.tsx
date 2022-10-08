@@ -2,11 +2,9 @@ import { CenterModal } from "@/components/CenterModal";
 import NulstilKode from "@/components/nulstilKode";
 import { PageBox } from "@/components/PageBox";
 import { Vare } from "@/components/Vare";
-import { Database } from "@/types/DatabaseDefinitions";
 import { AppContext } from "@/utils/context";
 import { supabaseClient } from "@/utils/supabase-util";
 import { SimpleGrid } from "@chakra-ui/react";
-import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { useSessionContext } from "@supabase/auth-helpers-react";
 import { useSelector } from "@xstate/react";
 import type { InferGetServerSidePropsType } from "next";
@@ -34,7 +32,7 @@ export const getStaticProps = async () => {
 export default function Bestil({
   data,
 }: InferGetServerSidePropsType<typeof getStaticProps>) {
-  const { session } = useSessionContext();
+  const { session, supabaseClient } = useSessionContext();
   const router = useRouter();
   const { access_token, type } = router.query;
   const appContext = React.useContext(AppContext);
@@ -54,7 +52,7 @@ export default function Bestil({
 
   useEffect(() => {
     async function getFirmaNavn(userEmail: string) {
-      const { data } = await createBrowserSupabaseClient<Database>()
+      const { data } = await supabaseClient
         .from("firmaer")
         .select("navn")
         .match({ user_email: userEmail });

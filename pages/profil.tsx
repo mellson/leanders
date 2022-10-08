@@ -13,7 +13,6 @@ import {
   SimpleGrid,
 } from "@chakra-ui/react";
 import {
-  createBrowserSupabaseClient,
   createServerSupabaseClient,
   withPageAuth,
 } from "@supabase/auth-helpers-nextjs";
@@ -29,7 +28,7 @@ interface ProfilProps {
 }
 
 export default function Profil({ isAdmin, firma: firmaInput }: ProfilProps) {
-  const { error, session } = useSessionContext();
+  const { error, session, supabaseClient } = useSessionContext();
   const [originaltFirma, setOriginaltFirma] = useState(firmaInput);
   const [firma, setFirma] = useState<Firma | undefined>(firmaInput);
   const [firmaIsChanging, setFirmaIsChanging] = useState(false);
@@ -53,7 +52,7 @@ export default function Profil({ isAdmin, firma: firmaInput }: ProfilProps) {
   const sletFirma = async () => {
     setFirma(undefined);
     setFirmaIsChanging(true);
-    const { data, error } = await createBrowserSupabaseClient<Database>()
+    const { data, error } = await supabaseClient
       .from("firmaer")
       .delete()
       .eq("id", firma?.id);
@@ -66,15 +65,13 @@ export default function Profil({ isAdmin, firma: firmaInput }: ProfilProps) {
   const gemFirma = async () => {
     if (!firma) return;
     setFirmaIsChanging(true);
-    const { data, error } = await createBrowserSupabaseClient<Database>()
-      .from("firmaer")
-      .upsert({
-        id: firma && firma.id > 0 ? firma.id : undefined,
-        navn: firma.navn,
-        adresse: firma.adresse,
-        postnr: firma.postnr,
-        by: firma.by,
-      });
+    const { data, error } = await supabaseClient.from("firmaer").upsert({
+      id: firma && firma.id > 0 ? firma.id : undefined,
+      navn: firma.navn,
+      adresse: firma.adresse,
+      postnr: firma.postnr,
+      by: firma.by,
+    });
     setOriginaltFirma(firma);
     setFirmaIsChanging(false);
 
@@ -222,11 +219,17 @@ export default function Profil({ isAdmin, firma: firmaInput }: ProfilProps) {
           </>
         )}
 
-        <NextLink href="/api/auth/logout" passHref>
-          <Button variant="outline" mt={8} rounded="none">
-            Log ud
-          </Button>
-        </NextLink>
+        <Button
+          variant="outline"
+          mt={8}
+          rounded="none"
+          onClick={async () => {
+            await supabaseClient.auth.signOut();
+            await router.push("/");
+          }}
+        >
+          Log ud
+        </Button>
       </FormControl>
     </PageBox>
   );

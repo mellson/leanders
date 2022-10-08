@@ -19,10 +19,10 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import {
-  createBrowserSupabaseClient,
   createServerSupabaseClient,
   withPageAuth,
 } from "@supabase/auth-helpers-nextjs";
+import { useSessionContext } from "@supabase/auth-helpers-react";
 import {
   addDays,
   isAfter,
@@ -52,6 +52,7 @@ interface ProfilProps {
 
 export default function Ordrer({ isAdmin, ordrer }: ProfilProps) {
   const router = useRouter();
+  const { supabaseClient } = useSessionContext();
   const [ordreData, setOrdreData] = useState(ordrer);
   const [knapDerAfslutterOrdre, setKnapDerAfslutterOrdre] = useState<number>();
   const isDesktop = useBreakpointValue({ base: false, lg: true }, "lg");
@@ -74,7 +75,7 @@ export default function Ordrer({ isAdmin, ordrer }: ProfilProps) {
 
   const afslutOrdreLinje = async (ordreLinjeId: number, afsluttet: boolean) => {
     setKnapDerAfslutterOrdre(ordreLinjeId);
-    const { data, error } = await createBrowserSupabaseClient<Database>()
+    const { data, error } = await supabaseClient
       .from("ordre_linjer")
       .update({ afsluttet, ordre_email_sendt: true })
       .match({ id: ordreLinjeId });

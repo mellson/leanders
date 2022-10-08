@@ -15,7 +15,7 @@ export default function Login() {
       const hasReturnTo = returnTo && typeof returnTo === "string";
       router.push(hasReturnTo ? `/${returnTo}` : "/");
     }
-  }, [returnTo, router]);
+  }, [returnTo, router, session]);
 
   return (
     <PageBox>
@@ -33,12 +33,15 @@ export default function Login() {
                 email_label: "Email adresse",
                 password_label: "Kode",
                 button_label: "Log ind",
+                link_text: "Har du allerede en konto? Log ind her",
               },
               forgotten_password: {
                 link_text: "Glemt kode?",
               },
               sign_up: {
                 link_text: "Har du ikke en bruger? Opret en her",
+                email_label: "Email adresse",
+                password_label: "Kode",
               },
             },
           }}
