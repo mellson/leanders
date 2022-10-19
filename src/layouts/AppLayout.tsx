@@ -52,7 +52,7 @@ export function AppLayout({ children }: PropsWithChildren) {
 
       <Navbar />
 
-      <Flex justify="space-between" direction="column" height="100%">
+      <Flex justify="space-between" direction="column" height="screen">
         <Container as="main">{children}</Container>
 
         {bgLogoSize !== undefined && (

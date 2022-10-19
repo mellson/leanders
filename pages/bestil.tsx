@@ -4,7 +4,14 @@ import { PageBox } from "@/components/PageBox";
 import { Vare } from "@/components/Vare";
 import { AppContext } from "@/utils/context";
 import { supabaseClient } from "@/utils/supabase-util";
-import { SimpleGrid } from "@chakra-ui/react";
+import {
+  Box,
+  Container,
+  Heading,
+  SimpleGrid,
+  Text,
+  useBreakpointValue,
+} from "@chakra-ui/react";
 import { useSessionContext } from "@supabase/auth-helpers-react";
 import { useSelector } from "@xstate/react";
 import type { InferGetServerSidePropsType } from "next";
@@ -75,32 +82,63 @@ export default function Bestil({
     typeof access_token === "string" &&
     type === "recovery";
 
-  return (
-    <PageBox>
-      <SimpleGrid
-        columns={{ base: 2, md: 3, lg: 5 }}
-        spacing={{ base: 2, md: 5, lg: 10 }}
-        justifyItems="center"
-      >
-        {data.varer?.map((vare) => (
-          <Vare
-            key={vare.id}
-            vare={vare}
-            dato={aktivDato}
-            visPris={visPriser}
-          />
-        ))}
-      </SimpleGrid>
+  const infoHeight = useBreakpointValue(
+    { base: "340px", sm: "280px", md: "220px" },
+    { ssr: false }
+  );
 
-      <CenterModal
-        titel={"Nulstil din kode"}
-        isOpen={visNulstilKode}
-        onClose={function (): void {
-          throw new Error("Function not implemented.");
-        }}
+  return (
+    <>
+      <Box
+        bg="rgba(190, 171, 139, 0.5)"
+        p={12}
+        position="absolute"
+        left={0}
+        right={0}
+        maxH={infoHeight}
       >
-        <NulstilKode />
-      </CenterModal>
-    </PageBox>
+        <Container maxW={{ base: "full", md: "2xl" }}>
+          <Heading as="h3" size="sm" textTransform="uppercase">
+            SÅDAN FUNGERER BESTILLINGSSIDEN
+          </Heading>
+          <Text>
+            Dvs. bestil senest kl. 24 for at afhente næste dag, afhent i
+            bageriet eller brødkassen, betal ved afhentning mv. On re pedi
+            remperum, consed ut dolori aboreptat. Ipsam sitaspicium laborepror
+            si ipsandi tasperes eic tem quatiusa digeniendam ditiori atecepedi
+            utem ut re volorem harchil ipsusdam sitatur?
+          </Text>
+        </Container>
+      </Box>
+
+      <Box mt={infoHeight}>
+        <PageBox>
+          <SimpleGrid
+            columns={{ base: 2, md: 3, lg: 5 }}
+            spacing={{ base: 2, md: 5, lg: 10 }}
+            justifyItems="center"
+          >
+            {data.varer?.map((vare) => (
+              <Vare
+                key={vare.id}
+                vare={vare}
+                dato={aktivDato}
+                visPris={visPriser}
+              />
+            ))}
+          </SimpleGrid>
+
+          <CenterModal
+            titel={"Nulstil din kode"}
+            isOpen={visNulstilKode}
+            onClose={function (): void {
+              throw new Error("Function not implemented.");
+            }}
+          >
+            <NulstilKode />
+          </CenterModal>
+        </PageBox>
+      </Box>
+    </>
   );
 }
