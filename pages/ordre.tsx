@@ -52,8 +52,6 @@ export default function Ordre() {
     state.matches("Opretter ordre id") ||
     state.matches("Opretter ordre linjer");
 
-  console.log(JSON.stringify(state.context));
-
   return (
     <PageBox>
       {(state.matches("Bekræfter ordre") || arbejder) && (

@@ -1,23 +1,23 @@
-import { AppContext } from '@/utils/context';
-import { antalVarerPaaDato, samletPrisPaaDato, sammeDato } from '@/utils/ordre';
+import { AppContext } from "@/utils/context";
+import { antalVarerPaaDato, samletPrisPaaDato, sammeDato } from "@/utils/ordre";
 import {
   antalVarerForHeleOrdrenSelector,
   sorteredeDatoerSelector,
-} from '@/xstate/selectors';
-import { Button, SimpleGrid, Slide, Text, VStack } from '@chakra-ui/react';
-import { useActor, useSelector } from '@xstate/react';
-import NextLink from 'next/link';
-import { useRouter } from 'next/router';
-import * as React from 'react';
-import { FiCalendar, FiPlus, FiShoppingCart } from 'react-icons/fi';
-import { PrisText } from './Pris';
-import RedigerAktivDatoModal from './RedigerAktivDatoModal';
-import SaetAktivDatoModal from './SaetAktivDatoModal';
-import TilfoejDatoModal from './TilfoejDatoModal';
+} from "@/xstate/selectors";
+import { Button, SimpleGrid, Slide, Text, VStack } from "@chakra-ui/react";
+import { useActor, useSelector } from "@xstate/react";
+import NextLink from "next/link";
+import { useRouter } from "next/router";
+import * as React from "react";
+import { FiCalendar, FiPlus, FiShoppingCart } from "react-icons/fi";
+import { PrisText } from "./Pris";
+import RedigerAktivDatoModal from "./RedigerAktivDatoModal";
+import SaetAktivDatoModal from "./SaetAktivDatoModal";
+import TilfoejDatoModal from "./TilfoejDatoModal";
 
 export function OrdreInfo() {
   const router = useRouter();
-  const erPaaOrdreSiden = router.pathname === '/ordre';
+  const erPaaBestillingssiden = router.pathname === "/bestil";
   const appContext = React.useContext(AppContext);
   const { send } = appContext.ordreActor;
   const [state] = useActor(appContext.ordreActor);
@@ -42,7 +42,7 @@ export function OrdreInfo() {
     <>
       <Slide
         direction="bottom"
-        in={ordrenOpbygges && !erPaaOrdreSiden}
+        in={ordrenOpbygges && erPaaBestillingssiden}
         style={{ zIndex: 10 }}
       >
         <VStack
@@ -64,22 +64,22 @@ export function OrdreInfo() {
                 alignItems="start"
                 bg={
                   sammeDato(dato, state.context.aktivDato)
-                    ? 'leanders.400'
-                    : 'transparent'
+                    ? "leanders.400"
+                    : "transparent"
                 }
                 border="2px solid"
                 borderColor="leanders.800"
                 cursor="pointer"
                 transition="all 0.2s"
                 _hover={{
-                  transform: 'scale(1.05)',
-                  shadow: 'sm',
+                  transform: "scale(1.05)",
+                  shadow: "sm",
                 }}
-                onClick={() => send({ type: 'Sæt aktiv dato', dato })}
+                onClick={() => send({ type: "Sæt aktiv dato", dato })}
                 padding={2}
                 rounded="none"
               >
-                <Text fontSize="xs">{dato.toLocaleDateString('da-DK')}</Text>
+                <Text fontSize="xs">{dato.toLocaleDateString("da-DK")}</Text>
                 <Text>
                   {antalVarerPaaDato(dato, state.context.varer)} brød i kurven
                 </Text>
@@ -112,7 +112,7 @@ export function OrdreInfo() {
                 size="sm"
                 width="full"
                 rounded="none"
-                onClick={() => send({ type: 'Start udskift aktiv dato' })}
+                onClick={() => send({ type: "Start udskift aktiv dato" })}
               >
                 Rediger dato
               </Button>
@@ -123,7 +123,7 @@ export function OrdreInfo() {
                 size="sm"
                 width="full"
                 rounded="none"
-                onClick={() => send({ type: 'Start tilføj dato' })}
+                onClick={() => send({ type: "Start tilføj dato" })}
               >
                 Tilføj ny dato
               </Button>
@@ -135,11 +135,11 @@ export function OrdreInfo() {
                 rightIcon={<FiShoppingCart />}
                 colorScheme="green"
                 rounded="none"
-                fontSize={{ base: 'sm', sm: 'sm', md: 'lg' }}
+                fontSize={{ base: "sm", sm: "sm", md: "lg" }}
                 gridRow={1}
                 gridColumn={{ base: 2, md: 3, lg: 5 }}
                 height="inherit"
-                onClick={() => send({ type: 'Bekræft ordre' })}
+                onClick={() => send({ type: "Bekræft ordre" })}
               >
                 Godkend ordre
               </Button>

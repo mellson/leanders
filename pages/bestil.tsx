@@ -82,10 +82,17 @@ export default function Bestil({
     typeof access_token === "string" &&
     type === "recovery";
 
-  const infoHeight = useBreakpointValue(
-    { base: "340px", sm: "280px", md: "220px" },
-    { ssr: false }
-  );
+  const infoHeight = useBreakpointValue({
+    base: "340px",
+    sm: "280px",
+    md: "220px",
+  });
+
+  useEffect(() => {
+    if (appContext.ordreActor.state?.matches("Bekræfter ordre")) {
+      send({ type: "Afbryd" });
+    }
+  }, []);
 
   return (
     <>
