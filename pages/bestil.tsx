@@ -106,7 +106,7 @@ export default function Bestil({
       >
         <Container maxW={{ base: "full", md: "2xl" }}>
           <Heading as="h3" size="sm" textTransform="uppercase">
-            SÅDAN FUNGERER BESTILLINGSSIDEN
+            Sådan fungerer bestillingssiden
           </Heading>
           <Text>
             Dvs. bestil senest kl. 24 for at afhente næste dag, afhent i

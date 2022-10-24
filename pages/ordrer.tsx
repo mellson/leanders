@@ -3,7 +3,6 @@ import { PageBox } from "@/components/PageBox";
 import type { Database } from "@/types/DatabaseDefinitions";
 import {
   Box,
-  Button,
   Heading,
   HStack,
   Table,
@@ -15,14 +14,12 @@ import {
   Th,
   Thead,
   Tr,
-  useBreakpointValue,
   useColorModeValue,
 } from "@chakra-ui/react";
 import {
   createServerSupabaseClient,
   withPageAuth,
 } from "@supabase/auth-helpers-nextjs";
-import { useSessionContext } from "@supabase/auth-helpers-react";
 import {
   addDays,
   isAfter,
@@ -31,63 +28,29 @@ import {
   parseISO,
   startOfDay,
 } from "date-fns";
-import { useRouter } from "next/router";
-import { useState } from "react";
 
-interface OrdreLinje {
+interface KundeOrdreLinje {
   id: number;
   antal: number;
   dato: string;
-  firma?: string;
-  user_email: string;
-  vare: string;
-  billede: string;
-  afsluttet: boolean;
+  ordrer: { id: string };
+  varer: { navn: string; billede: string };
 }
 
-interface ProfilProps {
-  isAdmin: boolean;
-  ordrer: OrdreLinje[];
-}
-
-export default function Ordrer({ isAdmin, ordrer }: ProfilProps) {
-  const router = useRouter();
-  const { supabaseClient } = useSessionContext();
-  const [ordreData, setOrdreData] = useState(ordrer);
-  const [knapDerAfslutterOrdre, setKnapDerAfslutterOrdre] = useState<number>();
-  const isDesktop = useBreakpointValue({ base: false, lg: true }, "lg");
+export default function Ordrer({ ordrer }: { ordrer: KundeOrdreLinje[] }) {
   const linjeIdagBg = useColorModeValue("leanders.100", "leanders.500");
-  const linjeAfsluttetBg = useColorModeValue("gray.200", "gray.600");
-
-  if (!isAdmin) {
-    router.push("/");
-  }
 
   const iDag = addDays(startOfDay(new Date()), -1);
 
-  const kommendeOrdrer = ordreData.filter((linje) =>
+  const kommendeOrdrer = ordrer.filter((linje) =>
     isAfter(parseISO(linje.dato), iDag)
   );
 
-  const tidligereOrdrer = ordreData.filter((linje) =>
+  const tidligereOrdrer = ordrer.filter((linje) =>
     isBefore(parseISO(linje.dato), addDays(iDag, 1))
   );
 
-  const afslutOrdreLinje = async (ordreLinjeId: number, afsluttet: boolean) => {
-    setKnapDerAfslutterOrdre(ordreLinjeId);
-    const { data, error } = await supabaseClient
-      .from("ordre_linjer")
-      .update({ afsluttet, ordre_email_sendt: true })
-      .match({ id: ordreLinjeId });
-    setOrdreData(
-      ordreData.map((linje) =>
-        linje.id === ordreLinjeId ? { ...linje, afsluttet } : linje
-      )
-    );
-    setKnapDerAfslutterOrdre(undefined);
-  };
-
-  const bygTable = (titel: string, ordreLinjer: OrdreLinje[]) => (
+  const bygTable = (titel: string, ordreLinjer: KundeOrdreLinje[]) => (
     <Table variant="simple">
       <TableCaption placement="top">{titel}</TableCaption>
       <Thead>
@@ -96,9 +59,7 @@ export default function Ordrer({ isAdmin, ordrer }: ProfilProps) {
             antal
           </Th>
           <Th w="30%">vare</Th>
-          <Th w="20%">bestilt af</Th>
           <Th w="20%">dato</Th>
-          <Th w="20%">afsluttet</Th>
         </Tr>
       </Thead>
       <Tbody>
@@ -107,20 +68,16 @@ export default function Ordrer({ isAdmin, ordrer }: ProfilProps) {
           return (
             <Tr
               key={linje.id}
-              background={
-                linje.afsluttet ? linjeAfsluttetBg : idag ? linjeIdagBg : ""
-              }
-              opacity={linje.afsluttet ? 0.5 : 1}
+              background={idag ? linjeIdagBg : ""}
               fontWeight={idag ? "bold" : ""}
-              textDecoration={linje.afsluttet ? "line-through" : ""}
             >
               <Td isNumeric>{linje.antal}</Td>
               <Td>
                 <HStack justify="space-between">
-                  <Text>{linje.vare}</Text>
+                  <Text>{linje.varer.navn}</Text>
                   <ChakraNextImage
-                    alt={linje.vare}
-                    src={`/billeder/${linje.billede}.jpeg`}
+                    alt={linje.varer.navn}
+                    src={`/billeder/${linje.varer.billede}.jpeg`}
                     width={60}
                     height={60}
                     transition="all 0.2s"
@@ -131,25 +88,7 @@ export default function Ordrer({ isAdmin, ordrer }: ProfilProps) {
                   />
                 </HStack>
               </Td>
-              <Td>{linje.firma ?? linje.user_email}</Td>
               <Td>{parseISO(linje.dato).toLocaleDateString("da-DK")}</Td>
-              <Td>
-                <Button
-                  variant="outline"
-                  isLoading={knapDerAfslutterOrdre === linje.id}
-                  disabled={
-                    knapDerAfslutterOrdre !== undefined &&
-                    knapDerAfslutterOrdre !== linje.id
-                  }
-                  onClick={() => afslutOrdreLinje(linje.id, !linje.afsluttet)}
-                >
-                  {linje.afsluttet
-                    ? "Er afsluttet"
-                    : isDesktop
-                    ? "Klik for at afslutte"
-                    : "Tryk for at afslutte"}
-                </Button>
-              </Td>
             </Tr>
           );
         })}
@@ -165,7 +104,7 @@ export default function Ordrer({ isAdmin, ordrer }: ProfilProps) {
       <TableContainer>
         {bygTable("Kommende ordrer", kommendeOrdrer)}
         <Box opacity={0.5}>
-          {bygTable("Ordrer fra de sidste to uger", tidligereOrdrer)}
+          {bygTable("Ordrer fra det seneste år", tidligereOrdrer)}
         </Box>
       </TableContainer>
     </PageBox>
@@ -178,14 +117,19 @@ export const getServerSideProps = withPageAuth({
     const supabaseClient = createServerSupabaseClient<Database>(ctx);
 
     const { data } = await supabaseClient
-      .from("ordrer_view")
-      .select("*")
-      .gte("dato", addDays(new Date(), -14).toDateString());
+      .from("ordre_linjer")
+      .select(
+        `
+          id,
+          antal,
+          dato,
+          ordrer (id),
+          varer (navn,billede)
+      `
+      )
+      .gte("dato", addDays(new Date(), -365).toDateString())
+      .order("dato", { ascending: false });
 
-    const { data: adminData } = await supabaseClient.from("admins").select("*");
-
-    const isAdmin = Array.isArray(adminData) && adminData.length > 0;
-
-    return { props: { ordrer: data, isAdmin } };
+    return { props: { ordrer: data } };
   },
 });

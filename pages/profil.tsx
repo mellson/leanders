@@ -210,7 +210,7 @@ export default function Profil({ isAdmin, firma: firmaInput }: ProfilProps) {
             <FormLabel htmlFor="kundersOrdrer" mt={8}>
               Kunders ordrer
             </FormLabel>
-            <NextLink href="/ordrer" passHref>
+            <NextLink href="/ordreoverblik" passHref>
               <Button variant="outline" colorScheme="leanders" rounded="none">
                 Kunders ordrer
               </Button>
