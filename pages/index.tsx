@@ -1,6 +1,6 @@
-import { CenterModal } from "@/components/CenterModal";
-import ChakraNextImage from "@/components/ChakraNextImage";
-import NulstilKode from "@/components/nulstilKode";
+import { CenterModal } from '@/components/CenterModal';
+import ChakraNextImage from '@/components/ChakraNextImage';
+import NulstilKode from '@/components/nulstilKode';
 import {
   Box,
   Button,
@@ -9,12 +9,12 @@ import {
   SimpleGrid,
   Text,
   VStack,
-} from "@chakra-ui/react";
-import NextLink from "next/link";
-import { useRouter } from "next/router";
-import { FC, PropsWithChildren } from "react";
+} from '@chakra-ui/react';
+import NextLink from 'next/link';
+import { useRouter } from 'next/router';
+import { FC, PropsWithChildren } from 'react';
 
-const TextWithHeading: FC<PropsWithChildren<{ heading: string }>> = ({
+export const TextWithHeading: FC<PropsWithChildren<{ heading: string }>> = ({
   heading,
   children,
 }) => {
@@ -34,8 +34,8 @@ export default function Home() {
 
   const visNulstilKode =
     access_token !== undefined &&
-    typeof access_token === "string" &&
-    type === "recovery";
+    typeof access_token === 'string' &&
+    type === 'recovery';
 
   return (
     <>
@@ -43,7 +43,7 @@ export default function Home() {
         position="absolute"
         left={0}
         right={0}
-        h={["200px", "300px", "400px", "500px"]}
+        h={['200px', '300px', '400px', '500px']}
       >
         <VStack h="full" justify="space-between">
           <ChakraNextImage
@@ -56,16 +56,12 @@ export default function Home() {
             zIndex={-1}
           />
           <Heading
-            size={{ base: "md", md: "lg", lg: "xl" }}
+            size={{ base: 'md', md: 'lg', lg: 'xl' }}
             textAlign="center"
             color="leanders.500"
             pt={{ base: 4, md: 20, lg: 40 }}
           >
-            Langsomt & lækkert
-            <Box as="span" display={{ base: "none", sm: "inline" }}>
-              {" "}
-              siden 2017
-            </Box>
+            Værdifuldt brød i hjertet af Svendborg
           </Heading>
           <NextLink href="/bestil" passHref>
             <Button
@@ -90,19 +86,19 @@ export default function Home() {
             textOverflow="ellipsis"
             whiteSpace="nowrap"
           >
-            <Box as="span" display={{ base: "none", sm: "inline" }}>
+            <Box as="span" display={{ base: 'none', sm: 'inline' }}>
               TELEFON:
             </Box>
             <NextLink href="tel:+4525330045" passHref>
               <Link>+45 25 33 00 45</Link>
             </NextLink>
-            <Box as="span" display={{ base: "none", sm: "inline" }}>
-              {" "}
+            <Box as="span" display={{ base: 'none', sm: 'inline' }}>
+              {' '}
               • ÅBNINGSTIDER:
             </Box>
-            <Box as="span" display={{ base: "inline", sm: "none" }}>
-              {" "}
-              •{" "}
+            <Box as="span" display={{ base: 'inline', sm: 'none' }}>
+              {' '}
+              •{' '}
             </Box>
             Man - fre kl. 7-13 og lør kl. 7-11
           </Text>
@@ -114,30 +110,29 @@ export default function Home() {
         spacing={16}
         py={16}
         px={8}
-        mt={["200px", "300px", "400px", "500px"]}
+        mt={['200px', '300px', '400px', '500px']}
       >
-        <TextWithHeading heading="Det gode brød">
-          Hvad er et godt brød? Det er der jo mange meninger om, men her hos
-          Brødkom- pagniet er det de gode økologiske råvarer og god tid, som
-          kendetegner et godt brød. Et groft og luftigt brød, som mætter og
-          smager af det mel og korn, det er lavet af. Rugbrød med eller uden
-          kerner, som er saftigt, har en sprød skorpe og en tilpas syrlig smag.
-          Det er Brødkompagniets defination af ‘Det gode brød’.
+        <TextWithHeading heading="Brød bagt på værdier">
+          Vores brød er bagt på en simpel men essentiel opskrift; lokalt og
+          økologisk mel, vand, salt, surdej, god tid og kærlighed til
+          håndværket. Det er lidt af en kunst at bage med surdej, og det giver
+          en længere bageproces. Til gengæld giver det en karakteristisk, let
+          syrlig smag og et brød der holder længe og smager af det korn og mel,
+          det er lavet af.
         </TextWithHeading>
-        <TextWithHeading heading="Brød bagt på surdej">
-          Alle brød fra Brødkompagniet er bagt på surdej. Det er lidt af en
-          kunst at bage med surdej og det giver en noget længere bagningsproces,
-          men til gengæld tilfører det brødet en skøn, karakteristisk og let
-          syrlig smag. Den syrlige smag kommer primært fra de
-          mælkesyrebakterier, som dannes i surdejen. Surdejen bruges både som
-          hæve- middel og smagsgiver hos Brødkompagniet.
+        <TextWithHeading heading="Det sure med det søde">
+          Selvom vi elsker surdejsbrød, bager vi også et småt men godt udvalg af
+          søde sager. Her er hverken sparet på værdier eller kalorier. Rigeligt
+          med økologisk smør og sukker så englene synger. Vælg mellem sprød
+          croissant, pain au chocolat, kanelsnegl eller tebirkes bagt som en
+          ægte københavner.
         </TextWithHeading>
       </SimpleGrid>
       <CenterModal
-        titel={"Nulstil din kode"}
+        titel={'Nulstil din kode'}
         isOpen={visNulstilKode}
         onClose={function (): void {
-          throw new Error("Function not implemented.");
+          throw new Error('Function not implemented.');
         }}
       >
         <NulstilKode />

@@ -141,6 +141,26 @@ export interface Database {
           afsluttet?: boolean;
         };
       };
+      citater: {
+        Row: {
+          id: number;
+          created_at: string | null;
+          citat: string | null;
+          afsender: string | null;
+        };
+        Insert: {
+          id?: number;
+          created_at?: string | null;
+          citat?: string | null;
+          afsender?: string | null;
+        };
+        Update: {
+          id?: number;
+          created_at?: string | null;
+          citat?: string | null;
+          afsender?: string | null;
+        };
+      };
     };
     Views: {
       email_ordrer_view: {

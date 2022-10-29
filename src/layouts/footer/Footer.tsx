@@ -1,6 +1,6 @@
-import { SoMeLinks } from "@/components/SoMeLinks";
-import { Cittaslow } from "@/layouts/footer/Cittaslow";
-import { navn } from "@/layouts/Logo";
+import { SoMeLinks } from '@/components/SoMeLinks';
+import { Cittaslow } from '@/layouts/footer/Cittaslow';
+import { navn } from '@/layouts/Logo';
 import {
   Box,
   Container,
@@ -9,24 +9,24 @@ import {
   Link,
   SimpleGrid,
   Text,
-} from "@chakra-ui/react";
-import NextLink from "next/link";
-import { OekoLogo } from "./OekoLogo";
+} from '@chakra-ui/react';
+import NextLink from 'next/link';
+import { OekoLogo } from './OekoLogo';
 
 export function Footer() {
   return (
     <Box as="footer" bg="rgba(190, 171, 139, 0.800)">
-      <Container role="contentinfo" py={{ base: "12", md: "16" }}>
+      <Container role="contentinfo" py={{ base: '12', md: '16' }}>
         <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>
           <Box>
             <Heading as="h6" size="xs">
               Kontrolrapport
             </Heading>
             <Text>
-              Se fødevarestyrelsens{" "}
+              Se fødevarestyrelsens{' '}
               <NextLink href="https://www.findsmiley.dk/719019" passHref>
                 <Link>kontrolrapport</Link>
-              </NextLink>{" "}
+              </NextLink>{' '}
               for {navn}
             </Text>
             <br />
@@ -39,7 +39,7 @@ export function Footer() {
             </Heading>
             <SoMeLinks color="leanders.900" />
           </Box>
-          <Box>
+          <Box id="kontakt">
             <Heading as="h6" size="xs">
               Kontaktoplysninger
             </Heading>
