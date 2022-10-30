@@ -1,6 +1,5 @@
 import { PageBox } from '@/components/PageBox';
-import { Flex, Heading, Link, Text } from '@chakra-ui/react';
-import NextLink from 'next/link';
+import { Heading, Link, Text } from '@chakra-ui/react';
 
 export default function Kontakt() {
   return (
@@ -73,17 +72,11 @@ export default function Kontakt() {
         <Text>Cykeltutten</Text>
       </Link>
       <br />
-      <Flex gap={1} flexWrap="wrap">
-        <Text>
-          Har du også lyst til at forkæle dine gæster med lækkert
-          kvalitetsbagværk så tøv ikke med at kontakte os på
-        </Text>
-        <NextLink href="mailto:kasper@leanders.dk" passHref>
-          <Link>
-            <Text>kasper@leanders.dk</Text>
-          </Link>
-        </NextLink>
-      </Flex>
+      <Text>
+        Har du også lyst til at forkæle dine gæster med lækkert kvalitetsbagværk
+        så tøv ikke med at kontakte os på{' '}
+        <a href="mailto:kasper@leanders.dk">kasper@leanders.dk</a>
+      </Text>
     </PageBox>
   );
 }

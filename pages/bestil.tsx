@@ -100,7 +100,7 @@ export default function Bestil({
     <>
       <Box
         bg="rgba(190, 171, 139, 0.5)"
-        p={12}
+        p={{ base: 4, sm: 8, md: 12 }}
         position="absolute"
         left={0}
         right={0}
