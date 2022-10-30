@@ -29,7 +29,7 @@ export function Citat() {
 
   return (
     <Box bg="leanders.900" color="leanders.500">
-      <Container py={8} maxWidth="50%">
+      <Container py={8} maxWidth={{ base: '100%', sm: '80%', md: '50%' }}>
         <VStack align="end" spacing={0}>
           <Text
             fontSize="2xl"

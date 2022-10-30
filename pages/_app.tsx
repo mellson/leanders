@@ -1,19 +1,19 @@
-import { OrdreInfo } from "@/components/ordre/OrdreInfo";
-import { AppLayout } from "@/layouts/AppLayout";
-import { AppContext } from "@/utils/context";
-import theme from "@/utils/theme";
-import { ordreMaskine } from "@/xstate/ordreMaskine";
-import { ChakraProvider } from "@chakra-ui/react";
-import "@fontsource/roboto-condensed";
+import { OrdreInfo } from '@/components/ordre/OrdreInfo';
+import { AppLayout } from '@/layouts/AppLayout';
+import { AppContext } from '@/utils/context';
+import theme from '@/utils/theme';
+import { ordreMaskine } from '@/xstate/ordreMaskine';
+import { ChakraProvider } from '@chakra-ui/react';
+import '@fontsource/roboto-condensed';
 import {
   createBrowserSupabaseClient,
   Session,
-} from "@supabase/auth-helpers-nextjs";
-import { SessionContextProvider } from "@supabase/auth-helpers-react";
-import { useInterpret } from "@xstate/react";
-import type { AppProps } from "next/app";
-import NextNProgress from "nextjs-progressbar";
-import { useState } from "react";
+} from '@supabase/auth-helpers-nextjs';
+import { SessionContextProvider } from '@supabase/auth-helpers-react';
+import { useInterpret } from '@xstate/react';
+import type { AppProps } from 'next/app';
+import NextNProgress from 'nextjs-progressbar';
+import { useState } from 'react';
 
 // const xstateInspect =
 //   process.env.NEXT_PUBLIC_XSTATE_INSPECT === "true" &&

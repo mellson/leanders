@@ -56,7 +56,7 @@ export default function Home() {
             zIndex={-1}
           />
           <Heading
-            size={{ base: 'md', md: 'lg', lg: 'xl' }}
+            size={{ base: 'sm', sm: 'md', md: 'lg', lg: 'xl' }}
             textAlign="center"
             color="leanders.500"
             pt={{ base: 4, md: 20, lg: 40 }}
@@ -79,7 +79,7 @@ export default function Home() {
             bg="rgba(231, 224, 212, 0.7)"
             p={3}
             w="full"
-            fontWeight="bold"
+            fontWeight={{ base: 'normal', md: 'bold' }}
             textAlign="center"
             noOfLines={1}
             overflow="hidden"
@@ -107,9 +107,9 @@ export default function Home() {
 
       <SimpleGrid
         columns={{ base: 1, md: 2 }}
-        spacing={16}
-        py={16}
-        px={8}
+        spacing={{ base: 4, sm: 8, md: 16 }}
+        py={{ base: 4, sm: 8, md: 16 }}
+        px={{ base: 0, sm: 4, md: 8 }}
         mt={['200px', '300px', '400px', '500px']}
       >
         <TextWithHeading heading="Brød bagt på værdier">

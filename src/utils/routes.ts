@@ -1,5 +1,11 @@
-import { IconType } from "react-icons";
-import { FiCoffee, FiHome, FiMapPin, FiShoppingBag } from "react-icons/fi";
+import { IconType } from 'react-icons';
+import {
+  FiCoffee,
+  FiHome,
+  FiMapPin,
+  FiShoppingBag,
+  FiUsers,
+} from 'react-icons/fi';
 
 interface Route {
   href: string;
@@ -8,9 +14,9 @@ interface Route {
 }
 
 export const routes: Route[] = [
-  { href: "/", label: "Hjem", icon: FiHome },
-  { href: "/bestil", label: "Bestil", icon: FiShoppingBag },
-  { href: "/om", label: "Om", icon: FiCoffee },
-  { href: "/samarbejde", label: "Samarbejdspartnere", icon: FiMapPin },
-  { href: "/kontakt", label: "Kontakt", icon: FiMapPin },
+  { href: '/', label: 'Hjem', icon: FiHome },
+  { href: '/bestil', label: 'Bestil', icon: FiShoppingBag },
+  { href: '/om', label: 'Om', icon: FiCoffee },
+  { href: '/samarbejde', label: 'Samarbejdspartnere', icon: FiUsers },
+  { href: '/kontakt', label: 'Kontakt', icon: FiMapPin },
 ];

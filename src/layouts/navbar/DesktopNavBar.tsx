@@ -1,7 +1,6 @@
 import { SimpleLink } from '@/components/SimpleLink';
 import { SoMeLinks } from '@/components/SoMeLinks';
 import { Logo } from '@/layouts/Logo';
-import { UserLink } from '@/layouts/UserLink';
 import { routes } from '@/utils/routes';
 import { Box, ButtonGroup, Flex, HStack } from '@chakra-ui/react';
 
@@ -21,7 +20,7 @@ export function DesktopNavBar() {
               label={route.label}
             />
           ))}
-          <UserLink />
+          {/* <UserLink /> */}
         </ButtonGroup>
         <SoMeLinks />
         {/* <ColorModeToggle /> */}

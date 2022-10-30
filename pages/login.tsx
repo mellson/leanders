@@ -1,5 +1,5 @@
 import { PageBox } from '@/components/PageBox';
-import { Container } from '@chakra-ui/react';
+import { Container, Heading, Text } from '@chakra-ui/react';
 import { useSessionContext } from '@supabase/auth-helpers-react';
 import { Auth, ThemeSupa } from '@supabase/auth-ui-react';
 import { useRouter } from 'next/router';
@@ -21,6 +21,20 @@ export default function Login() {
     <PageBox>
       <Container maxW={{ base: 'full', md: '640px' }}>
         {error && <p>{error.message}</p>}
+
+        <Heading as="h3" size="sm">
+          Log ind
+        </Heading>
+        <Text>Du skal logge ind for at kunne bestille vores brød.</Text>
+        <Text>
+          Vi skal bruge dit login for at kunne sikre at du får netop det brød du
+          har bestilt.
+        </Text>
+        <br />
+        <Text pb="2">
+          Du kan logge ind med FaceBook, Google eller med din email og en kode
+          du selv vælger.
+        </Text>
 
         <Auth
           supabaseClient={supabaseClient}

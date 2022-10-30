@@ -16,6 +16,7 @@ import {
 import { useSessionContext } from '@supabase/auth-helpers-react';
 import { useSelector } from '@xstate/react';
 import type { InferGetServerSidePropsType } from 'next';
+import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useEffect } from 'react';
@@ -110,12 +111,19 @@ export default function Bestil({
             Bestil og hent brød og kager
           </Heading>
           <Text>
-            Her på siden kan du bestille brød og kager og hente det dagen efter.
-            I åbningstiden direkte fra bageriet og efter lukketid fra vores
-            brødboks. Du betaler først, når du henter. Har du særlige ønsker
-            eller forespørgsler, så tøv ikke med at kontakte os på{' '}
-            <Link href="#kontakt">mail eller tlf.</Link>
+            Her på siden kan du bestille brød og kager og vælge en dag du vil
+            hente det. Du kan hente det I åbningstiden direkte fra bageriet og
+            efter lukketid fra vores brødboks. Du betaler først, når du henter.
+            Har du særlige ønsker eller forespørgsler, så tøv ikke med at
+            kontakte os på <Link href="#kontakt">mail eller tlf.</Link>
           </Text>
+          {session?.user && (
+            <Box pt="4" textAlign="end">
+              <NextLink href="/profil" passHref>
+                <Link>Min side</Link>
+              </NextLink>
+            </Box>
+          )}
         </Container>
       </Box>
 
