@@ -20,7 +20,6 @@ export function Vare({ vare, dato, visPris }: VareComponentProps) {
     <Box
       bg="leanders.100"
       border="1px solid"
-      π
       borderColor="leanders.800"
       shadow="md"
       maxW="full"
