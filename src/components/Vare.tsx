@@ -20,6 +20,7 @@ export function Vare({ vare, dato, visPris }: VareComponentProps) {
     <Box
       bg="leanders.100"
       border="1px solid"
+      π
       borderColor="leanders.800"
       shadow="md"
       maxW="full"
@@ -50,6 +51,11 @@ export function Vare({ vare, dato, visPris }: VareComponentProps) {
           >
             {vare.navn}
           </Text>
+          {vare.detaljer && (
+            <Text noOfLines={2} fontSize="xs" textAlign="center" lineHeight={1}>
+              {vare.detaljer}
+            </Text>
+          )}
           {visPris && <PrisText pris={vare.pris} />}
         </VStack>
       </VStack>

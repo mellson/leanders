@@ -77,41 +77,6 @@ export interface Database {
           user_email?: string;
         };
       };
-      varer: {
-        Row: {
-          id: number;
-          created_at: string | null;
-          navn: string;
-          pris: number;
-          beskrivelse: string;
-          billede: string;
-          kategori: string;
-          kan_kun_bestilles: string | null;
-          kan_bestilles: boolean;
-        };
-        Insert: {
-          id?: number;
-          created_at?: string | null;
-          navn: string;
-          pris: number;
-          beskrivelse?: string;
-          billede?: string;
-          kategori: string;
-          kan_kun_bestilles?: string | null;
-          kan_bestilles?: boolean;
-        };
-        Update: {
-          id?: number;
-          created_at?: string | null;
-          navn?: string;
-          pris?: number;
-          beskrivelse?: string;
-          billede?: string;
-          kategori?: string;
-          kan_kun_bestilles?: string | null;
-          kan_bestilles?: boolean;
-        };
-      };
       ordre_linjer: {
         Row: {
           id: number;
@@ -159,6 +124,44 @@ export interface Database {
           created_at?: string | null;
           citat?: string | null;
           afsender?: string | null;
+        };
+      };
+      varer: {
+        Row: {
+          id: number;
+          created_at: string | null;
+          navn: string;
+          pris: number;
+          beskrivelse: string;
+          billede: string;
+          kategori: string;
+          kan_kun_bestilles: string | null;
+          kan_bestilles: boolean;
+          detaljer: string | null;
+        };
+        Insert: {
+          id?: number;
+          created_at?: string | null;
+          navn: string;
+          pris: number;
+          beskrivelse?: string;
+          billede?: string;
+          kategori: string;
+          kan_kun_bestilles?: string | null;
+          kan_bestilles?: boolean;
+          detaljer?: string | null;
+        };
+        Update: {
+          id?: number;
+          created_at?: string | null;
+          navn?: string;
+          pris?: number;
+          beskrivelse?: string;
+          billede?: string;
+          kategori?: string;
+          kan_kun_bestilles?: string | null;
+          kan_bestilles?: boolean;
+          detaljer?: string | null;
         };
       };
     };

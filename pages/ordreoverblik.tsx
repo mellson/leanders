@@ -77,7 +77,7 @@ export default function Ordreoverblik({ isAdmin, ordrer }: ProfilProps) {
     setKnapDerAfslutterOrdre(ordreLinjeId);
     const { data, error } = await supabaseClient
       .from("ordre_linjer")
-      .update({ afsluttet, ordre_email_sendt: true })
+      .update({ afsluttet })
       .match({ id: ordreLinjeId });
     setOrdreData(
       ordreData.map((linje) =>
