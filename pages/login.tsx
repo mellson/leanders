@@ -1,9 +1,9 @@
-import { PageBox } from "@/components/PageBox";
-import { Container, Heading, Text } from "@chakra-ui/react";
-import { useSessionContext } from "@supabase/auth-helpers-react";
-import { Auth, ThemeSupa } from "@supabase/auth-ui-react";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { PageBox } from '@/components/PageBox';
+import { Container, Heading, Text } from '@chakra-ui/react';
+import { useSessionContext } from '@supabase/auth-helpers-react';
+import { Auth, ThemeSupa } from '@supabase/auth-ui-react';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 
 export default function Login() {
   const { session, error, supabaseClient } = useSessionContext();
@@ -12,14 +12,14 @@ export default function Login() {
 
   useEffect(() => {
     if (session?.user) {
-      const hasReturnTo = returnTo && typeof returnTo === "string";
-      router.push(hasReturnTo ? `/${returnTo}` : "/");
+      const hasReturnTo = returnTo && typeof returnTo === 'string';
+      router.push(hasReturnTo ? `/${returnTo}` : '/');
     }
   }, [returnTo, router, session]);
 
   return (
     <PageBox>
-      <Container maxW={{ base: "full", md: "640px" }}>
+      <Container maxW={{ base: 'full', md: '640px' }}>
         {error && <p>{error.message}</p>}
 
         <Heading as="h3" size="sm">
@@ -38,19 +38,19 @@ export default function Login() {
 
         <Auth
           supabaseClient={supabaseClient}
-          providers={["facebook", "google"]}
+          providers={['facebook', 'google']}
           socialLayout="horizontal"
           appearance={{
             theme: ThemeSupa,
             variables: {
               default: {
                 radii: {
-                  inputBorderRadius: "0",
-                  borderRadiusButton: "0",
-                  buttonBorderRadius: "0",
+                  inputBorderRadius: '0',
+                  borderRadiusButton: '0',
+                  buttonBorderRadius: '0',
                 },
                 colors: {
-                  inputBackground: "#fff",
+                  inputBackground: '#fff',
                 },
               },
             },
@@ -58,24 +58,24 @@ export default function Login() {
           localization={{
             variables: {
               sign_in: {
-                email_label: "Email adresse",
-                password_label: "Kode",
-                button_label: "Log ind",
-                link_text: "Har du allerede en konto? Log ind her",
+                email_label: 'Email adresse',
+                password_label: 'Kode',
+                button_label: 'Log ind',
+                link_text: 'Har du allerede en konto? Log ind her',
               },
               update_password: {
-                password_label: "Kode",
-                password_input_placeholder: "Indtast kode",
+                password_label: 'Kode',
+                password_input_placeholder: 'Indtast kode',
               },
               forgotten_password: {
-                link_text: "Glemt kode?",
+                link_text: 'Glemt kode?',
                 button_label:
-                  "Send mail med instruktioner til at nulstille kode",
+                  'Send mail med instruktioner til at nulstille kode',
               },
               sign_up: {
-                link_text: "Har du ikke en bruger? Opret en her",
-                email_label: "Email adresse",
-                password_label: "Kode",
+                link_text: 'Har du ikke en bruger? Opret en her',
+                email_label: 'Email adresse',
+                password_label: 'Kode',
               },
             },
           }}

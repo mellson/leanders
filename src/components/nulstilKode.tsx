@@ -1,13 +1,13 @@
-import { supabaseClient } from "@/utils/supabase-util";
 import {
   Button,
   FormControl,
   FormErrorMessage,
   FormLabel,
   Input,
-} from "@chakra-ui/react";
-import { useRouter } from "next/router";
-import { SubmitHandler, useForm } from "react-hook-form";
+  useToast,
+} from '@chakra-ui/react';
+import { useSessionContext } from '@supabase/auth-helpers-react';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
 type FormValues = {
   kode: string;
@@ -15,8 +15,8 @@ type FormValues = {
 };
 
 export default function NulstilKode() {
-  const router = useRouter();
-  const { access_token, type } = router.query;
+  const { supabaseClient } = useSessionContext();
+  const toast = useToast();
   const {
     getValues,
     handleSubmit,
@@ -24,32 +24,29 @@ export default function NulstilKode() {
     formState: { errors, isSubmitting, isValid },
   } = useForm<FormValues>();
 
-  const onSubmit: SubmitHandler<FormValues> = async (data) => {
-    if (
-      access_token &&
-      typeof access_token === "string" &&
-      type === "recovery"
-    ) {
-      return await supabaseClient.auth.updateUser({
-        password: data.kode,
+  const onSubmit: SubmitHandler<FormValues> = async (values) => {
+    const { error } = await supabaseClient.auth.updateUser({
+      password: values.kode,
+    });
+    if (error) {
+      console.log(error);
+      toast({
+        title: 'Fejl under opdatering af kode',
+        description: error.message,
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+      });
+    } else {
+      toast({
+        title: 'Kode nulstillet',
+        description: 'Din kode er nu opdateret',
+        status: 'success',
+        duration: 9000,
+        isClosable: true,
       });
     }
   };
-
-  console.log(access_token);
-  console.log(type);
-
-  async function nulstilKode(nyKode: string) {
-    if (
-      access_token &&
-      typeof access_token === "string" &&
-      type === "recovery"
-    ) {
-      return await supabaseClient.auth.updateUser({
-        password: nyKode,
-      });
-    }
-  }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -58,11 +55,11 @@ export default function NulstilKode() {
         <Input
           id="kode"
           type="password"
-          {...register("kode", {
-            required: "Koden er påkrævet",
+          {...register('kode', {
+            required: 'Koden er påkrævet',
             minLength: {
               value: 4,
-              message: "Din kode skal bestå af mindst 4 tegn",
+              message: 'Din kode skal bestå af mindst 4 tegn',
             },
           })}
         />
@@ -73,12 +70,12 @@ export default function NulstilKode() {
         <Input
           id="gentaget_kode"
           type="password"
-          {...register("gentaget_kode", {
-            required: "Koden er påkrævet",
+          {...register('gentaget_kode', {
+            required: 'Koden er påkrævet',
             validate: {
               matchesPreviousPassword: (value) => {
                 const { kode } = getValues();
-                return kode === value || "Koderne skal være ens!";
+                return kode === value || 'Koderne skal være ens!';
               },
             },
           })}

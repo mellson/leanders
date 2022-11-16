@@ -1,6 +1,4 @@
-import { CenterModal } from '@/components/CenterModal';
 import ChakraNextImage from '@/components/ChakraNextImage';
-import NulstilKode from '@/components/nulstilKode';
 import {
   Box,
   Button,
@@ -11,7 +9,6 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import NextLink from 'next/link';
-import { useRouter } from 'next/router';
 import { FC, PropsWithChildren } from 'react';
 
 export const TextWithHeading: FC<PropsWithChildren<{ heading: string }>> = ({
@@ -29,14 +26,6 @@ export const TextWithHeading: FC<PropsWithChildren<{ heading: string }>> = ({
 };
 
 export default function Home() {
-  const router = useRouter();
-  const { access_token, type } = router.query;
-
-  const visNulstilKode =
-    access_token !== undefined &&
-    typeof access_token === 'string' &&
-    type === 'recovery';
-
   return (
     <>
       <Box
@@ -128,15 +117,6 @@ export default function Home() {
           ægte københavner.
         </TextWithHeading>
       </SimpleGrid>
-      <CenterModal
-        titel={'Nulstil din kode'}
-        isOpen={visNulstilKode}
-        onClose={function (): void {
-          throw new Error('Function not implemented.');
-        }}
-      >
-        <NulstilKode />
-      </CenterModal>
     </>
   );
 }
