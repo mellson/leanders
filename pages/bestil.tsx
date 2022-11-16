@@ -1,5 +1,3 @@
-import { CenterModal } from '@/components/CenterModal';
-import NulstilKode from '@/components/nulstilKode';
 import { PageBox } from '@/components/PageBox';
 import { Vare } from '@/components/Vare';
 import { AppContext } from '@/utils/context';
@@ -17,7 +15,6 @@ import { useSessionContext } from '@supabase/auth-helpers-react';
 import { useSelector } from '@xstate/react';
 import type { InferGetServerSidePropsType } from 'next';
 import NextLink from 'next/link';
-import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useEffect } from 'react';
 
@@ -42,8 +39,6 @@ export default function Bestil({
   data,
 }: InferGetServerSidePropsType<typeof getStaticProps>) {
   const { session, supabaseClient } = useSessionContext();
-  const router = useRouter();
-  const { access_token, type } = router.query;
   const appContext = React.useContext(AppContext);
   const aktivDato = useSelector(
     appContext.ordreActor,
@@ -78,11 +73,6 @@ export default function Bestil({
       getFirmaNavn(session?.user.email);
     }
   }, [send, session]);
-
-  const visNulstilKode =
-    access_token !== undefined &&
-    typeof access_token === 'string' &&
-    type === 'recovery';
 
   const infoHeight = useBreakpointValue({
     base: '340px',
@@ -143,16 +133,6 @@ export default function Bestil({
               />
             ))}
           </SimpleGrid>
-
-          <CenterModal
-            titel={'Nulstil din kode'}
-            isOpen={visNulstilKode}
-            onClose={function (): void {
-              throw new Error('Function not implemented.');
-            }}
-          >
-            <NulstilKode />
-          </CenterModal>
         </PageBox>
       </Box>
     </>
