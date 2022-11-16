@@ -1,4 +1,3 @@
-import { supabaseClient } from '@/utils/supabase-util';
 import {
   Button,
   FormControl,
@@ -7,6 +6,7 @@ import {
   Input,
   useToast,
 } from '@chakra-ui/react';
+import { useSessionContext } from '@supabase/auth-helpers-react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 type FormValues = {
@@ -15,6 +15,7 @@ type FormValues = {
 };
 
 export default function NulstilKode() {
+  const { supabaseClient } = useSessionContext();
   const toast = useToast();
   const {
     getValues,
