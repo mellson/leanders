@@ -59,7 +59,9 @@ export default function Login() {
             variables: {
               sign_in: {
                 email_label: 'Email adresse',
+                email_input_placeholder: 'Din email adresse',
                 password_label: 'Kode',
+                password_input_placeholder: 'Din kode',
                 button_label: 'Log ind',
                 link_text: 'Har du allerede en konto? Log ind her',
               },
@@ -75,7 +77,9 @@ export default function Login() {
               sign_up: {
                 link_text: 'Har du ikke en bruger? Opret en her',
                 email_label: 'Email adresse',
+                email_input_placeholder: 'Din email adresse',
                 password_label: 'Kode',
+                password_input_placeholder: 'Din kode',
               },
             },
           }}
