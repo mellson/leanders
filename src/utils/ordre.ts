@@ -97,7 +97,8 @@ export function samletPrisPaaDato(
   const varerPaaDato = varer.get(dato.getTime());
   if (varerPaaDato) {
     const priser = Array.from(varerPaaDato.keys()).map((vareId) => {
-      const pris = databaseVarer[vareId]?.pris ?? 0;
+      const vare = databaseVarer.find((vare) => vare.id === vareId);
+      const pris = vare?.pris ?? 0;
       const antal = varerPaaDato.get(vareId) ?? 0;
       return pris * antal;
     });
