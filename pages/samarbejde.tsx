@@ -1,5 +1,5 @@
-import { PageBox } from '@/components/PageBox';
-import { Heading, Link, Text } from '@chakra-ui/react';
+import { PageBox } from "@/components/PageBox";
+import { Heading, Link, Text } from "@chakra-ui/react";
 
 export default function Kontakt() {
   return (
@@ -7,6 +7,12 @@ export default function Kontakt() {
       <Heading as="h3" size="sm" textTransform="uppercase">
         Samarbejdspartnere
       </Heading>
+      <Link href="https://was-keramik.com/" target="_blank">
+        <Text>Keramik og Kaffe</Text>
+      </Link>
+      <Link href="https://restaurantsvendborgsund.dk/" target="_blank">
+        <Text>Restaurant Svendborgsund</Text>
+      </Link>
       <Link href="https://byensgaardbutik.dk/" target="_blank">
         <Text>Byens Gårdbutik</Text>
       </Link>
@@ -74,7 +80,7 @@ export default function Kontakt() {
       <br />
       <Text>
         Har du også lyst til at forkæle dine gæster med lækkert kvalitetsbagværk
-        så tøv ikke med at kontakte os på{' '}
+        så tøv ikke med at kontakte os på{" "}
         <a href="mailto:kasper@leanders.dk">kasper@leanders.dk</a>
       </Text>
     </PageBox>
