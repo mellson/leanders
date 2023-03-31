@@ -1,4 +1,4 @@
-import ChakraNextImage from '@/components/ChakraNextImage';
+import ChakraNextImage from "@/components/ChakraNextImage";
 import {
   Box,
   Button,
@@ -7,9 +7,10 @@ import {
   SimpleGrid,
   Text,
   VStack,
-} from '@chakra-ui/react';
-import NextLink from 'next/link';
-import { FC, PropsWithChildren } from 'react';
+} from "@chakra-ui/react";
+import { isBefore, isSameDay } from "date-fns";
+import NextLink from "next/link";
+import { FC, PropsWithChildren } from "react";
 
 export const TextWithHeading: FC<PropsWithChildren<{ heading: string }>> = ({
   heading,
@@ -26,15 +27,21 @@ export const TextWithHeading: FC<PropsWithChildren<{ heading: string }>> = ({
 };
 
 export default function Home() {
+  const visPaaskeLukket = isBefore(Date.now(), new Date(2023, 3, 10));
   return (
     <>
       <Box
         position="absolute"
         left={0}
         right={0}
-        h={['200px', '300px', '400px', '500px']}
+        h={["200px", "300px", "400px", "500px"]}
       >
         <VStack h="full" justify="space-between">
+          {visPaaskeLukket && (
+            <Text bg="yellow.400" w="full" textAlign="center" p={4}>
+              Vi holder lukket i påsken fra den 6. til og med den 10. april 🐣
+            </Text>
+          )}
           <ChakraNextImage
             alt="Cover foto"
             src="/billeder/cover.jpeg"
@@ -45,7 +52,7 @@ export default function Home() {
             zIndex={-1}
           />
           <Heading
-            size={{ base: 'sm', sm: 'md', md: 'lg', lg: 'xl' }}
+            size={{ base: "sm", sm: "md", md: "lg", lg: "xl" }}
             textAlign="center"
             color="leanders.500"
             pt={{ base: 4, md: 20, lg: 40 }}
@@ -68,26 +75,26 @@ export default function Home() {
             bg="rgba(231, 224, 212, 0.7)"
             p={3}
             w="full"
-            fontWeight={{ base: 'normal', md: 'bold' }}
+            fontWeight={{ base: "normal", md: "bold" }}
             textAlign="center"
             noOfLines={1}
             overflow="hidden"
             textOverflow="ellipsis"
             whiteSpace="nowrap"
           >
-            <Box as="span" display={{ base: 'none', sm: 'inline' }}>
+            <Box as="span" display={{ base: "none", sm: "inline" }}>
               TELEFON:
             </Box>
             <NextLink href="tel:+4525330045" passHref>
               <Link>+45 25 33 00 45</Link>
             </NextLink>
-            <Box as="span" display={{ base: 'none', sm: 'inline' }}>
-              {' '}
+            <Box as="span" display={{ base: "none", sm: "inline" }}>
+              {" "}
               • ÅBNINGSTIDER:
             </Box>
-            <Box as="span" display={{ base: 'inline', sm: 'none' }}>
-              {' '}
-              •{' '}
+            <Box as="span" display={{ base: "inline", sm: "none" }}>
+              {" "}
+              •{" "}
             </Box>
             Man - fre kl. 7-13 og lør kl. 7-11
           </Text>
@@ -99,7 +106,7 @@ export default function Home() {
         spacing={{ base: 4, sm: 8, md: 16 }}
         py={{ base: 4, sm: 8, md: 16 }}
         px={{ base: 0, sm: 4, md: 8 }}
-        mt={['200px', '300px', '400px', '500px']}
+        mt={["200px", "300px", "400px", "500px"]}
       >
         <TextWithHeading heading="Brød bagt på værdier">
           Vores brød er bagt på en simpel men essentiel opskrift; lokalt og
