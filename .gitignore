@@ -42,3 +42,6 @@ yarn-error.log*
 *.typegen.ts
 
 .mailing
+
+.idea/misc.xml
+.idea/aws.xml
