@@ -8,7 +8,7 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { isBefore, isSameDay } from "date-fns";
+import { isBefore } from "date-fns";
 import NextLink from "next/link";
 import { FC, PropsWithChildren } from "react";
 
@@ -27,7 +27,6 @@ export const TextWithHeading: FC<PropsWithChildren<{ heading: string }>> = ({
 };
 
 export default function Home() {
-  const visPaaskeLukket = isBefore(Date.now(), new Date(2023, 3, 10));
   return (
     <>
       <Box
@@ -37,11 +36,6 @@ export default function Home() {
         h={["200px", "300px", "400px", "500px"]}
       >
         <VStack h="full" justify="space-between">
-          {visPaaskeLukket && (
-            <Text bg="yellow.400" w="full" textAlign="center" p={4}>
-              Vi holder lukket i påsken fra den 6. til og med den 10. april 🐣
-            </Text>
-          )}
           <ChakraNextImage
             alt="Cover foto"
             src="/billeder/cover.jpeg"

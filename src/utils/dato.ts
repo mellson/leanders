@@ -47,7 +47,7 @@ function lukkedeDage() {
   }).filter(isSunday); // Pt. er alle søndage lukkede
 }
 
-const saerligeLukkedage = [new Date("2023-04-8")];
+const saerligeLukkedage = [new Date(2023, 3, 8)];
 
 export function standardDatoerHvorManIkkeKanBestiller(
   varer: OrdreMaskineContext["varer"]
