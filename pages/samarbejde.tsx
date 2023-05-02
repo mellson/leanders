@@ -52,6 +52,13 @@ export default function Kontakt() {
       <Link href="https://themonica.dk/" target="_blank">
         <Text>The Monica Hotel, Ærø</Text>
       </Link>
+      <Link href="https://www.aggershoej.dk/" target="_blank">
+        <Text>Aggershøj Pensionat</Text>
+      </Link>
+      <Link href="https://www.facebook.com/knaewr" target="_blank">
+        <Text>Knæwr Kaffebar</Text>
+      </Link>
+
       <Heading as="h4" size="xs" pt="6">
         Disse producenter har en særlig plads i bagerens hjerte, når de enten
         leverer råvarer eller samarbejder med os om forskellige madevents
@@ -76,12 +83,6 @@ export default function Kontakt() {
       </Link>
       <Link href="https://www.facebook.com/Cykeltutten" target="_blank">
         <Text>Cykeltutten</Text>
-      </Link>
-      <Link href="https://www.aggershoej.dk/" target="_blank">
-        <Text>Aggershøj Pensionat</Text>
-      </Link>
-      <Link href="https://www.facebook.com/knaewr" target="_blank">
-        <Text>Knæwr Kaffebar</Text>
       </Link>
       <br />
       <Text>
