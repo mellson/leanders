@@ -74,8 +74,14 @@ export default function Kontakt() {
       <Link href="https://kragegaarden.dk/" target="_blank">
         <Text>Økomølleriet Kragegården</Text>
       </Link>
-      <Link href="https://www.facebook.com/Cykeltutten?fref=nf" target="_blank">
+      <Link href="https://www.facebook.com/Cykeltutten" target="_blank">
         <Text>Cykeltutten</Text>
+      </Link>
+      <Link href="https://www.aggershoej.dk/" target="_blank">
+        <Text>Aggershøj Pensionat</Text>
+      </Link>
+      <Link href="https://www.facebook.com/knaewr" target="_blank">
+        <Text>Knæwr Kaffebar</Text>
       </Link>
       <br />
       <Text>
