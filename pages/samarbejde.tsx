@@ -37,9 +37,6 @@ export default function Kontakt() {
       <Link href="https://www.sejlmedaron.dk/" target="_blank">
         <Text>Aron, Det Sydfynske Øhav</Text>
       </Link>
-      <Link href="https://www.bar105.dk/" target="_blank">
-        <Text>105 Bar & Køkken, Svendborg</Text>
-      </Link>
       <Link href="https://lalouvinbar.dk/" target="_blank">
         <Text>Lalou Vinbar, Odense</Text>
       </Link>
@@ -57,6 +54,9 @@ export default function Kontakt() {
       </Link>
       <Link href="https://www.facebook.com/knaewr" target="_blank">
         <Text>Knæwr Kaffebar</Text>
+      </Link>
+      <Link href="https://www.canele.dk/hjem/" target="_blank">
+        <Text>Canelé</Text>
       </Link>
 
       <Heading as="h4" size="xs" pt="6">
@@ -80,6 +80,9 @@ export default function Kontakt() {
       </Link>
       <Link href="https://kragegaarden.dk/" target="_blank">
         <Text>Økomølleriet Kragegården</Text>
+      </Link>
+      <Link href="https://quartzmolle.dk/" target="_blank">
+        <Text>Quartz Mølle</Text>
       </Link>
       <Link href="https://www.facebook.com/Cykeltutten" target="_blank">
         <Text>Cykeltutten</Text>

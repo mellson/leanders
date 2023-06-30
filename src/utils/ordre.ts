@@ -1,7 +1,7 @@
-import { OrdreMaskineContext } from '@/xstate/ordreMaskine';
-import { addDays, eachWeekOfInterval, startOfDay } from 'date-fns';
-import { da } from 'date-fns/locale';
-import { erFredagLigeUge, erFredagUligeUge } from './dato';
+import { OrdreMaskineContext } from "@/xstate/ordreMaskine";
+import { addDays, eachWeekOfInterval, isSameDay, startOfDay } from "date-fns";
+import { da } from "date-fns/locale";
+import { erFredagLigeUge, erFredagUligeUge } from "./dato";
 
 export const ordreStart = startOfDay(addDays(new Date(), 1));
 export const ordreCutoff = startOfDay(addDays(new Date(), 60));
@@ -14,12 +14,12 @@ export const fredageUligeUger = eachWeekOfInterval(
   { weekStartsOn: 5, locale: da }
 ).filter(erFredagUligeUge);
 
-export function defaultVarerMap(): OrdreMaskineContext['varer'] {
+export function defaultVarerMap(): OrdreMaskineContext["varer"] {
   return new Map();
 }
 
 export function bygVarer(
-  varer: OrdreMaskineContext['varer'],
+  varer: OrdreMaskineContext["varer"],
   dato: Date,
   vareId: number,
   antal: number,
@@ -50,6 +50,10 @@ export function bygVarer(
   }
 }
 
+export const datoerPizzaDejIkkeKanBestilles = [
+  new Date(2023, 6, 14),
+  new Date(2023, 6, 28),
+];
 export const pizzaDejVareId = 12; // Pizzadej kan kun bestilles fredag i lige uger
 export function erPizzaDej(vareId: number) {
   return vareId === pizzaDejVareId;
@@ -57,14 +61,19 @@ export function erPizzaDej(vareId: number) {
 
 export function datoErOkTilVare(vareId: number, dato?: Date) {
   if (erPizzaDej(vareId) && dato) {
-    return erFredagLigeUge(dato);
+    return (
+      erFredagLigeUge(dato) &&
+      !datoerPizzaDejIkkeKanBestilles.some((datoHvorManIkkeKanBestille) =>
+        isSameDay(dato, datoHvorManIkkeKanBestille)
+      )
+    );
   }
   return dato !== undefined;
 }
 
 export function antalVarerPaaDato(
   dato: Date,
-  varer: OrdreMaskineContext['varer']
+  varer: OrdreMaskineContext["varer"]
 ) {
   const varerPaaDato = varer.get(dato.getTime());
   if (varerPaaDato) {
@@ -75,8 +84,8 @@ export function antalVarerPaaDato(
 }
 
 export function samletPris(
-  varer: OrdreMaskineContext['varer'],
-  databaseVarer: OrdreMaskineContext['databaseVarer']
+  varer: OrdreMaskineContext["varer"],
+  databaseVarer: OrdreMaskineContext["databaseVarer"]
 ) {
   return Array.from(varer.values()).reduce((acc, vareMap) => {
     const priser = Array.from(vareMap.keys()).map((vareId) => {
@@ -91,8 +100,8 @@ export function samletPris(
 
 export function samletPrisPaaDato(
   dato: Date,
-  varer: OrdreMaskineContext['varer'],
-  databaseVarer: OrdreMaskineContext['databaseVarer']
+  varer: OrdreMaskineContext["varer"],
+  databaseVarer: OrdreMaskineContext["databaseVarer"]
 ) {
   const varerPaaDato = varer.get(dato.getTime());
   if (varerPaaDato) {
@@ -109,7 +118,7 @@ export function samletPrisPaaDato(
   }
 }
 
-export function sorteredeDatoerFraVarer(varer: OrdreMaskineContext['varer']) {
+export function sorteredeDatoerFraVarer(varer: OrdreMaskineContext["varer"]) {
   return Array.from(varer.keys()).sort();
 }
 
