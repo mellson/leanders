@@ -4,6 +4,8 @@ import {
   eachWeekendOfInterval,
   format,
   isFriday,
+  isMonday,
+  isSaturday,
   isSunday,
   parseISO,
 } from "date-fns";
@@ -11,6 +13,7 @@ import { da } from "date-fns/locale";
 import Holidays from "date-holidays";
 import {
   erPizzaDej,
+  erSpeltbrød,
   ordreCutoff,
   ordreStart,
   sorteredeDatoerFraVarer,
@@ -47,7 +50,7 @@ function lukkedeDage() {
   }).filter(isSunday); // Pt. er alle søndage lukkede
 }
 
-const saerligeLukkedage = [new Date(2023, 3, 8)];
+const særligeLukkedage = [new Date(2023, 3, 8)];
 
 export function standardDatoerHvorManIkkeKanBestiller(
   varer: OrdreMaskineContext["varer"]
@@ -56,29 +59,46 @@ export function standardDatoerHvorManIkkeKanBestiller(
     ...sorteredeDatoerFraVarer(varer).map((time) => new Date(time)),
     ...lukkedeDage(),
     ...helligdage(),
-    ...saerligeLukkedage,
+    ...særligeLukkedage,
   ];
 }
 
 export function datoerHvorManIkkeKanBestillePizzaDej(
   varer: OrdreMaskineContext["varer"]
 ) {
-  const alleDageDerIkkeErFredagIligeUge = eachDayOfInterval({
+  const alleDageUndtagenFredagOgLørdag = eachDayOfInterval({
     start: new Date(),
     end: ordreCutoff,
-  }).filter(erIkkeFredagLigeUge);
+  }).filter((dato) => !isFriday(dato) && !isSaturday(dato));
 
   return [
     ...sorteredeDatoerFraVarer(varer).map((time) => new Date(time)),
     ...lukkedeDage(),
-    ...alleDageDerIkkeErFredagIligeUge,
+    ...alleDageUndtagenFredagOgLørdag,
+    ...helligdage(),
+  ];
+}
+export function datoerHvorManIkkeKanBestilleSpeltbrød(
+  varer: OrdreMaskineContext["varer"]
+) {
+  const alleDageUndtagenMandag = eachDayOfInterval({
+    start: new Date(),
+    end: ordreCutoff,
+  }).filter(isMonday);
+
+  return [
+    ...sorteredeDatoerFraVarer(varer).map((time) => new Date(time)),
+    ...lukkedeDage(),
+    ...alleDageUndtagenMandag,
     ...helligdage(),
   ];
 }
 
 export const getDatoVejledning = (vareId: number) => {
   if (erPizzaDej(vareId)) {
-    return "Pizza dej kan bestilles fredage i lige uger";
+    return "Pizza dej kan bestilles fredag og lørdag";
+  } else if (erSpeltbrød(vareId)) {
+    return "Speltbrød kan bestilles alle dage undtagen mandag";
   }
   return "Du kan bestille mandag til lørdag, minus helligdage";
 };

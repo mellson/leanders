@@ -1,6 +1,7 @@
 import { Database } from "@/types/DatabaseDefinitions";
 import {
   datoerHvorManIkkeKanBestillePizzaDej,
+  datoerHvorManIkkeKanBestilleSpeltbrød,
   getDatoVejledning,
   standardDatoerHvorManIkkeKanBestiller,
 } from "@/utils/dato";
@@ -9,8 +10,10 @@ import {
   datoErOkTilVare,
   defaultVarerMap,
   erPizzaDej,
+  erSpeltbrød,
   pizzaDejVareId,
   sorteredeDatoerFraVarer,
+  speltBroedVareId,
 } from "@/utils/ordre";
 import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { PostgrestResponse } from "@supabase/supabase-js";
@@ -292,6 +295,8 @@ export const ordreMaskine =
           datoerHvorManIkkeKanBestille: (context, event) => {
             if (erPizzaDej(event.vareId)) {
               return datoerHvorManIkkeKanBestillePizzaDej(context.varer);
+            } else if (erSpeltbrød(event.vareId)) {
+              return datoerHvorManIkkeKanBestilleSpeltbrød(context.varer);
             } else {
               return standardDatoerHvorManIkkeKanBestiller(context.varer);
             }
@@ -332,11 +337,10 @@ export const ordreMaskine =
               const varerPaaAktivDato = context.varer.get(
                 context.aktivDato.getTime()
               );
-              const derErPizzaDejPaaAktivDato = Array.from(
-                varerPaaAktivDato?.keys() ?? []
-              ).some(erPizzaDej);
-              if (derErPizzaDejPaaAktivDato)
+              if (Array.from(varerPaaAktivDato?.keys() ?? []).some(erPizzaDej))
                 return datoerHvorManIkkeKanBestillePizzaDej(context.varer);
+              if (Array.from(varerPaaAktivDato?.keys() ?? []).some(erSpeltbrød))
+                return datoerHvorManIkkeKanBestilleSpeltbrød(context.varer);
             }
             return standardDatoerHvorManIkkeKanBestiller(context.varer);
           },
@@ -350,6 +354,11 @@ export const ordreMaskine =
               ).some(erPizzaDej);
               if (derErPizzaDejPaaAktivDato)
                 return getDatoVejledning(pizzaDejVareId);
+              const derErSpeltbrødPaaAktivDato = Array.from(
+                varerPaaAktivDato?.keys() ?? []
+              ).some(erSpeltbrød);
+              if (derErSpeltbrødPaaAktivDato)
+                return getDatoVejledning(speltBroedVareId);
             }
             return getDatoVejledning(-1);
           },

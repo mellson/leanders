@@ -1,7 +1,7 @@
-import { AppContext } from '@/utils/context';
-import { Button, HStack, Input, useNumberInput } from '@chakra-ui/react';
-import { useActor } from '@xstate/react';
-import { useContext } from 'react';
+import { AppContext } from "@/utils/context";
+import { Button, HStack, Input, useNumberInput } from "@chakra-ui/react";
+import { useActor } from "@xstate/react";
+import { useContext } from "react";
 
 interface VareInputProps {
   vareId: number;
@@ -20,9 +20,10 @@ export function VareInput({ vareId, dato }: VareInputProps) {
       step: 1,
       value: antal,
       min: 0,
-      inputMode: 'numeric',
+      max: 10,
+      inputMode: "numeric",
       onChange: (_, valueAsNumber) =>
-        send({ type: 'Tilføj vare', vareId, antal: valueAsNumber, dato }),
+        send({ type: "Tilføj vare", vareId, antal: valueAsNumber, dato }),
     });
 
   const inc = getIncrementButtonProps();
@@ -38,7 +39,7 @@ export function VareInput({ vareId, dato }: VareInputProps) {
         fontFamily="monospace"
         fontSize="xl"
         fontWeight="bolder"
-        bg={antal > 0 ? 'leanders.900' : undefined}
+        bg={antal > 0 ? "leanders.900" : undefined}
         {...dec}
       >
         -
@@ -59,7 +60,7 @@ export function VareInput({ vareId, dato }: VareInputProps) {
         fontFamily="monospace"
         fontSize="xl"
         fontWeight="bolder"
-        bg={antal > 0 ? 'leanders.900' : 'leanders.600'}
+        bg={antal > 0 ? "leanders.900" : "leanders.600"}
         {...inc}
       >
         +

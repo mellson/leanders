@@ -1,18 +1,15 @@
 import { OrdreMaskineContext } from "@/xstate/ordreMaskine";
-import { addDays, eachWeekOfInterval, isSameDay, startOfDay } from "date-fns";
-import { da } from "date-fns/locale";
-import { erFredagLigeUge, erFredagUligeUge } from "./dato";
+import {
+  addDays,
+  isFriday,
+  isMonday,
+  isSameDay,
+  isSaturday,
+  startOfDay,
+} from "date-fns";
 
 export const ordreStart = startOfDay(addDays(new Date(), 1));
 export const ordreCutoff = startOfDay(addDays(new Date(), 60));
-
-export const fredageUligeUger = eachWeekOfInterval(
-  {
-    start: ordreStart,
-    end: ordreCutoff,
-  },
-  { weekStartsOn: 5, locale: da }
-).filter(erFredagUligeUge);
 
 export function defaultVarerMap(): OrdreMaskineContext["varer"] {
   return new Map();
@@ -54,19 +51,30 @@ export const datoerPizzaDejIkkeKanBestilles = [
   new Date(2023, 6, 14),
   new Date(2023, 6, 28),
 ];
-export const pizzaDejVareId = 12; // Pizzadej kan kun bestilles fredag i lige uger
+export const datoerSpeltbrødIkkeKanBestilles = [
+  new Date(2023, 6, 14),
+  new Date(2023, 6, 28),
+];
+export const pizzaDejVareId = 12; // Pizzadej kan kun bestilles fredag og lørdag
 export function erPizzaDej(vareId: number) {
   return vareId === pizzaDejVareId;
+}
+
+export const speltBroedVareId = 4; // Pizzadej kan kun bestilles fredag i lige uger
+export function erSpeltbrød(vareId: number) {
+  return vareId === speltBroedVareId;
 }
 
 export function datoErOkTilVare(vareId: number, dato?: Date) {
   if (erPizzaDej(vareId) && dato) {
     return (
-      erFredagLigeUge(dato) &&
+      (isFriday(dato) || isSaturday(dato)) &&
       !datoerPizzaDejIkkeKanBestilles.some((datoHvorManIkkeKanBestille) =>
         isSameDay(dato, datoHvorManIkkeKanBestille)
       )
     );
+  } else if (erSpeltbrød(vareId) && dato) {
+    return !isMonday(dato);
   }
   return dato !== undefined;
 }
