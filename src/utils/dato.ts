@@ -50,7 +50,13 @@ function lukkedeDage() {
   }).filter(isSunday); // Pt. er alle søndage lukkede
 }
 
-const særligeLukkedage = [new Date(2023, 3, 8)];
+const særligeLukkedage = [
+  new Date(2023, 3, 8),
+  ...eachDayOfInterval({
+    start: new Date(2023, 9, 10),
+    end: new Date(2023, 9, 23),
+  }),
+];
 
 export function standardDatoerHvorManIkkeKanBestiller(
   varer: OrdreMaskineContext["varer"]

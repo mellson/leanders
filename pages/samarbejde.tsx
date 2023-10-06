@@ -16,9 +16,6 @@ export default function Kontakt() {
       <Link href="https://byensgaardbutik.dk/" target="_blank">
         <Text>Byens Gårdbutik</Text>
       </Link>
-      <Link href="https://www.cafecitronen.dk/" target="_blank">
-        <Text>Café Citronen, Svendborg</Text>
-      </Link>
       <Link href="https://www.work2gether.dk/" target="_blank">
         <Text>Work2gether, Svendborg</Text>
       </Link>
@@ -54,9 +51,6 @@ export default function Kontakt() {
       </Link>
       <Link href="https://www.facebook.com/knaewr" target="_blank">
         <Text>Knæwr Kaffebar</Text>
-      </Link>
-      <Link href="https://www.canele.dk/hjem/" target="_blank">
-        <Text>Canelé</Text>
       </Link>
 
       <Heading as="h4" size="xs" pt="6">

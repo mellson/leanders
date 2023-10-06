@@ -1,11 +1,13 @@
 import { Box, Container, Text, useBreakpointValue } from "@chakra-ui/react";
-import { isBefore } from "date-fns";
+import { isAfter, isBefore } from "date-fns";
 import { DesktopNavBar } from "./DesktopNavBar";
 import { MobileNavBar } from "./MobileNavBar";
 
 export function Navbar() {
   const isDesktop = useBreakpointValue({ base: false, lg: true }, "lg");
-  const visPaaskeLukket = isBefore(Date.now(), new Date(2023, 3, 10));
+  const visFerieLukket =
+    isAfter(Date.now(), new Date(2023, 9, 10)) &&
+    isBefore(Date.now(), new Date(2023, 9, 23));
   return (
     <Box
       as="nav"
@@ -18,9 +20,9 @@ export function Navbar() {
       {/* <Container py={{ base: '3', lg: '4' }}>
       </Container> */}
       <Container>{isDesktop ? <DesktopNavBar /> : <MobileNavBar />}</Container>
-      {visPaaskeLukket && (
+      {visFerieLukket && (
         <Text bg="yellow.400" textAlign="center" p={2} color="black">
-          Vi holder påskelukket fra den 6. til og med den 10. april 🐣
+          Vi holder ferielukket fra den 10. oktober til og med den 23. oktober
         </Text>
       )}
     </Box>
