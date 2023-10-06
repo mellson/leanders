@@ -53,7 +53,7 @@ function lukkedeDage() {
 const særligeLukkedage = [
   new Date(2023, 3, 8),
   ...eachDayOfInterval({
-    start: new Date(2023, 9, 10),
+    start: new Date(2023, 9, 14),
     end: new Date(2023, 9, 23),
   }),
 ];
