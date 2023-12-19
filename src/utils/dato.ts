@@ -56,6 +56,10 @@ const særligeLukkedage = [
     start: new Date(2023, 9, 14),
     end: new Date(2023, 9, 23),
   }),
+  ...eachDayOfInterval({
+    start: new Date(2023, 11, 24),
+    end: new Date(2023, 11, 30),
+  }),
 ];
 
 export function standardDatoerHvorManIkkeKanBestiller(
@@ -81,7 +85,12 @@ export function datoerHvorManIkkeKanBestillePizzaDej(
     ...sorteredeDatoerFraVarer(varer).map((time) => new Date(time)),
     ...lukkedeDage(),
     ...alleDageUndtagenFredagOgLørdag,
+    ...særligeLukkedage,
     ...helligdage(),
+    ...eachDayOfInterval({
+      start: new Date(2023, 11, 22),
+      end: new Date(2024, 0, 11),
+    }),
   ];
 }
 export function datoerHvorManIkkeKanBestilleSpeltbrød(
