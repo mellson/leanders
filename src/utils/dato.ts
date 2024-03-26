@@ -1,4 +1,4 @@
-import { OrdreMaskineContext } from "@/xstate/ordreMaskine";
+import { OrdreMaskineContext } from '@/xstate/ordreMaskine';
 import {
   eachDayOfInterval,
   eachWeekendOfInterval,
@@ -8,19 +8,19 @@ import {
   isSaturday,
   isSunday,
   parseISO,
-} from "date-fns";
-import { da } from "date-fns/locale";
-import Holidays from "date-holidays";
+} from 'date-fns';
+import { da } from 'date-fns/locale';
+import Holidays from 'date-holidays';
 import {
   erPizzaDej,
   erSpeltbrød,
   ordreCutoff,
   ordreStart,
   sorteredeDatoerFraVarer,
-} from "./ordre";
+} from './ordre';
 
 export function erLigeUge(dato: Date) {
-  const ugeNummerString = format(dato, "w", { locale: da });
+  const ugeNummerString = format(dato, 'w', { locale: da });
   const ugeNummer = parseInt(ugeNummerString);
   return ugeNummer % 2 === 0;
 }
@@ -38,7 +38,7 @@ export function erFredagUligeUge(dato: Date) {
 }
 
 function helligdage() {
-  return new Holidays("DK")
+  return new Holidays('DK')
     .getHolidays(ordreStart)
     .map((helligdag) => parseISO(helligdag.date)); // Her bruger vi parseISO fra date-fns, da en alm. new Date() ikke virker på iPhone
 }
@@ -52,6 +52,7 @@ function lukkedeDage() {
 
 const særligeLukkedage = [
   new Date(2023, 3, 8),
+  new Date(2024, 2, 30),
   ...eachDayOfInterval({
     start: new Date(2023, 9, 14),
     end: new Date(2023, 9, 23),
@@ -63,7 +64,7 @@ const særligeLukkedage = [
 ];
 
 export function standardDatoerHvorManIkkeKanBestiller(
-  varer: OrdreMaskineContext["varer"]
+  varer: OrdreMaskineContext['varer']
 ) {
   return [
     ...sorteredeDatoerFraVarer(varer).map((time) => new Date(time)),
@@ -74,7 +75,7 @@ export function standardDatoerHvorManIkkeKanBestiller(
 }
 
 export function datoerHvorManIkkeKanBestillePizzaDej(
-  varer: OrdreMaskineContext["varer"]
+  varer: OrdreMaskineContext['varer']
 ) {
   const alleDageUndtagenFredagOgLørdag = eachDayOfInterval({
     start: new Date(),
@@ -94,7 +95,7 @@ export function datoerHvorManIkkeKanBestillePizzaDej(
   ];
 }
 export function datoerHvorManIkkeKanBestilleSpeltbrød(
-  varer: OrdreMaskineContext["varer"]
+  varer: OrdreMaskineContext['varer']
 ) {
   const alleDageUndtagenMandag = eachDayOfInterval({
     start: new Date(),
@@ -111,9 +112,9 @@ export function datoerHvorManIkkeKanBestilleSpeltbrød(
 
 export const getDatoVejledning = (vareId: number) => {
   if (erPizzaDej(vareId)) {
-    return "Pizza dej kan bestilles fredag og lørdag";
+    return 'Pizza dej kan bestilles fredag og lørdag';
   } else if (erSpeltbrød(vareId)) {
-    return "Speltbrød kan bestilles alle dage undtagen mandag";
+    return 'Speltbrød kan bestilles alle dage undtagen mandag';
   }
-  return "Du kan bestille mandag til lørdag, minus helligdage";
+  return 'Du kan bestille mandag til lørdag, minus helligdage';
 };
