@@ -1,7 +1,6 @@
 module.exports = {
   parser: '@typescript-eslint/parser',
   plugins: ['@next/next', '@typescript-eslint'],
-
   overrides: [
     {
       files: ['*.ts', '*.tsx'],
@@ -11,7 +10,6 @@ module.exports = {
         'plugin:@typescript-eslint/recommended',
       ],
       rules: {},
-
       parserOptions: {
         project: ['./tsconfig.json'],
       },
