@@ -32,9 +32,9 @@ export default function Kontakt() {
 
         <Box>
           <Text fontWeight="bold">E-mail</Text>
-          <NextLink href="mailto:kasper@leanders.dk" passHref>
+          <NextLink href="mailto:rune@leanders.dk" passHref>
             <Link>
-              <Text>kasper@leanders.dk</Text>
+              <Text>rune@leanders.dk</Text>
             </Link>
           </NextLink>
 
